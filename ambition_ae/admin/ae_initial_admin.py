@@ -17,6 +17,7 @@ class AeInitialAdmin(ModelAdminMixin, admin.ModelAdmin):
         (None, {
             'fields': (
                 'tracking_identifier',
+                'action_identifier',
                 'subject_identifier',
                 'regimen',
                 'report_datetime',

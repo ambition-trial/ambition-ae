@@ -25,6 +25,7 @@ class AeTmgAdmin(ModelAdminMixin, admin.ModelAdmin):
         (None, {
             'fields': (
                 'ae_initial',
+                'action_identifier',
                 'report_datetime',
                 'ae_received_datetime',
                 'clinical_review_datetime',

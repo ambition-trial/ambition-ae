@@ -17,6 +17,7 @@ class AeFollowupAdmin(ModelAdminMixin, admin.ModelAdmin):
         (None, {
             'fields': (
                 'ae_initial',
+                'action_identifier',
                 'report_datetime',
                 'outcome',
                 'outcome_date',
