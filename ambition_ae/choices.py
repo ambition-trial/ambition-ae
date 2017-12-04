@@ -1,9 +1,10 @@
 from edc_constants.constants import NOT_APPLICABLE
+from .constants import GRADE3, GRADE4, GRADE5, MILD, MODERATE, SEVERE
 
 AE_INTENSITY = (
-    ('mild', 'Mild'),
-    ('moderate', 'Moderate'),
-    ('severe', 'Severe')
+    (MILD, 'Mild'),
+    (MODERATE, 'Moderate'),
+    (SEVERE, 'Severe')
 )
 
 AE_REPORT_TYPE = (
@@ -13,9 +14,9 @@ AE_REPORT_TYPE = (
 )
 
 AE_GRADE = (
-    ('3', 'Grade 3'),
-    ('4', 'Grade 4 - Life-threatening'),
-    ('5', 'Grade 5 - Death'),
+    (GRADE3, 'Grade 3'),
+    (GRADE4, 'Grade 4 - Life-threatening'),
+    (GRADE5, 'Grade 5 - Death'),
 )
 
 AE_OUTCOME = (
