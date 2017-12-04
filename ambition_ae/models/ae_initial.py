@@ -1,90 +1,17 @@
 from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
-from django.utils import timezone
-from edc_action_item.model_mixins import ActionItemModelMixin
-from edc_action_item.models import ActionItem
 from edc_base.model_fields import OtherCharField
 from edc_base.model_managers import HistoricalRecords
 from edc_base.model_mixins import BaseUuidModel
-from edc_base.model_validators import date_not_future, datetime_not_future
-from edc_base.utils import get_utcnow
+from edc_base.model_validators import datetime_not_future
 from edc_constants.choices import YES_NO, YES_NO_NA, YES_NO_UNKNOWN
-from edc_constants.constants import NOT_APPLICABLE, UNKNOWN, YES
+from edc_constants.constants import NOT_APPLICABLE, UNKNOWN
 from edc_identifier.model_mixins import NonUniqueSubjectIdentifierFieldMixin
 from edc_identifier.model_mixins import TrackingIdentifierModelMixin
 
-from ..choices import AE_GRADE, AE_INTENSITY, RAE_REASON
-from ..choices import STUDY_DRUG_RELATIONSHIP
-from .managers import AeInitialManager
-
-
-class AeInitialActionItemModelMixin(ActionItemModelMixin):
-
-    def creates_action_items(self):
-        action_items = ['submit-initial-ae-report']
-        return action_items
-
-    def create_next_action_items(self, action_type_name=None):
-        action_items = []
-        if action_type_name:
-            action_items.append(action_type_name)
-        try:
-            ActionItem.objects.get(
-                subject_identifier=self.subject_identifier,
-                parent_reference_identifier=self.tracking_identifier,
-                reference_model='ambition_ae.aetmg')
-        except ObjectDoesNotExist:
-            action_items.append('submit-ae-tmg-report')
-        if self.ae_cm_recurrence == YES:
-            action_items.append('submit-recurrence-symptoms')
-        return action_items
-
-    class Meta:
-        abstract = True
-
-
-class AeModelMixin(models.Model):
-
-    ae_auto_created = models.BooleanField(
-        max_length=25,
-        default=False,
-        editable=False)
-
-    ae_auto_created_criteria = models.CharField(
-        max_length=50,
-        default=NOT_APPLICABLE,
-        editable=False)
-
-    report_datetime = models.DateTimeField(
-        verbose_name="Report Date and Time",
-        default=get_utcnow)
-
-    ae_description = models.TextField(
-        verbose_name='Adverse Event (AE) description')
-
-    ae_awareness_date = models.DateField(
-        verbose_name='AE Awareness date',
-        default=timezone.now,
-        validators=[date_not_future])
-
-    ae_start_date = models.DateField(
-        verbose_name='Actual Start Date of AE',
-        default=timezone.now,
-        validators=[date_not_future])
-
-    ae_grade = models.CharField(
-        verbose_name='Severity of AE',
-        max_length=25,
-        choices=AE_GRADE)
-
-    ae_intensity = models.CharField(
-        verbose_name='What is the intensity AE',
-        max_length=25,
-        choices=AE_INTENSITY)
-
-    class Meta:
-        abstract = True
+from ..choices import STUDY_DRUG_RELATIONSHIP, SAE_REASONS
+from ..model_mixins import AeInitialActionItemModelMixin, AeModelMixin
+from ..managers import AeInitialManager
 
 
 class AeInitial(AeModelMixin, AeInitialActionItemModelMixin,
@@ -174,7 +101,7 @@ class AeInitial(AeModelMixin, AeInitialActionItemModelMixin,
     sae_reason = models.CharField(
         verbose_name='If Yes, Reason for SAE:',
         max_length=50,
-        choices=RAE_REASON,
+        choices=SAE_REASONS,
         default=NOT_APPLICABLE)
 
     susar = models.CharField(

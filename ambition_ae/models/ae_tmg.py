@@ -9,9 +9,9 @@ from edc_identifier.model_mixins import NonUniqueSubjectIdentifierFieldMixin
 from edc_base.utils import get_utcnow
 from edc_identifier.model_mixins import TrackingIdentifierModelMixin
 
+from ..managers import AeManager
 from .ae_classification import AEClassification
 from .ae_initial import AeInitial
-from .managers import AeManager
 
 
 class AeTmg(ActionItemModelMixin, TrackingIdentifierModelMixin,

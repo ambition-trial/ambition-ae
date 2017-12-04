@@ -1,6 +1,5 @@
 from django.db import models
 from django.db.models.deletion import PROTECT
-from edc_action_item.model_mixins import ActionItemModelMixin
 from edc_base.model_validators import date_not_future
 from edc_base.model_managers import HistoricalRecords
 from edc_base.model_mixins import BaseUuidModel
@@ -11,22 +10,9 @@ from edc_constants.constants import YES
 from edc_identifier.model_mixins import TrackingIdentifierModelMixin
 
 from ..choices import AE_OUTCOME
+from ..managers import AeManager
+from ..model_mixins import AeFollowupActionItemModelMixin
 from .ae_initial import AeInitial
-from .managers import AeManager
-
-
-class AeFollowupActionItemModelMixin(ActionItemModelMixin):
-
-    def create_next_action_items(self, action_type_name=None):
-        action_items = []
-        if self.followup == YES:
-            action_items.append(action_type_name)
-        else:
-            action_items.append('submit-final-ae-report')
-        return action_items
-
-    class Meta:
-        abstract = True
 
 
 class AeFollowup(AeFollowupActionItemModelMixin,

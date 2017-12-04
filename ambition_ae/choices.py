@@ -28,7 +28,7 @@ AE_OUTCOME = (
     ('Death', 'Death'),
 )
 
-RAE_REASON = (
+SAE_REASONS = (
     (NOT_APPLICABLE, 'Not applicable'),
     ('death', 'Death (Please complete Death form and Study termination form)'),
     ('life_threatening', 'Life-threatening'),
