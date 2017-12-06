@@ -3,7 +3,7 @@
 .settings/
 db.sqlite3
 etc/
-
+.DS_Store
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
