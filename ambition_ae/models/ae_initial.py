@@ -30,7 +30,9 @@ class AeInitial(AeModelMixin, ActionItemModelMixin,
         max_length=50,
         help_text='Control: (Amphotericin B 1 mg/kg for 7 days with '
         'flucytosine 100mg/kg/day for 7 days followed by fluconazole '
-        '1200mg/day for 7 days)')
+        '1200mg/day for 7 days)'
+        'Single: Ambisome 10mg/kg on day 1 with flucytosine '
+        '100mg/kg/day and fluconazole 1200mg/day for 14 days')
 
     ae_study_relation_possibility = models.CharField(
         verbose_name=(
