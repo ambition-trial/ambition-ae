@@ -19,6 +19,7 @@ class AeTmg(ActionItemModelMixin, TrackingIdentifierModelMixin,
             NonUniqueSubjectIdentifierFieldMixin, BaseUuidModel):
 
     action_cls = AeTmgAction
+    tracking_identifier_prefix = 'AT'
 
     ae_initial = models.OneToOneField(AeInitial, on_delete=PROTECT)
 

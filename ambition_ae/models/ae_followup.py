@@ -24,6 +24,7 @@ class AeFollowup(ActionItemModelMixin,
                  TrackingIdentifierModelMixin, BaseUuidModel):
 
     action_cls = AeFollowupAction
+    tracking_identifier_prefix = 'AF'
 
     ae_initial = models.ForeignKey(AeInitial, on_delete=PROTECT)
 
