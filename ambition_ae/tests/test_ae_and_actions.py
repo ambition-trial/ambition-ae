@@ -1,16 +1,16 @@
-from django.test import TestCase, tag
-from model_mommy import mommy
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.db.utils import IntegrityError
+from django.test import TestCase, tag
+from edc_action_item import site_action_items
+from edc_action_item.models import SubjectDoesNotExist
 from edc_action_item.models.action_item import ActionItem
 from edc_action_item.models.action_type import ActionType
+from edc_constants.constants import CLOSED, NO, NEW
 from edc_list_data.site_list_data import site_list_data
 from edc_registration.models import RegisteredSubject
-from edc_constants.constants import CLOSED, NO
-from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
-from edc_action_item.action_item_handler import ActionItemDoesNotExist
-from edc_action_item.models import SubjectDoesNotExist
+from model_mommy import mommy
 
-from ..action_items import AE_INITIAL_ACTION
+from ..action_items import AeFollowupAction, AeInitialAction
 from ..models import AeInitial, AeFollowup
 
 
@@ -26,6 +26,8 @@ class TestAeAndActions(TestCase):
         super().tearDownClass()
 
     def setUp(self):
+        site_action_items.populated_action_type = False
+        site_action_items.populate_action_type()
         self.subject_identifier = '12345'
         RegisteredSubject.objects.create(
             subject_identifier=self.subject_identifier)
@@ -42,37 +44,32 @@ class TestAeAndActions(TestCase):
             'ambition_ae.aeinitial',
             subject_identifier='blahblah')
 
-    @tag('1')
     def test_entire_flow(self):
-        # for _ in range(0, 5):
-        ae_initial = mommy.make_recipe(
-            'ambition_ae.aeinitial',
-            subject_identifier=self.subject_identifier)
-        mommy.make_recipe(
-            'ambition_ae.aetmg',
-            ae_initial=ae_initial,
-            subject_identifier=self.subject_identifier)
-        mommy.make_recipe(
-            'ambition_ae.aefollowup',
-            ae_initial=ae_initial,
-            subject_identifier=self.subject_identifier)
-        mommy.make_recipe(
-            'ambition_ae.aefollowup',
-            ae_initial=ae_initial,
-            subject_identifier=self.subject_identifier)
-        mommy.make_recipe(
-            'ambition_ae.aefollowup',
-            ae_initial=ae_initial,
-            subject_identifier=self.subject_identifier)
-        mommy.make_recipe(
-            'ambition_ae.aefollowup',
-            ae_initial=ae_initial,
-            subject_identifier=self.subject_identifier,
-            followup=NO)
-        mommy.make_recipe(
-            'ambition_ae.aefinal',
-            ae_initial=ae_initial,
-            subject_identifier=self.subject_identifier)
+        for _ in range(0, 5):
+            ae_initial = mommy.make_recipe(
+                'ambition_ae.aeinitial',
+                subject_identifier=self.subject_identifier)
+            mommy.make_recipe(
+                'ambition_ae.aetmg',
+                ae_initial=ae_initial,
+                subject_identifier=self.subject_identifier)
+            mommy.make_recipe(
+                'ambition_ae.aefollowup',
+                ae_initial=ae_initial,
+                subject_identifier=self.subject_identifier)
+            mommy.make_recipe(
+                'ambition_ae.aefollowup',
+                ae_initial=ae_initial,
+                subject_identifier=self.subject_identifier)
+            mommy.make_recipe(
+                'ambition_ae.aefollowup',
+                ae_initial=ae_initial,
+                subject_identifier=self.subject_identifier)
+            mommy.make_recipe(
+                'ambition_ae.aefollowup',
+                ae_initial=ae_initial,
+                subject_identifier=self.subject_identifier,
+                followup=NO)
 
     def test_fk1(self):
         ae_initial = mommy.make_recipe(
@@ -126,34 +123,13 @@ class TestAeAndActions(TestCase):
             'ambition_ae.aetmg',
             ae_initial=ae_initial,
             subject_identifier=self.subject_identifier)
-        mommy.make_recipe('ambition_ae.aefinal', ae_initial=ae_initial)
-        self.assertRaises(
-            IntegrityError,
-            mommy.make_recipe,
-            'ambition_ae.aefinal',
-            ae_initial=ae_initial,
-            subject_identifier=self.subject_identifier)
-
-    def test_out_of_order(self):
-        ae_initial = mommy.make_recipe(
-            'ambition_ae.aeinitial',
-            subject_identifier=self.subject_identifier)
-        self.assertRaises(
-            ActionItemDoesNotExist,
-            mommy.make_recipe,
-            'ambition_ae.aefinal',
-            ae_initial=ae_initial,
-            subject_identifier=self.subject_identifier)
 
     def test_ae_initial_action(self):
         action_type = ActionType.objects.get(
-            name=AE_INITIAL_ACTION)
-        next_action_type = ActionType.objects.get(
-            model='ambition_ae.aefollowup')
+            name=AeInitialAction.name)
         action_item = ActionItem.objects.create(
             subject_identifier=self.subject_identifier,
-            action_type=action_type,
-            next_action_type=next_action_type)
+            action_type=action_type)
 
         mommy.make_recipe(
             'ambition_ae.aeinitial',
@@ -164,11 +140,10 @@ class TestAeAndActions(TestCase):
         try:
             ActionItem.objects.get(
                 subject_identifier=self.subject_identifier,
-                action_type=action_item.next_action_type)
+                action_type__name=AeFollowupAction.name)
         except ObjectDoesNotExist:
             self.fail(
-                f'Next action item unexpectedly does not exist. '
-                f'Got {action_item.next_action_type}')
+                f'Next action item unexpectedly does not exist.')
 
     def test_ae_initial_action2(self):
         ae_initial = mommy.make_recipe(
@@ -222,13 +197,10 @@ class TestAeAndActions(TestCase):
     def test_ae_initial_updates_existing_action_item(self):
         # create action item first
         action_type = ActionType.objects.get(
-            name=AE_INITIAL_ACTION)
-        next_action_type = ActionType.objects.get(
-            model='ambition_ae.aefollowup')
+            name=AeInitialAction.name)
         action_item = ActionItem.objects.create(
             subject_identifier=self.subject_identifier,
             action_type=action_type,
-            next_action_type=next_action_type,
             reference_model='ambition_ae.aeinitial')
 
         # then create reference model
@@ -250,39 +222,27 @@ class TestAeAndActions(TestCase):
             'ambition_ae.aeinitial',
             subject_identifier=self.subject_identifier)
         ae_initial = AeInitial.objects.get(pk=ae_initial.pk)
-        action_item = ActionItem.objects.get(
-            action_identifier=ae_initial.action_identifier)
-        next_action_type = action_item.next_action_type
-        try:
+        self.assertTrue(
+            ActionItem.objects.get(
+                subject_identifier=self.subject_identifier,
+                reference_identifier=ae_initial.tracking_identifier,
+                parent_reference_identifier=None,
+                reference_model='ambition_ae.aeinitial',
+                status=CLOSED))
+        self.assertTrue(
             ActionItem.objects.get(
                 subject_identifier=self.subject_identifier,
                 reference_identifier__isnull=True,
                 parent_reference_identifier=ae_initial.tracking_identifier,
-                next_action_type=next_action_type)
-        except ObjectDoesNotExist:
-            self.fail(
-                f'next ActionItem unexpectedly does not exist.')
-
-    def test_ae_initial_does_not_duplicate_next_action(self):
-        ae_initial = mommy.make_recipe(
-            'ambition_ae.aeinitial',
-            subject_identifier=self.subject_identifier)
-        ae_initial = AeInitial.objects.get(pk=ae_initial.pk)
-        ae_initial.save()
-        action_item = ActionItem.objects.get(
-            action_identifier=ae_initial.action_identifier)
-        next_action_type = action_item.next_action_type
-
-        try:
+                reference_model='ambition_ae.aefollowup',
+                status=NEW))
+        self.assertTrue(
             ActionItem.objects.get(
                 subject_identifier=self.subject_identifier,
                 reference_identifier__isnull=True,
                 parent_reference_identifier=ae_initial.tracking_identifier,
-                parent_model='ambition_ae.aeinitial',
-                next_action_type=next_action_type)
-        except ObjectDoesNotExist:
-            self.fail(
-                f'next ActionItem unexpectedly does not exist.')
+                reference_model='ambition_ae.aetmg',
+                status=NEW))
 
     def test_next_action1(self):
         ae_initial = mommy.make_recipe(

@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from edc_action_item.model_mixins import ActionItemModelMixin
 from edc_base.model_fields import OtherCharField
 from edc_base.model_managers import HistoricalRecords
 from edc_base.model_mixins import BaseUuidModel
@@ -9,16 +10,19 @@ from edc_constants.constants import NOT_APPLICABLE, UNKNOWN
 from edc_identifier.model_mixins import NonUniqueSubjectIdentifierFieldMixin
 from edc_identifier.model_mixins import TrackingIdentifierModelMixin
 
+from ..action_items import AeInitialAction
 from ..choices import STUDY_DRUG_RELATIONSHIP, SAE_REASONS
-from ..model_mixins import AeInitialActionItemModelMixin, AeModelMixin
 from ..managers import AeInitialManager
+from ..model_mixins import AeModelMixin
 
 
-class AeInitial(AeModelMixin, AeInitialActionItemModelMixin,
+class AeInitial(AeModelMixin, ActionItemModelMixin,
                 TrackingIdentifierModelMixin, NonUniqueSubjectIdentifierFieldMixin,
                 BaseUuidModel):
 
     tracking_identifier_prefix = 'AE'
+
+    action_cls = AeInitialAction
 
     # TODO: Get this from the Randomization
     regimen = models.CharField(

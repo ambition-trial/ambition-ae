@@ -1,4 +1,5 @@
 from django.contrib import admin
+from simple_history.admin import SimpleHistoryAdmin
 
 from edc_model_admin import audit_fieldset_tuple
 
@@ -9,7 +10,7 @@ from .modeladmin_mixins import ModelAdminMixin
 
 
 @admin.register(AeInitial, site=ambition_ae_admin)
-class AeInitialAdmin(ModelAdminMixin, admin.ModelAdmin):
+class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
 
     form = AeInitialForm
 

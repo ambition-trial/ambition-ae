@@ -3,7 +3,7 @@ from faker import Faker
 from model_mommy.recipe import Recipe
 
 from .constants import GRADE4, MODERATE
-from .models import AeInitial, AeTmg, AeFollowup, AeFinal, AEClassification
+from .models import AeInitial, AeTmg, AeFollowup, AEClassification
 
 
 fake = Faker()
@@ -31,5 +31,3 @@ aetmg = Recipe(AeTmg)
 aefollowup = Recipe(
     AeFollowup,
     relevant_history=NO)
-
-aefinal = Recipe(AeFinal)

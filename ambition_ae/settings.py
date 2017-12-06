@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'edc_identifier.apps.AppConfig',
     'edc_action_item.apps.AppConfig',
     'edc_prn.apps.AppConfig',
-    'edc_sync.apps.AppConfig',
     'ambition_ae.apps.AppConfig',
 ]
 
@@ -89,21 +88,21 @@ WSGI_APPLICATION = 'ambition_ae.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'read_default_file': os.path.join(ETC_DIR, 'mysql.conf'),
-        },
-    },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'OPTIONS': {
+#             'read_default_file': os.path.join(ETC_DIR, 'mysql.conf'),
+#         },
+#     },
+# }
 
 
 # Password validation
@@ -144,27 +143,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-DASHBOARD_URL_NAMES = {
-    'subject_listboard_url': 'ambition_dashboard:subject_listboard_url',
-    'screening_listboard_url': 'ambition_dashboard:screening_listboard_url',
-    'subject_dashboard_url': 'ambition_dashboard:subject_dashboard_url',
-}
-LAB_DASHBOARD_URL_NAMES = {}
-DASHBOARD_BASE_TEMPLATES = {
-    'listboard_base_template': 'ambition/base.html',
-    'dashboard_base_template': 'ambition/base.html',
-    'screening_listboard_template': 'ambition_dashboard/screening/listboard.html',
-    'subject_listboard_template': 'ambition_dashboard/subject/listboard.html',
-    'subject_dashboard_template': 'ambition_dashboard/subject/dashboard.html',
-}
-
-EMAIL_CONTACTS = {
-    'ae_reports': 'ambitionreporting@lshtm.ac.uk'}
-
-EDC_SYNC_SERVER_IP = None
-EDC_SYNC_FILES_REMOTE_HOST = None
-EDC_SYNC_FILES_USER = None
-EDC_SYNC_FILES_USB_VOLUME = None
+EMAIL_CONTACTS = {'ae_reports': 'user@example.com'}
 
 if 'test' in sys.argv:
 

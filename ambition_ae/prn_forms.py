@@ -1,16 +1,11 @@
+from edc_action_item import site_action_items
 from edc_prn import Prn, site_prn_forms
 
 from .admin_site import ambition_ae_admin
 
-prn_models = [
-    'ambition_ae.aeinitial',
-    'ambition_ae.aefollowup',
-    'ambition_ae.aefinal',
-    'ambition_ae.aetmg',
-]
-
-for model in prn_models:
-    prn = Prn(
-        model=model,
-        url_namespace=ambition_ae_admin.name)
-    site_prn_forms.register(prn)
+for action_item in site_action_items.registry.values():
+    if action_item.prn_form_action:
+        prn = Prn(
+            model=action_item.model,
+            url_namespace=ambition_ae_admin.name)
+        site_prn_forms.register(prn)

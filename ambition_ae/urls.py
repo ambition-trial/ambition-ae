@@ -1,9 +1,8 @@
+from django.conf import settings
 from django.urls.conf import path
 from django.views.generic.base import RedirectView
 
 from .admin_site import ambition_ae_admin
-from edc_action_item.admin_site import edc_action_item_admin
-from django.conf import settings
 
 app_name = 'ambition_ae'
 
@@ -14,6 +13,8 @@ urlpatterns = [
 
 
 if settings.APP_NAME == 'ambition_ae':
+    from django.contrib import admin
+
     urlpatterns += [
-        path('admin/', edc_action_item_admin.urls),
+        path('admin/', admin.site.urls),
     ]

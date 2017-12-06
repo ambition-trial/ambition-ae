@@ -9,6 +9,7 @@ from edc_identifier.model_mixins import NonUniqueSubjectIdentifierFieldMixin
 from edc_base.utils import get_utcnow
 from edc_identifier.model_mixins import TrackingIdentifierModelMixin
 
+from ..action_items import AeTmgAction
 from ..managers import AeManager
 from .ae_classification import AEClassification
 from .ae_initial import AeInitial
@@ -16,6 +17,8 @@ from .ae_initial import AeInitial
 
 class AeTmg(ActionItemModelMixin, TrackingIdentifierModelMixin,
             NonUniqueSubjectIdentifierFieldMixin, BaseUuidModel):
+
+    action_cls = AeTmgAction
 
     ae_initial = models.OneToOneField(AeInitial, on_delete=PROTECT)
 

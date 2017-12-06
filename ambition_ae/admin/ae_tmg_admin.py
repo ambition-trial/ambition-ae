@@ -5,11 +5,11 @@ from edc_model_admin import audit_fieldset_tuple
 from ..admin_site import ambition_ae_admin
 from ..forms import AeTmgForm
 from ..models import AeTmg
-from .modeladmin_mixins import ModelAdminMixin
+from .modeladmin_mixins import ModelAdminMixin, NonAeInitialModelAdminMixin
 
 
 @admin.register(AeTmg, site=ambition_ae_admin)
-class AeTmgAdmin(ModelAdminMixin, admin.ModelAdmin):
+class AeTmgAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelAdmin):
 
     form = AeTmgForm
 
