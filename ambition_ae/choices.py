@@ -14,7 +14,7 @@ AE_REPORT_TYPE = (
 )
 
 AE_GRADE = (
-    (GRADE3, 'Grade 3'),
+    (GRADE3, 'Grade III - Severe'),
     (GRADE4, 'Grade 4 - Life-threatening'),
     (GRADE5, 'Grade 5 - Death'),
 )
