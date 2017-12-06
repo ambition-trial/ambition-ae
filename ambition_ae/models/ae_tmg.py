@@ -82,5 +82,9 @@ class AeTmg(ActionItemModelMixin, TrackingIdentifierModelMixin,
     def natural_key(self):
         return (self.report_datetime, ) + self.ae_initial.natural_key()
 
+    @property
+    def action_item_reason(self):
+        return self.ae_initial.ae_description
+
     class Meta:
         verbose_name = 'AE TMG Report'

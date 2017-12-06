@@ -82,7 +82,7 @@ class AeFollowup(ActionItemModelMixin,
         return None
 
     @property
-    def parent_action_reason(self):
+    def action_item_reason(self):
         return self.ae_initial.ae_description
 
     class Meta:

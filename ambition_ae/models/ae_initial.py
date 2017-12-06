@@ -139,6 +139,10 @@ class AeInitial(AeModelMixin, ActionItemModelMixin,
         return f'{self.tracking_identifier[-9:]} Grade {self.ae_grade}'
 
     @property
+    def action_item_reason(self):
+        return self.ae_description
+
+    @property
     def description(self):
         """Returns a description.
         """

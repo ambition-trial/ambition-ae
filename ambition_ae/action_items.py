@@ -20,7 +20,7 @@ class BaseNonAeInitialAction(Action):
 
     parent_model_fk_attr = 'ae_initial'
     prn_form_action = True
-    show_on_dashboard = False
+    show_on_dashboard = True
     priority = HIGH_PRIORITY
 
     @property
