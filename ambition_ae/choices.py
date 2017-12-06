@@ -20,6 +20,7 @@ AE_GRADE = (
 )
 
 AE_OUTCOME = (
+    ('continuing/update', 'Continuing/Update'),
     ('recovered', 'Recovered/Resolved'),
     ('recovering', 'Recovering/Resolving at end of study'),
     ('not_recovered', 'Not Recovered/Resolved at end of study'),
