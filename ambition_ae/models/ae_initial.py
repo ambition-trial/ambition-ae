@@ -130,7 +130,7 @@ class AeInitial(AeModelMixin, ActionItemModelMixin,
         null=True,
         help_text=(
             'AEs ≥ Grade 4 or SAE must be reported to the Trial '
-            'Management Group (TMG) within 48hrs (Email to: '
+            'Management Group (TMG) within 24 hours (Email to: '
             f'{settings.EMAIL_CONTACTS.get("ae_reports")}'))
 
     objects = AeInitialManager()
