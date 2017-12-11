@@ -14,12 +14,13 @@ AE_REPORT_TYPE = (
 )
 
 AE_GRADE = (
-    (GRADE3, 'Grade 3'),
+    (GRADE3, 'Grade III - Severe'),
     (GRADE4, 'Grade 4 - Life-threatening'),
     (GRADE5, 'Grade 5 - Death'),
 )
 
 AE_OUTCOME = (
+    ('continuing/update', 'Continuing/Update'),
     ('recovered', 'Recovered/Resolved'),
     ('recovering', 'Recovering/Resolving at end of study'),
     ('not_recovered', 'Not Recovered/Resolved at end of study'),
