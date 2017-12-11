@@ -24,16 +24,3 @@ preload_data = PreloadData(
     list_data=list_data,
     model_data={},
     unique_field_data=None)
-
-# # add next action to 'Submit initial AE report'
-# action_type = ActionType.objects.get(display_name='Submit initial AE report')
-# next_action_type = ActionType.objects.get(
-#     display_name='Submit followup AE report')
-# action_type.next_action = next_action_type
-# action_type.save()
-#
-# # add next action to 'Submit followup AE report'
-# action_type = ActionType.objects.get(
-#     display_name='Submit followup AE report')
-# action_type.next_action = action_type
-# action_type.save()
