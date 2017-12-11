@@ -2,27 +2,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from edc_action_item import Action, HIGH_PRIORITY, site_action_items
 from edc_constants.constants import YES
 
+
 AE_INITIAL_ACTION = 'submit-initial-ae-report'
 AE_TMG_ACTION = 'submit-ae-tmg-report'
 AE_FOLLOWUP_ACTION = 'submit-ae-followup-report'
-RECURRENCE_OF_SYMPTOMS_ACTION = 'submit-recurrence-symptoms'
-STUDY_TERMINATION_CONCLUSION_ACTION = 'submit-study-termination-conclusion'
-
-
-class RecurrenceOfSymptomsAction(Action):
-    name = RECURRENCE_OF_SYMPTOMS_ACTION
-    display_name = 'Submit Recurrence of Symptoms Report'
-    model = 'ambition_subject.recurrencesymptom'
-    show_on_dashboard = True
-    priority = HIGH_PRIORITY
-
-
-class StudyTerminationConclusionAction(Action):
-    name = STUDY_TERMINATION_CONCLUSION_ACTION
-    display_name = 'Submit Study Termination/Conclusion Report'
-    model = 'ambition_subject.studyterminationconclusion'
-    show_on_dashboard = True
-    priority = HIGH_PRIORITY
 
 
 class BaseNonAeInitialAction(Action):
@@ -68,6 +51,8 @@ class AeInitialAction(Action):
     priority = HIGH_PRIORITY
 
     def get_next_actions(self):
+        RecurrenceOfSymptomsAction = site_action_items.get(
+            'submit-recurrence-symptoms')
         next_actions = [
             AeFollowupAction, AeTmgAction, RecurrenceOfSymptomsAction]
         try:
@@ -89,5 +74,3 @@ class AeInitialAction(Action):
 site_action_items.register(AeInitialAction)
 site_action_items.register(AeTmgAction)
 site_action_items.register(AeFollowupAction)
-site_action_items.register(RecurrenceOfSymptomsAction)
-site_action_items.register(StudyTerminationConclusionAction)
