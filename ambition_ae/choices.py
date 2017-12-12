@@ -26,7 +26,7 @@ AE_OUTCOME = (
     ('not_recovered', 'Not Recovered/Resolved at end of study'),
     ('unknown', 'Unknown/Lost to follow-up'),
     ('recovered_with_sequelae', 'Recovered with sequelae'),
-    ('Death', 'Death'),
+    ('death', 'Death'),
 )
 
 SAE_REASONS = (
@@ -34,10 +34,10 @@ SAE_REASONS = (
     ('death', 'Death (Please complete Death form and Study termination form)'),
     ('life_threatening', 'Life-threatening'),
     ('significant_disability', 'Significant disability'),
-    ('in-patient_hospitalization or prolongation',
+    ('in-patient_hospitalization',
      'In-patient hospitalization or prolongation '
      '(beyond 1 week from study inclusion)'),
-    ('Medically_important_event',
+    ('medically_important_event',
      'Medically important event (e.g. Severe thrombophlebitis, Bacteraemia, '
      'recurrence of symptoms not requiring admission, Hospital acquired '
      'pneumonia)'),
