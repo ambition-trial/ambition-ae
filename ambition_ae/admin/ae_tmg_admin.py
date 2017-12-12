@@ -25,7 +25,6 @@ class AeTmgAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelAdmin)
         (None, {
             'fields': (
                 'ae_initial',
-                'action_identifier',
                 'report_datetime',
                 'ae_received_datetime',
                 'clinical_review_datetime',
@@ -35,6 +34,8 @@ class AeTmgAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelAdmin)
                 'ae_classification_other',
                 'officials_notified',
                 'investigator_returned')}),
+        ['Action', {'classes': ('collapse', ), 'fields': (
+            'tracking_identifier', 'action_identifier')}],
         audit_fieldset_tuple
     )
 

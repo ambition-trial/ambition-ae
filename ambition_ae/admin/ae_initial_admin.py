@@ -17,8 +17,6 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
     fieldsets = (
         (None, {
             'fields': (
-                'tracking_identifier',
-                'action_identifier',
                 'subject_identifier',
                 'regimen',
                 'report_datetime',
@@ -44,6 +42,8 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
                 'susar_reported',
                 'tmg_report_datetime')},
          ),
+        ['Action', {'classes': ('collapse', ), 'fields': (
+            'tracking_identifier', 'action_identifier')}],
         audit_fieldset_tuple
     )
 

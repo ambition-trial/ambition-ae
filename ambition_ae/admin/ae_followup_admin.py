@@ -16,8 +16,6 @@ class AeFollowupAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelA
     fieldsets = (
         (None, {
             'fields': (
-                'tracking_identifier',
-                'action_identifier',
                 'subject_identifier',
                 'ae_initial',
                 'report_datetime',
@@ -26,6 +24,8 @@ class AeFollowupAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelA
                 'relevant_history',
                 'followup')},
          ),
+        ['Action', {'classes': ('collapse', ), 'fields': (
+            'tracking_identifier', 'action_identifier')}],
         audit_fieldset_tuple
     )
 
