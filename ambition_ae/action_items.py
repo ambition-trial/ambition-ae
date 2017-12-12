@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from edc_action_item import Action, HIGH_PRIORITY, site_action_items
 from edc_constants.constants import YES
@@ -31,7 +32,9 @@ class AeFollowupAction(BaseNonAeInitialAction):
     name = AE_FOLLOWUP_ACTION
     display_name = 'Submit AE Followup Report'
     model = 'ambition_ae.aefollowup'
-    instructions = 'Complete the followup report and forward to the TMG'
+    instructions = (
+        'Complete the follow-up report and forward to the TMG '
+        f'(Email to: {settings.EMAIL_CONTACTS.get("ae_reports")}')
 
     def get_next_actions(self):
         actions = []
