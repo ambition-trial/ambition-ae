@@ -2,6 +2,7 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from edc_action_item import Action, HIGH_PRIORITY, site_action_items
 from edc_constants.constants import YES
+from django.utils.safestring import mark_safe
 
 
 AE_INITIAL_ACTION = 'submit-initial-ae-report'
@@ -25,16 +26,17 @@ class AeTmgAction(BaseNonAeInitialAction):
     name = AE_TMG_ACTION
     display_name = 'Submit AE TMG Report'
     model = 'ambition_ae.aetmg'
-    show_on_dashboard = False
+    show_on_dashboard = True
 
 
 class AeFollowupAction(BaseNonAeInitialAction):
     name = AE_FOLLOWUP_ACTION
     display_name = 'Submit AE Followup Report'
     model = 'ambition_ae.aefollowup'
-    instructions = (
-        'Complete the follow-up report and forward to the TMG '
-        f'(Email to: {settings.EMAIL_CONTACTS.get("ae_reports")}')
+    instructions = mark_safe(
+        f'Email to the TMG at <a href="mailto:'
+        f'{settings.EMAIL_CONTACTS.get("ae_reports")}">'
+        f'{settings.EMAIL_CONTACTS.get("ae_reports")}</a>')
 
     def get_next_actions(self):
         actions = []
