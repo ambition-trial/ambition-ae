@@ -12,7 +12,7 @@ list_data = {
         ('pneumonia', 'Pneumonia'),
         ('TB', 'TB'),
         ('hypokalaemia', 'Hypokalaemia'),
-        ('bacteraemia/sepsis', 'Bacteraemia/sepsis'),
+        ('bacteraemia/sepsis', 'Bacteraemia/Sepsis'),
         ('neutropaenia', 'Neutropaenia'),
         ('CM_IRIS', 'CM IRIS'),
         ('respiratory_distress', 'Respiratory distress'),

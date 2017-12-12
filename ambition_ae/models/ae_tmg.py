@@ -24,7 +24,7 @@ class AeTmg(ActionItemModelMixin, TrackingIdentifierModelMixin,
     ae_initial = models.OneToOneField(AeInitial, on_delete=PROTECT)
 
     report_datetime = models.DateTimeField(
-        verbose_name="Report Date and Time",
+        verbose_name="Report date and time",
         default=get_utcnow)
 
     ae_received_datetime = models.DateTimeField(
@@ -36,20 +36,19 @@ class AeTmg(ActionItemModelMixin, TrackingIdentifierModelMixin,
     clinical_review_datetime = models.DateTimeField(
         blank=True,
         null=True,
-        verbose_name='Date and time of Clinical Review: ')
+        verbose_name='Date and time of clinical review: ')
 
     investigator_comments = models.TextField(
         blank=True,
         null=True,
-        verbose_name='Investigator Comments:')
+        verbose_name='Investigator comments:')
 
     ae_classification = models.ManyToManyField(
         AEClassification,
         blank=True,
-        verbose_name='Classification of AE (Tick all that apply):')
+        verbose_name='Classification of AE (tick all that apply):')
 
     ae_classification_other = OtherCharField(
-        verbose_name='If Other, Specify',
         max_length=250,
         blank=True,
         null=True)
@@ -63,7 +62,7 @@ class AeTmg(ActionItemModelMixin, TrackingIdentifierModelMixin,
         blank=True,
         null=True,
         validators=[date_not_future],
-        verbose_name='Date and time Regulatory authorities notified (SUSARs)')
+        verbose_name='Date and time regulatory authorities notified (SUSARs)')
 
     investigator_returned = models.DateTimeField(
         blank=True,

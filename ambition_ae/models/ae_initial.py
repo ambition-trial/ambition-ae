@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.db import models
 from edc_action_item.model_mixins import ActionItemModelMixin
 from edc_base.model_fields import OtherCharField
@@ -29,10 +28,10 @@ class AeInitial(AeModelMixin, ActionItemModelMixin,
         verbose_name='Patient’s treatment regimen',
         max_length=50,
         help_text='Control: (Amphotericin B 1 mg/kg for 7 days with '
-        'flucytosine 100mg/kg/day for 7 days followed by fluconazole '
+        'Flucytosine 100mg/kg/day for 7 days followed by Fluconazole '
         '1200mg/day for 7 days)'
-        'Single: Ambisome 10mg/kg on day 1 with flucytosine '
-        '100mg/kg/day and fluconazole 1200mg/day for 14 days')
+        'Single: Ambisome 10mg/kg on day 1 with Flucytosine '
+        '100mg/kg/day and Fluconazole 1200mg/day for 14 days')
 
     ae_study_relation_possibility = models.CharField(
         verbose_name=(
@@ -67,20 +66,19 @@ class AeInitial(AeModelMixin, ActionItemModelMixin,
         blank=True)
 
     med_administered_datetime = models.DateTimeField(
-        verbose_name='Date and time of last implicated study medication '
-                     'administered',
+        verbose_name='Date and time of last implicated study medication administered',
         validators=[datetime_not_future],
         null=True,
         blank=True)
 
     ae_cause = models.CharField(
-        verbose_name='Has a reason other than the specified study drug been '
-                     ' identified as the cause of the event(s)?',
+        verbose_name=('Has a reason other than the specified study drug been '
+                      'identified as the cause of the event(s)?'),
         choices=YES_NO,
         max_length=5)
 
     ae_cause_other = OtherCharField(
-        verbose_name='If yes, specify',
+        verbose_name='If YES, specify',
         max_length=250,
         blank=True,
         null=True)
@@ -94,18 +92,18 @@ class AeInitial(AeModelMixin, ActionItemModelMixin,
         max_length=10,
         choices=YES_NO,
         default=UNKNOWN,
-        help_text='If yes, fill in the Recurrence of Symptoms form')
+        help_text='If YES, fill in the "Recurrence of Symptoms" form')
 
     sae = models.CharField(
         verbose_name='Is this event a SAE?',
         max_length=5,
         choices=YES_NO,
-        help_text='(i.e. results in death, in-patient '
-                  'hospitalisation/prolongation, significant disability or is '
-                  'life-threatening)')
+        help_text=('(i.e. results in death, in-patient '
+                   'hospitalisation/prolongation, significant disability or is '
+                   'life-threatening)'))
 
     sae_reason = models.CharField(
-        verbose_name='If Yes, Reason for SAE:',
+        verbose_name='If YES, reason for SAE:',
         max_length=50,
         choices=SAE_REASONS,
         default=NOT_APPLICABLE)

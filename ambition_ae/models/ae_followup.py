@@ -29,7 +29,7 @@ class AeFollowup(ActionItemModelMixin,
     ae_initial = models.ForeignKey(AeInitial, on_delete=PROTECT)
 
     report_datetime = models.DateTimeField(
-        verbose_name="Report Date and Time",
+        verbose_name="Report date and time",
         default=get_utcnow)
 
     outcome = models.CharField(
@@ -42,11 +42,11 @@ class AeFollowup(ActionItemModelMixin,
         validators=[date_not_future])
 
     relevant_history = models.TextField(
-        verbose_name='Description Summary Of Adverse Event Outcome',
+        verbose_name='Description summary of Adverse Event outcome',
         max_length=1000,
         blank=False,
         null=False,
-        help_text='Indicate Adverse Event, Clinical results,'
+        help_text='Indicate Adverse Event, clinical results,'
         'medications given, dosage,treatment plan and outcomes.')
 
     followup = models.CharField(
