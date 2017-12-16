@@ -43,4 +43,4 @@ class AeFollowupAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelA
 
     def get_readonly_fields(self, request, obj=None):
         fields = super().get_readonly_fields(request, obj=obj)
-        return fields + ('tracking_identifier', )
+        return fields + ('tracking_identifier', 'action_identifier')

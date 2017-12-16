@@ -1,10 +1,8 @@
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.db.utils import IntegrityError
 from django.test import TestCase, tag
-from edc_action_item import site_action_items
 from edc_action_item.models import SubjectDoesNotExist
 from edc_action_item.models.action_item import ActionItem
-from edc_action_item.models.action_type import ActionType
 from edc_constants.constants import CLOSED, NO, NEW
 from edc_list_data.site_list_data import site_list_data
 from edc_registration.models import RegisteredSubject
@@ -26,8 +24,6 @@ class TestAeAndActions(TestCase):
         super().tearDownClass()
 
     def setUp(self):
-        site_action_items.populated_action_type = False
-        site_action_items.populate_action_type()
         self.subject_identifier = '12345'
         RegisteredSubject.objects.create(
             subject_identifier=self.subject_identifier)
@@ -125,8 +121,7 @@ class TestAeAndActions(TestCase):
             subject_identifier=self.subject_identifier)
 
     def test_ae_initial_action(self):
-        action_type = ActionType.objects.get(
-            name=AeInitialAction.name)
+        action_type = AeInitialAction.action_type()
         action_item = ActionItem.objects.create(
             subject_identifier=self.subject_identifier,
             action_type=action_type)
@@ -195,9 +190,7 @@ class TestAeAndActions(TestCase):
             reference_model='ambition_ae.aeinitial').count(), 1)
 
     def test_ae_initial_updates_existing_action_item(self):
-        # create action item first
-        action_type = ActionType.objects.get(
-            name=AeInitialAction.name)
+        action_type = AeInitialAction.action_type()
         action_item = ActionItem.objects.create(
             subject_identifier=self.subject_identifier,
             action_type=action_type,

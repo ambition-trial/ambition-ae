@@ -11,7 +11,7 @@ from edc_identifier.model_mixins import TrackingIdentifierModelMixin
 
 from ..action_items import AeTmgAction
 from ..managers import AeManager
-from .ae_classification import AEClassification
+from .list_models import AeClassification
 from .ae_initial import AeInitial
 
 
@@ -44,9 +44,9 @@ class AeTmg(ActionItemModelMixin, TrackingIdentifierModelMixin,
         verbose_name='Investigator comments:')
 
     ae_classification = models.ManyToManyField(
-        AEClassification,
+        AeClassification,
         blank=True,
-        verbose_name='Classification of AE (tick all that apply):')
+        verbose_name='Classification of AE:')
 
     ae_classification_other = OtherCharField(
         max_length=250,

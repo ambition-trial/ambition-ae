@@ -8,12 +8,14 @@ from django.utils.safestring import mark_safe
 AE_INITIAL_ACTION = 'submit-initial-ae-report'
 AE_TMG_ACTION = 'submit-ae-tmg-report'
 AE_FOLLOWUP_ACTION = 'submit-ae-followup-report'
+PROTOCOL_DEVIATION_VIOLATION_ACTION = 'submit-protocol-deviation-violation'
+RECURRENCE_OF_SYMPTOMS_ACTION = 'submit-recurrence-of-symptoms'
+STUDY_TERMINATION_CONCLUSION_ACTION = 'submit-study-termination-conclusion'
 
 
 class BaseNonAeInitialAction(Action):
 
     parent_model_fk_attr = 'ae_initial'
-    prn_form_action = True
     show_on_dashboard = True
     priority = HIGH_PRIORITY
 
@@ -26,13 +28,16 @@ class AeTmgAction(BaseNonAeInitialAction):
     name = AE_TMG_ACTION
     display_name = 'Submit AE TMG Report'
     model = 'ambition_ae.aetmg'
+    create_by_user = False
     show_on_dashboard = True
 
 
+# TODO: If severity increased from G3,trigger AeTmgAction
 class AeFollowupAction(BaseNonAeInitialAction):
     name = AE_FOLLOWUP_ACTION
     display_name = 'Submit AE Followup Report'
     model = 'ambition_ae.aefollowup'
+    create_by_user = False
     instructions = mark_safe(
         f'Email to the TMG at <a href="mailto:'
         f'{settings.EMAIL_CONTACTS.get("ae_reports")}">'
@@ -51,17 +56,17 @@ class AeInitialAction(Action):
     display_name = 'Submit AE Initial Report'
     model = 'ambition_ae.aeinitial'
     show_on_dashboard = True
-    prn_form_action = True
     instructions = 'Complete the initial report and forward to the TMG'
     priority = HIGH_PRIORITY
 
+    # TODO: AeTmgAction only triggered for GRADE4
     def get_next_actions(self):
         RecurrenceOfSymptomsAction = site_action_items.get(
-            'submit-recurrence-symptoms')
+            'submit-recurrence-of-symptoms')
         next_actions = [
             AeFollowupAction, AeTmgAction, RecurrenceOfSymptomsAction]
         try:
-            self.action_item_model_cls().objects.get(
+            self.action_item_model_cls.objects.get(
                 subject_identifier=self.model_obj.subject_identifier,
                 parent_reference_identifier=self.model_obj.tracking_identifier,
                 reference_model=AeTmgAction.model)
@@ -76,6 +81,35 @@ class AeInitialAction(Action):
         return next_actions
 
 
+class ProtocolDeviationViolationAction(Action):
+    name = PROTOCOL_DEVIATION_VIOLATION_ACTION
+    display_name = 'Submit Protocol Deviation / Violation Report'
+    model = 'ambition_ae.protocoldeviationviolation'
+    show_on_dashboard = True
+    priority = HIGH_PRIORITY
+
+
+class RecurrenceOfSymptomsAction(Action):
+    name = RECURRENCE_OF_SYMPTOMS_ACTION
+    display_name = 'Submit Recurrence of Symptoms Report'
+    model = 'ambition_ae.recurrencesymptom'
+    show_on_dashboard = True
+    priority = HIGH_PRIORITY
+    create_by_user = False
+    help_text = 'This document is triggered by AE Initial'
+
+
+class StudyTerminationConclusionAction(Action):
+    name = STUDY_TERMINATION_CONCLUSION_ACTION
+    display_name = 'Submit Study Termination/Conclusion Report'
+    model = 'ambition_ae.studyterminationconclusion'
+    show_on_dashboard = True
+    priority = HIGH_PRIORITY
+
+
 site_action_items.register(AeInitialAction)
 site_action_items.register(AeTmgAction)
 site_action_items.register(AeFollowupAction)
+site_action_items.register(ProtocolDeviationViolationAction)
+site_action_items.register(RecurrenceOfSymptomsAction)
+site_action_items.register(StudyTerminationConclusionAction)

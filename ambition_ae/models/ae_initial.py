@@ -1,4 +1,6 @@
+from ambition_rando import SINGLE_DOSE, CONTROL, SINGLE_DOSE_NAME, CONTROL_NAME
 from django.db import models
+from django.utils.safestring import mark_safe
 from edc_action_item.model_mixins import ActionItemModelMixin
 from edc_base.model_fields import OtherCharField
 from edc_base.model_managers import HistoricalRecords
@@ -23,15 +25,22 @@ class AeInitial(AeModelMixin, ActionItemModelMixin,
 
     action_cls = AeInitialAction
 
+    ae_name = models.CharField(
+        verbose_name=('Short description of AE'),
+        max_length=25,
+        blank=False,
+        null=True)
+
     # TODO: Get this from the Randomization
     regimen = models.CharField(
         verbose_name='Patient’s treatment regimen',
         max_length=50,
-        help_text='Control: (Amphotericin B 1 mg/kg for 7 days with '
-        'Flucytosine 100mg/kg/day for 7 days followed by Fluconazole '
-        '1200mg/day for 7 days)'
-        'Single: Ambisome 10mg/kg on day 1 with Flucytosine '
-        '100mg/kg/day and Fluconazole 1200mg/day for 14 days')
+        choices=(
+            (SINGLE_DOSE, 'Single dose'),
+            (CONTROL, 'Control'),
+        ),
+        help_text=mark_safe(
+            f'<ul><li>{SINGLE_DOSE_NAME}<li>{CONTROL_NAME}</ul>'))
 
     ae_study_relation_possibility = models.CharField(
         verbose_name=(

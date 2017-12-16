@@ -25,6 +25,7 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
         (None, {
             'fields': (
                 'subject_identifier',
+                'ae_name',
                 'regimen',
                 'report_datetime',
                 'ae_description',
@@ -55,6 +56,7 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
     )
 
     radio_fields = {
+        'regimen': admin.VERTICAL,
         'ae_grade': admin.VERTICAL,
         'ae_intensity': admin.VERTICAL,
         'ae_study_relation_possibility': admin.VERTICAL,
@@ -72,15 +74,15 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
     ordering = ['-tracking_identifier']
 
     list_display = ['identifier', 'dashboard',
-                    'ae_awareness_date', 'ae_grade', 'sae', 'sae_reason',
+                    'ae_name', 'ae_awareness_date', 'ae_grade', 'sae', 'sae_reason',
                     'susar', 'susar_reported']
 
     list_filter = ['ae_awareness_date', 'ae_grade',
                    'ae_intensity', 'sae', 'sae_reason', 'susar',
                    'susar_reported']
 
-    search_fields = ['tracking_identifier', 'subject_identifier']
+    search_fields = ['ae_name', 'tracking_identifier', 'subject_identifier']
 
     def get_readonly_fields(self, request, obj=None):
         fields = super().get_readonly_fields(request, obj=obj)
-        return fields + ('tracking_identifier', )
+        return fields + ('tracking_identifier', 'action_identifier')

@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'edc_identifier.apps.AppConfig',
     'edc_action_item.apps.AppConfig',
     'edc_prn.apps.AppConfig',
+    'ambition_rando.apps.AppConfig',
     'ambition_ae.apps.AppConfig',
 ]
 
@@ -129,7 +130,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Gaborone'
 
 USE_I18N = True
 

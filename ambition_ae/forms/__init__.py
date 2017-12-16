@@ -1,3 +1,8 @@
 from .ae_followup_form import AeFollowupForm
 from .ae_initial_form import AeInitialForm
 from .ae_tmg_form import AeTmgForm
+from .death_report import DeathReportForm
+from .death_report import DeathReportTmgOneForm, DeathReportTmgTwoForm
+from .protocol_deviation_violation_form import ProtocolDeviationViolationForm
+from .recurrence_symptom_form import RecurrenceSymptomForm
+from .study_termination_conclusion_form import StudyTerminationConclusionForm

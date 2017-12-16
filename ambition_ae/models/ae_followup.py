@@ -14,7 +14,7 @@ from django.utils.safestring import mark_safe
 
 from ..action_items import AeFollowupAction
 from ..admin_site import ambition_ae_admin
-from ..choices import AE_OUTCOME
+from ..choices import AE_OUTCOME, AE_GRADE_SIMPLE
 from ..managers import AeManager
 from .ae_initial import AeInitial
 
@@ -40,6 +40,15 @@ class AeFollowup(ActionItemModelMixin,
 
     outcome_date = models.DateField(
         validators=[date_not_future])
+
+    # TOD: add validation against 'outcome'
+    # if increased create TMG action
+    ae_grade = models.CharField(
+        verbose_name='If severity increased, indicate grade',
+        max_length=25,
+        choices=AE_GRADE_SIMPLE,
+        blank=True,
+        null=True)
 
     relevant_history = models.TextField(
         verbose_name='Description summary of Adverse Event outcome',

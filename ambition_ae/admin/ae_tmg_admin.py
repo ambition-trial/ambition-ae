@@ -40,3 +40,7 @@ class AeTmgAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelAdmin)
     )
 
     filter_horizontal = ('ae_classification',)
+
+    def get_readonly_fields(self, request, obj=None):
+        fields = super().get_readonly_fields(request, obj=obj)
+        return fields + ('tracking_identifier', 'action_identifier')
