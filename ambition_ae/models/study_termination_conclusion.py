@@ -7,17 +7,16 @@ from edc_base.model_validators import date_not_future
 from edc_base.utils import get_utcnow
 from edc_constants.choices import YES_NO, YES_NO_NA, NOT_APPLICABLE
 from edc_identifier.managers import TrackingIdentifierManager
-from edc_identifier.model_mixins import NonUniqueSubjectIdentifierFieldMixin
 from edc_identifier.model_mixins import TrackingIdentifierModelMixin
+from edc_offstudy.model_mixins import OffstudyModelMixin
 
 from ..action_items import StudyTerminationConclusionAction
 from ..choices import FIRST_ARV_REGIMEN, FIRST_LINE_REGIMEN, SECOND_ARV_REGIMEN
 from ..choices import REASON_STUDY_TERMINATED, YES_NO_ALREADY
 
 
-class StudyTerminationConclusion(NonUniqueSubjectIdentifierFieldMixin,
-                                 ActionItemModelMixin, TrackingIdentifierModelMixin,
-                                 BaseUuidModel):
+class StudyTerminationConclusion(ActionItemModelMixin, TrackingIdentifierModelMixin,
+                                 OffstudyModelMixin, BaseUuidModel):
 
     tracking_identifier_prefix = 'ST'
 
@@ -26,10 +25,6 @@ class StudyTerminationConclusion(NonUniqueSubjectIdentifierFieldMixin,
     report_datetime = models.DateTimeField(
         verbose_name="Report Date and Time",
         default=get_utcnow)
-
-    patient_terminated_date = models.DateField(
-        verbose_name='Date patient terminated on study:',
-        validators=[date_not_future])
 
     last_study_fu_date = models.DateField(
         verbose_name='Date of last research follow up (if different):',
@@ -49,9 +44,10 @@ class StudyTerminationConclusion(NonUniqueSubjectIdentifierFieldMixin,
         null=True)
 
     readmission_after_initial_discharge = models.CharField(
-        verbose_name='Was the patient readmitted following initial discharge?',
+        verbose_name='Was the patient re-admitted following initial discharge?',
         max_length=7,
-        choices=YES_NO)
+        choices=YES_NO_NA,
+        default=NOT_APPLICABLE)
 
     readmission_date = models.DateField(
         verbose_name='Date of readmission',
@@ -167,9 +163,14 @@ class StudyTerminationConclusion(NonUniqueSubjectIdentifierFieldMixin,
 
     history = HistoricalRecords()
 
+    def save(self, *args, **kwargs):
+        self.offstudy_reason = self.termination_reason
+        super().save(*args, **kwargs)
+
     def natural_key(self):
         return (self.tracking_identifier, )
 
-    class Meta:
+    class Meta(OffstudyModelMixin.Meta):
+        consent_model = 'ambition_subject.subjectconsent'
         verbose_name = 'Study Termination/Conclusion'
         verbose_name_plural = 'Study Terminations/Conclusions'

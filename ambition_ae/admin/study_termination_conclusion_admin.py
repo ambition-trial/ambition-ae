@@ -21,7 +21,7 @@ class StudyTerminationConclusionAdmin(ModelAdminMixin, admin.ModelAdmin):
         [None, {
             'fields': (
                 'subject_identifier',
-                'patient_terminated_date',
+                'offstudy_datetime',
                 'last_study_fu_date',
                 'discharged_after_initial_admission',
                 'initial_discharge_date',
@@ -62,10 +62,10 @@ class StudyTerminationConclusionAdmin(ModelAdminMixin, admin.ModelAdmin):
         'first_line_choice': admin.VERTICAL}
 
     list_display = ('subject_identifier', 'dashboard', 'report_datetime',
-                    'patient_terminated_date', 'last_study_fu_date',
+                    'offstudy_datetime', 'last_study_fu_date',
                     'tracking_identifier', 'action_identifier')
 
-    list_filter = ('patient_terminated_date', 'last_study_fu_date')
+    list_filter = ('offstudy_datetime', 'last_study_fu_date')
 
     search_fields = ('tracking_identifier',
                      'subject_identifier', 'action_identifier')

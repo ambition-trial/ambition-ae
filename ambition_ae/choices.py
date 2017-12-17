@@ -1,4 +1,5 @@
-from edc_constants.constants import NOT_APPLICABLE, OTHER, UNKNOWN, YES, NO
+from edc_constants.constants import NOT_APPLICABLE, OTHER, UNKNOWN, YES, NO,\
+    DEAD
 
 from .constants import AZT_3TC_with_ATZ_r_or_Lopinavir_r
 from .constants import AZT_3TC_with_EFV_NVP_or_DTG
@@ -164,6 +165,18 @@ PROTOCOL_VIOLATION = (
     (OTHER, 'Other'),
 )
 
+REASON_STUDY_TERMINATED = (
+    ('10_weeks_completed_follow_up',
+     'Patient completed 10 weeks of follow-up'),
+    ('patient_lost_to_follow_up', 'Patient lost to follow-up'),
+    (DEAD, 'Reported/known to have died'),
+    (CONSENT_WITHDRAWAL, 'Withdrawal of Subject Consent for '
+     'participation'),
+    ('care_transferred_to_another_institution',
+     'Care transferred to another institution'),
+    ('late_exclusion_criteria_met', 'Late exclusion criteria met'),
+    ('included_in_error', 'Included in error'),
+)
 TB_SITE_DEATH = (
     ('meningitis', 'Meningitis'),
     ('pulmonary', 'Pulmonary'),

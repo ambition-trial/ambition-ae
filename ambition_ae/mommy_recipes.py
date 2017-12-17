@@ -1,10 +1,11 @@
-from edc_constants.constants import YES, NO
+from edc_constants.constants import YES, NO, OTHER
 from faker import Faker
 from model_mommy.recipe import Recipe
 
 from .constants import GRADE4, MODERATE
-from .models import AeInitial, AeTmg, AeFollowup, DeathReport
-
+from .models import AeInitial, AeTmg, AeFollowup, DeathReport, StudyTerminationConclusion
+from .models import ProtocolDeviationViolation, RecurrenceSymptom, Neurological
+from .models import MeningitisSymptom
 
 fake = Faker()
 
@@ -45,3 +46,21 @@ deathreport = Recipe(
     cause_tb_tmg2_opinion=None,
     narrative_summary=(
         'adverse event resulted in death due to cryptococcal meningitis'))
+
+studyterminationconclusion = Recipe(StudyTerminationConclusion)
+
+protocoldeviationviolation = Recipe(ProtocolDeviationViolation)
+
+recurrencesymptom = Recipe(RecurrenceSymptom)
+
+meningitissymptom = Recipe(
+    MeningitisSymptom,
+    name=OTHER,
+    short_name='Other'
+)
+
+neurological = Recipe(
+    Neurological,
+    name='meningismus',
+    short_name='Meningismus'
+)
