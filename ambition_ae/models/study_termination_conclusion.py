@@ -18,9 +18,9 @@ from ..choices import REASON_STUDY_TERMINATED, YES_NO_ALREADY
 class StudyTerminationConclusion(ActionItemModelMixin, TrackingIdentifierModelMixin,
                                  OffstudyModelMixin, BaseUuidModel):
 
-    tracking_identifier_prefix = 'ST'
-
     action_cls = StudyTerminationConclusionAction
+    offstudy_visit_model_app_label = 'ambition_subject'
+    tracking_identifier_prefix = 'ST'
 
     report_datetime = models.DateTimeField(
         verbose_name="Report Date and Time",
