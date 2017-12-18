@@ -1,10 +1,11 @@
 from django import forms
-from edc_offstudy.modelform_mixins import OffstudyNonCrfModelFormMixin
+from edc_offstudy.modelform_mixins import OffstudyModelFormMixin
+
 from ..models import StudyTerminationConclusion
 from ..form_validators import StudyTerminationConclusionFormValidator
 
 
-class StudyTerminationConclusionForm(OffstudyNonCrfModelFormMixin, forms.ModelForm):
+class StudyTerminationConclusionForm(OffstudyModelFormMixin, forms.ModelForm):
 
     form_validator_cls = StudyTerminationConclusionFormValidator
 
