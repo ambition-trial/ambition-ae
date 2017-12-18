@@ -1,6 +1,4 @@
 from .ae_followup_admin import AeFollowupAdmin
 from .ae_initial_admin import AeInitialAdmin
 from .ae_tmg_admin import AeTmgAdmin
-from .protocol_deviation_violation_admin import ProtocolDeviationViolationAdmin
 from .recurrence_symptom_admin import RecurrenceSymptomAdmin
-from .study_termination_conclusion_admin import StudyTerminationConclusionAdmin

@@ -8,9 +8,7 @@ from django.utils.safestring import mark_safe
 AE_INITIAL_ACTION = 'submit-initial-ae-report'
 AE_TMG_ACTION = 'submit-ae-tmg-report'
 AE_FOLLOWUP_ACTION = 'submit-ae-followup-report'
-PROTOCOL_DEVIATION_VIOLATION_ACTION = 'submit-protocol-deviation-violation'
 RECURRENCE_OF_SYMPTOMS_ACTION = 'submit-recurrence-of-symptoms'
-STUDY_TERMINATION_CONCLUSION_ACTION = 'submit-study-termination-conclusion'
 
 
 class BaseNonAeInitialAction(Action):
@@ -81,14 +79,6 @@ class AeInitialAction(Action):
         return next_actions
 
 
-class ProtocolDeviationViolationAction(Action):
-    name = PROTOCOL_DEVIATION_VIOLATION_ACTION
-    display_name = 'Submit Protocol Deviation / Violation Report'
-    model = 'ambition_ae.protocoldeviationviolation'
-    show_on_dashboard = True
-    priority = HIGH_PRIORITY
-
-
 class RecurrenceOfSymptomsAction(Action):
     name = RECURRENCE_OF_SYMPTOMS_ACTION
     display_name = 'Submit Recurrence of Symptoms Report'
@@ -99,17 +89,7 @@ class RecurrenceOfSymptomsAction(Action):
     help_text = 'This document is triggered by AE Initial'
 
 
-class StudyTerminationConclusionAction(Action):
-    name = STUDY_TERMINATION_CONCLUSION_ACTION
-    display_name = 'Submit Study Termination/Conclusion Report'
-    model = 'ambition_ae.studyterminationconclusion'
-    show_on_dashboard = True
-    priority = HIGH_PRIORITY
-
-
 site_action_items.register(AeInitialAction)
 site_action_items.register(AeTmgAction)
 site_action_items.register(AeFollowupAction)
-site_action_items.register(ProtocolDeviationViolationAction)
 site_action_items.register(RecurrenceOfSymptomsAction)
-site_action_items.register(StudyTerminationConclusionAction)
