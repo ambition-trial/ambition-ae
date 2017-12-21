@@ -14,7 +14,8 @@ RECURRENCE_OF_SYMPTOMS_ACTION = 'submit-recurrence-of-symptoms'
 class BaseNonAeInitialAction(Action):
 
     parent_model_fk_attr = 'ae_initial'
-    show_on_dashboard = True
+    show_link_to_changelist = True
+    admin_site_name = 'ambition_ae_admin'
     priority = HIGH_PRIORITY
 
     @property
@@ -27,7 +28,8 @@ class AeTmgAction(BaseNonAeInitialAction):
     display_name = 'Submit AE TMG Report'
     model = 'ambition_ae.aetmg'
     create_by_user = False
-    show_on_dashboard = True
+    show_link_to_changelist = True
+    admin_site_name = 'ambition_ae_admin'
 
 
 # TODO: If severity increased from G3,trigger AeTmgAction
@@ -36,6 +38,8 @@ class AeFollowupAction(BaseNonAeInitialAction):
     display_name = 'Submit AE Followup Report'
     model = 'ambition_ae.aefollowup'
     create_by_user = False
+    show_link_to_changelist = True
+    admin_site_name = 'ambition_ae_admin'
     instructions = mark_safe(
         f'Email to the TMG at <a href="mailto:'
         f'{settings.EMAIL_CONTACTS.get("ae_reports")}">'
@@ -53,7 +57,8 @@ class AeInitialAction(Action):
     name = AE_INITIAL_ACTION
     display_name = 'Submit AE Initial Report'
     model = 'ambition_ae.aeinitial'
-    show_on_dashboard = True
+    show_link_to_changelist = True
+    admin_site_name = 'ambition_ae_admin'
     instructions = 'Complete the initial report and forward to the TMG'
     priority = HIGH_PRIORITY
 
@@ -83,7 +88,8 @@ class RecurrenceOfSymptomsAction(Action):
     name = RECURRENCE_OF_SYMPTOMS_ACTION
     display_name = 'Submit Recurrence of Symptoms Report'
     model = 'ambition_ae.recurrencesymptom'
-    show_on_dashboard = True
+    show_link_to_changelist = True
+    admin_site_name = 'ambition_ae_admin'
     priority = HIGH_PRIORITY
     create_by_user = False
     help_text = 'This document is triggered by AE Initial'
