@@ -1,9 +1,9 @@
-from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from edc_action_item import Action, HIGH_PRIORITY, site_action_items
 from edc_constants.constants import YES
 from django.utils.safestring import mark_safe
 
+from .email_contacts import email_contacts
 
 AE_INITIAL_ACTION = 'submit-initial-ae-report'
 AE_TMG_ACTION = 'submit-ae-tmg-report'
@@ -42,8 +42,8 @@ class AeFollowupAction(BaseNonAeInitialAction):
     admin_site_name = 'ambition_ae_admin'
     instructions = mark_safe(
         f'Email to the TMG at <a href="mailto:'
-        f'{settings.EMAIL_CONTACTS.get("ae_reports")}">'
-        f'{settings.EMAIL_CONTACTS.get("ae_reports")}</a>')
+        f'{email_contacts.get("ae_reports")}">'
+        f'{email_contacts.get("ae_reports")}</a>')
 
     def get_next_actions(self):
         actions = []

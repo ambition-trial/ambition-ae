@@ -1,10 +1,11 @@
 from ambition_rando import SINGLE_DOSE, CONTROL, SINGLE_DOSE_NAME, CONTROL_NAME
+from django.contrib.sites.managers import CurrentSiteManager
 from django.db import models
 from django.utils.safestring import mark_safe
 from edc_action_item.model_mixins import ActionItemModelMixin
 from edc_base.model_fields import OtherCharField
 from edc_base.model_managers import HistoricalRecords
-from edc_base.model_mixins import BaseUuidModel
+from edc_base.model_mixins import BaseUuidModel, SiteModelMixin
 from edc_base.model_validators import datetime_not_future
 from edc_constants.choices import YES_NO, YES_NO_NA, YES_NO_UNKNOWN
 from edc_constants.constants import NOT_APPLICABLE, UNKNOWN
@@ -19,7 +20,7 @@ from ..model_mixins import AeModelMixin
 
 class AeInitial(AeModelMixin, ActionItemModelMixin,
                 TrackingIdentifierModelMixin, NonUniqueSubjectIdentifierFieldMixin,
-                BaseUuidModel):
+                SiteModelMixin, BaseUuidModel):
 
     tracking_identifier_prefix = 'AE'
 
@@ -142,6 +143,8 @@ class AeInitial(AeModelMixin, ActionItemModelMixin,
     objects = AeInitialManager()
 
     history = HistoricalRecords()
+
+    on_site = CurrentSiteManager()
 
     def __str__(self):
         return f'{self.tracking_identifier[-9:]} Grade {self.ae_grade}'

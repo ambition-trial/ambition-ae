@@ -1,16 +1,17 @@
+from django.contrib.sites.managers import CurrentSiteManager
 from django.db import models
 from django.db.models.deletion import PROTECT
-from edc_action_item.model_mixins import ActionItemModelMixin
-from edc_base.model_validators import date_not_future
-from edc_base.model_managers import HistoricalRecords
-from edc_base.model_mixins import BaseUuidModel
-from edc_base.utils import get_utcnow
-from edc_identifier.model_mixins import NonUniqueSubjectIdentifierFieldMixin
-from edc_constants.choices import YES_NO
-from edc_constants.constants import YES
-from edc_identifier.model_mixins import TrackingIdentifierModelMixin
 from django.urls.base import reverse
 from django.utils.safestring import mark_safe
+from edc_action_item.model_mixins import ActionItemModelMixin
+from edc_base.model_managers import HistoricalRecords
+from edc_base.model_mixins import BaseUuidModel, SiteModelMixin
+from edc_base.model_validators import date_not_future
+from edc_base.utils import get_utcnow
+from edc_constants.choices import YES_NO
+from edc_constants.constants import YES
+from edc_identifier.model_mixins import NonUniqueSubjectIdentifierFieldMixin
+from edc_identifier.model_mixins import TrackingIdentifierModelMixin
 
 from ..action_items import AeFollowupAction
 from ..admin_site import ambition_ae_admin
@@ -21,7 +22,7 @@ from .ae_initial import AeInitial
 
 class AeFollowup(ActionItemModelMixin,
                  NonUniqueSubjectIdentifierFieldMixin,
-                 TrackingIdentifierModelMixin, BaseUuidModel):
+                 TrackingIdentifierModelMixin, SiteModelMixin, BaseUuidModel):
 
     action_cls = AeFollowupAction
     tracking_identifier_prefix = 'AF'
@@ -68,6 +69,8 @@ class AeFollowup(ActionItemModelMixin,
     objects = AeManager()
 
     history = HistoricalRecords()
+
+    on_site = CurrentSiteManager()
 
     def save(self, *args, **kwargs):
         self.subject_identifier = self.ae_initial.subject_identifier

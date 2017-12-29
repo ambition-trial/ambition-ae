@@ -1,8 +1,9 @@
+from django.contrib.sites.managers import CurrentSiteManager
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from edc_action_item.model_mixins import ActionItemModelMixin
 from edc_base.model_managers import HistoricalRecords
-from edc_base.model_mixins import BaseUuidModel
+from edc_base.model_mixins import BaseUuidModel, SiteModelMixin
 from edc_base.model_validators import date_not_future
 from edc_base.utils import get_utcnow
 from edc_constants.choices import YES_NO, YES_NO_NA, NOT_APPLICABLE
@@ -17,7 +18,7 @@ from .list_models import Neurological, MeningitisSymptom, AntibioticTreatment
 
 class RecurrenceSymptom(NonUniqueSubjectIdentifierFieldMixin,
                         ActionItemModelMixin, TrackingIdentifierModelMixin,
-                        BaseUuidModel):
+                        SiteModelMixin, BaseUuidModel):
 
     tracking_identifier_prefix = 'RS'
 
@@ -175,6 +176,8 @@ class RecurrenceSymptom(NonUniqueSubjectIdentifierFieldMixin,
     objects = TrackingIdentifierManager()
 
     history = HistoricalRecords()
+
+    on_site = CurrentSiteManager()
 
     def natural_key(self):
         return (self.tracking_identifier, )

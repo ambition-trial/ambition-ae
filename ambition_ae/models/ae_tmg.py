@@ -1,12 +1,13 @@
+from django.contrib.sites.managers import CurrentSiteManager
 from django.db import models
 from django.db.models.deletion import PROTECT
 from edc_action_item.model_mixins import ActionItemModelMixin
 from edc_base.model_fields import OtherCharField
 from edc_base.model_managers import HistoricalRecords
-from edc_base.model_mixins import BaseUuidModel
+from edc_base.model_mixins import BaseUuidModel, SiteModelMixin
 from edc_base.model_validators import date_not_future
-from edc_identifier.model_mixins import NonUniqueSubjectIdentifierFieldMixin
 from edc_base.utils import get_utcnow
+from edc_identifier.model_mixins import NonUniqueSubjectIdentifierFieldMixin
 from edc_identifier.model_mixins import TrackingIdentifierModelMixin
 
 from ..action_items import AeTmgAction
@@ -16,7 +17,7 @@ from .ae_initial import AeInitial
 
 
 class AeTmg(ActionItemModelMixin, TrackingIdentifierModelMixin,
-            NonUniqueSubjectIdentifierFieldMixin, BaseUuidModel):
+            NonUniqueSubjectIdentifierFieldMixin, SiteModelMixin, BaseUuidModel):
 
     action_cls = AeTmgAction
     tracking_identifier_prefix = 'AT'
@@ -74,6 +75,8 @@ class AeTmg(ActionItemModelMixin, TrackingIdentifierModelMixin,
     objects = AeManager()
 
     history = HistoricalRecords()
+
+    on_site = CurrentSiteManager()
 
     def save(self, *args, **kwargs):
         self.subject_identifier = self.ae_initial.subject_identifier

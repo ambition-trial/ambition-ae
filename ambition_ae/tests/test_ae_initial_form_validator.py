@@ -7,6 +7,7 @@ from ambition_rando.tests.make_test_list import make_test_list
 from django import forms
 from django.core.exceptions import ValidationError
 from django.test import TestCase, tag
+from edc_base.tests import SiteTestCaseMixin
 from edc_base.utils import get_utcnow
 from edc_constants.constants import YES, NO, NOT_APPLICABLE
 from edc_form_validators import NOT_REQUIRED_ERROR
@@ -16,7 +17,7 @@ from ..form_validators import AeInitialFormValidator
 from ..forms import AeInitialForm
 
 
-class TestAeInitialFormValidator(TestCase):
+class TestAeInitialFormValidator(SiteTestCaseMixin, TestCase):
 
     def test_ae_cause_yes(self):
         options = {
@@ -141,14 +142,14 @@ class TestAeInitialFormValidator(TestCase):
 
     def test_ae_initial_form(self):
         subject_identifier = '12345'
-        path, filename = make_test_list()
+        path, filename = make_test_list(site_names=self.site_names)
         path = os.path.join(path, filename)
         import_randomization_list(path=path, overwrite=True)
-        RegisteredSubject.objects.create(
+        rs = RegisteredSubject.objects.create(
             subject_identifier=subject_identifier)
         randomizer = Randomizer(
             subject_identifier=subject_identifier,
-            study_site='10',
+            site=rs.site,
             report_datetime=get_utcnow())
         drug_assignment = randomizer.model_obj.drug_assignment
         form = AeInitialForm(

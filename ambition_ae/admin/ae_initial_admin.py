@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from simple_history.admin import SimpleHistoryAdmin
@@ -6,6 +5,7 @@ from simple_history.admin import SimpleHistoryAdmin
 from edc_model_admin import audit_fieldset_tuple
 
 from ..admin_site import ambition_ae_admin
+from ..email_contacts import email_contacts
 from ..forms import AeInitialForm
 from ..models import AeInitial
 from .modeladmin_mixins import ModelAdminMixin
@@ -15,7 +15,7 @@ from .modeladmin_mixins import ModelAdminMixin
 class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
 
     form = AeInitialForm
-    email_contact = settings.EMAIL_CONTACTS.get('ae_report')
+    email_contact = email_contacts.get('ae_report')
 
     additional_instructions = mark_safe(
         'Complete the initial AE report and forward to the TMG. '

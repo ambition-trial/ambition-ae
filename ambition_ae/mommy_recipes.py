@@ -31,16 +31,15 @@ aefollowup = Recipe(
     AeFollowup,
     relevant_history=NO)
 
-recurrencesymptom = Recipe(RecurrenceSymptom)
+recurrencesymptom = Recipe(
+    RecurrenceSymptom)
 
 meningitissymptom = Recipe(
     MeningitisSymptom,
     name=OTHER,
-    short_name='Other'
-)
+    short_name='Other')
 
 neurological = Recipe(
     Neurological,
     name='meningismus',
-    short_name='Meningismus'
-)
+    short_name='Meningismus')

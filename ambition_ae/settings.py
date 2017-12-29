@@ -18,6 +18,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP_NAME = 'ambition_ae'
 ETC_DIR = os.path.join(BASE_DIR, 'etc')
 
+# for django.contrib.sites
+SITE_ID = 40
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
@@ -39,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'django_crypto_fields.apps.AppConfig',
     'django_revision.apps.AppConfig',
     'rest_framework',
