@@ -9,12 +9,12 @@ from edc_base.model_mixins import BaseUuidModel, SiteModelMixin
 from edc_base.model_validators import datetime_not_future
 from edc_constants.choices import YES_NO, YES_NO_NA, YES_NO_UNKNOWN
 from edc_constants.constants import NOT_APPLICABLE, UNKNOWN
+from edc_identifier.managers import TrackingIdentifierManager
 from edc_identifier.model_mixins import NonUniqueSubjectIdentifierFieldMixin
 from edc_identifier.model_mixins import TrackingIdentifierModelMixin
 
 from ..action_items import AeInitialAction
 from ..choices import STUDY_DRUG_RELATIONSHIP, SAE_REASONS
-from ..managers import AeInitialManager
 from ..model_mixins import AeModelMixin
 
 
@@ -140,7 +140,7 @@ class AeInitial(AeModelMixin, ActionItemModelMixin,
             'AEs ≥ Grade 4 or SAE must be reported to the Trial '
             'Management Group (TMG) within 24 hours'))
 
-    objects = AeInitialManager()
+    objects = TrackingIdentifierManager()
 
     history = HistoricalRecords()
 
