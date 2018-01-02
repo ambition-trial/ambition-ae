@@ -1,5 +1,3 @@
-import os
-
 from ambition_rando.constants import SINGLE_DOSE, CONTROL
 from ambition_rando.import_randomization_list import import_randomization_list
 from ambition_rando.randomizer import Randomizer
@@ -142,9 +140,8 @@ class TestAeInitialFormValidator(SiteTestCaseMixin, TestCase):
 
     def test_ae_initial_form(self):
         subject_identifier = '12345'
-        path, filename = make_test_list(site_names=self.site_names)
-        path = os.path.join(path, filename)
-        import_randomization_list(path=path, overwrite=True)
+        full_path = make_test_list(site_names=self.site_names)
+        import_randomization_list(path=full_path, overwrite=True)
         rs = RegisteredSubject.objects.create(
             subject_identifier=subject_identifier)
         randomizer = Randomizer(

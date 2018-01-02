@@ -1,4 +1,4 @@
-from ambition_rando.tests import SiteTestCaseMixin
+from ambition_rando.tests import AmbitionTestCaseMixin
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.db.utils import IntegrityError
 from django.test import TestCase, tag
@@ -13,7 +13,7 @@ from ..action_items import AeFollowupAction, AeInitialAction
 from ..models import AeInitial, AeFollowup
 
 
-class TestAeAndActions(SiteTestCaseMixin, TestCase):
+class TestAeAndActions(AmbitionTestCaseMixin, TestCase):
 
     @classmethod
     def setUpClass(cls):
