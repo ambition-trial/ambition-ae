@@ -69,7 +69,7 @@ class AeInitialAction(Action):
         next_actions = [
             AeFollowupAction, AeTmgAction, RecurrenceOfSymptomsAction]
         try:
-            self.action_item_model_cls.objects.get(
+            self.action_item_model_cls().objects.get(
                 subject_identifier=self.model_obj.subject_identifier,
                 parent_reference_identifier=self.model_obj.tracking_identifier,
                 reference_model=AeTmgAction.model)
