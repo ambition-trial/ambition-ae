@@ -58,6 +58,7 @@ class AeInitialAction(Action):
     display_name = 'Submit AE Initial Report'
     model = 'ambition_ae.aeinitial'
     show_link_to_changelist = True
+    show_link_to_add = True
     admin_site_name = 'ambition_ae_admin'
     instructions = 'Complete the initial report and forward to the TMG'
     priority = HIGH_PRIORITY
@@ -69,7 +70,7 @@ class AeInitialAction(Action):
         next_actions = [
             AeFollowupAction, AeTmgAction, RecurrenceOfSymptomsAction]
         try:
-            self.action_item_model_cls.objects.get(
+            self.action_item_model_cls().objects.get(
                 subject_identifier=self.model_obj.subject_identifier,
                 parent_reference_identifier=self.model_obj.tracking_identifier,
                 reference_model=AeTmgAction.model)
