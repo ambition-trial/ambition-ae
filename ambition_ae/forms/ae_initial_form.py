@@ -5,8 +5,6 @@ from edc_form_validators import FormValidatorMixin
 from ..form_validators import AeInitialFormValidator
 from ..models import AeInitial
 from .modelform_mixin import ModelformMixin
-from ambition_rando.constants import SINGLE_DOSE, SINGLE_DOSE_NAME, CONTROL,\
-    CONTROL_NAME
 
 
 class AeInitialForm(FormValidatorMixin, ModelformMixin, forms.ModelForm):

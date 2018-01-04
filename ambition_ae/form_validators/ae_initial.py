@@ -1,5 +1,5 @@
 from edc_form_validators import FormValidator
-from edc_constants.constants import YES
+from edc_constants.constants import YES, UNKNOWN
 
 
 class AeInitialFormValidator(FormValidator):
@@ -10,7 +10,7 @@ class AeInitialFormValidator(FormValidator):
                  'amphotericin_b_relation', 'flucytosine_relation']
         for drug in drugs:
             self.applicable_if(
-                YES, field='ae_study_relation_possibility',
+                YES, UNKNOWN, field='ae_study_relation_possibility',
                 field_applicable=drug)
 
         self.required_if(

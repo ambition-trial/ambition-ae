@@ -72,7 +72,7 @@ STUDY_DRUG_RELATIONSHIP = (
     ('probably_related', 'Probably related'),
     ('definitely_related', 'Definitely related'),
     ('unlikely_related', 'Unlikely related'),
-    (NOT_APPLICABLE, 'Not Applicable'),
+    (NOT_APPLICABLE, 'Not applicable')
 )
 
 
