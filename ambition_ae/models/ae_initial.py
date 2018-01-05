@@ -97,7 +97,6 @@ class AeInitial(AeModelMixin, ActionItemModelMixin,
     ae_treatment = models.TextField(
         verbose_name='Specify action taken for treatment of AE:')
 
-    # TODO: If yes Use rule group to open recurrence form
     ae_cm_recurrence = models.CharField(
         verbose_name='Was the AE a recurrence of CM symptoms?',
         max_length=10,

@@ -43,8 +43,6 @@ class AeFollowup(ActionItemModelMixin,
     outcome_date = models.DateField(
         validators=[date_not_future])
 
-    # TODO: add validation against 'outcome'
-    # if increased create TMG action
     ae_grade = models.CharField(
         verbose_name='If severity increased, indicate grade',
         max_length=25,

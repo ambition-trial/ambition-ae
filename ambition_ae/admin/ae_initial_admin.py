@@ -47,8 +47,7 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
                 'sae',
                 'sae_reason',
                 'susar',
-                'susar_reported',
-                'tmg_report_datetime')},
+                'susar_reported')},
          ),
         ['Action', {'classes': ('collapse', ), 'fields': (
             'tracking_identifier', 'action_identifier')}],
