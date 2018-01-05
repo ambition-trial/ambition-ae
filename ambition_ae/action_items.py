@@ -114,13 +114,20 @@ class AeInitialAction(Action):
     def get_next_actions(self):
         """Returns next actions.
         """
+        # add next Followup
         next_actions = self.append_to_next_if_required(
-            action_cls=AeFollowupAction,
-            required=True)
+            action_cls=AeFollowupAction)
+        # add next Death report if G5/Death
+        next_actions = self.append_to_next_if_required(
+            next_actions=next_actions,
+            action_cls=site_action_items.get(DEATH_REPORT_ACTION),
+            required=self.model_obj.ae_grade == GRADE5)
+        # add next AeTmgAction if G4
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,
             action_cls=AeTmgAction,
-            required=self.model_obj.ae_grade in [GRADE4, GRADE5])
+            required=self.model_obj.ae_grade == GRADE4)
+        # add next Recurrence of Symptoms if YES
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,
             action_cls=site_action_items.get(RECURRENCE_OF_SYMPTOMS_ACTION),
