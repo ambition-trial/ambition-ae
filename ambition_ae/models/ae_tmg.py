@@ -5,16 +5,18 @@ from edc_action_item.model_mixins import ActionItemModelMixin
 from edc_base.model_fields import OtherCharField
 from edc_base.model_managers import HistoricalRecords
 from edc_base.model_mixins import BaseUuidModel
+from edc_base.model_validators.date import datetime_not_future
 from edc_base.sites.site_model_mixin import SiteModelMixin
-from edc_base.model_validators import date_not_future
 from edc_base.utils import get_utcnow
 from edc_identifier.model_mixins import NonUniqueSubjectIdentifierFieldMixin
 from edc_identifier.model_mixins import TrackingIdentifierModelMixin
 
 from ..action_items import AeTmgAction
+from ..choices import AE_TMG_REPORT_STATUS
 from ..managers import AeManager
 from .list_models import AeClassification
 from .ae_initial import AeInitial
+from edc_constants.constants import CLOSED
 
 
 class AeTmg(ActionItemModelMixin, TrackingIdentifierModelMixin,
@@ -27,17 +29,19 @@ class AeTmg(ActionItemModelMixin, TrackingIdentifierModelMixin,
 
     report_datetime = models.DateTimeField(
         verbose_name="Report date and time",
+        validators=[datetime_not_future],
         default=get_utcnow)
 
     ae_received_datetime = models.DateTimeField(
         blank=True,
         null=True,
-        validators=[date_not_future],
+        validators=[datetime_not_future],
         verbose_name='Date and time AE form received:')
 
     clinical_review_datetime = models.DateTimeField(
         blank=True,
         null=True,
+        validators=[datetime_not_future],
         verbose_name='Date and time of clinical review: ')
 
     investigator_comments = models.TextField(
@@ -47,7 +51,6 @@ class AeTmg(ActionItemModelMixin, TrackingIdentifierModelMixin,
 
     ae_classification = models.ManyToManyField(
         AeClassification,
-        blank=True,
         verbose_name='Classification of AE:')
 
     ae_classification_other = OtherCharField(
@@ -63,15 +66,19 @@ class AeTmg(ActionItemModelMixin, TrackingIdentifierModelMixin,
     officials_notified = models.DateTimeField(
         blank=True,
         null=True,
-        validators=[date_not_future],
+        validators=[datetime_not_future],
         verbose_name='Date and time regulatory authorities notified (SUSARs)')
 
-    investigator_returned = models.DateTimeField(
+    report_status = models.CharField(
+        verbose_name='What is the status of this report?',
+        max_length=25,
+        choices=AE_TMG_REPORT_STATUS)
+
+    report_closed_datetime = models.DateTimeField(
         blank=True,
         null=True,
-        validators=[date_not_future],
-        verbose_name=('Date and time form logged in data base and returned'
-                      'to Local Investigator'))
+        validators=[datetime_not_future],
+        verbose_name=('Date and time report closed.'))
 
     objects = AeManager()
 
@@ -89,6 +96,13 @@ class AeTmg(ActionItemModelMixin, TrackingIdentifierModelMixin,
     @property
     def action_item_reason(self):
         return self.ae_initial.ae_description
+
+    @property
+    def status(self):
+        if self.report_status == CLOSED:
+            return 'Closed'
+        else:
+            return 'Open'
 
     class Meta:
         verbose_name = 'AE TMG Report'

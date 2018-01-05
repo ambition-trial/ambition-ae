@@ -13,17 +13,21 @@ class AeTmgAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelAdmin)
 
     form = AeTmgForm
 
-    additional_instructions = 'For completion by TMG Investigator Only'
+    additional_instructions = 'For completion by TMG Investigators Only'
 
-    list_display = ['ae_initial', 'subject_identifier', 'report_datetime',
-                    'officials_notified', 'investigator_returned']
+    list_display = ['subject_identifier', 'dashboard', 'status', 'ae_initial', 'report_datetime',
+                    'officials_notified', 'report_closed_datetime']
+
+    list_filter = ('report_datetime', 'report_status', 'ae_classification')
 
     search_fields = ['ae_initial__tracking_identifier',
-                     'ae_initial__subject_identifier']
+                     'ae_initial__action_identifier',
+                     'subject_identifier', 'action_identifier', 'tracking_identifier']
 
     fieldsets = (
         (None, {
             'fields': (
+                'subject_identifier',
                 'ae_initial',
                 'report_datetime',
                 'ae_received_datetime',
@@ -33,14 +37,14 @@ class AeTmgAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelAdmin)
                 'ae_classification',
                 'ae_classification_other',
                 'officials_notified',
-                'investigator_returned')}),
+                'report_status',
+                'report_closed_datetime')}),
         ['Action', {'classes': ('collapse', ), 'fields': (
             'tracking_identifier', 'action_identifier')}],
         audit_fieldset_tuple
     )
 
-    filter_horizontal = ('ae_classification',)
+    radio_fields = {
+        'report_status': admin.VERTICAL}
 
-    def get_readonly_fields(self, request, obj=None):
-        fields = super().get_readonly_fields(request, obj=obj)
-        return fields + ('tracking_identifier', 'action_identifier')
+    filter_horizontal = ('ae_classification',)

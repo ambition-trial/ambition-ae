@@ -37,13 +37,8 @@ class AeFollowupForm(FormValidatorMixin, ModelformMixin, forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         if cleaned_data.get('followup') == YES:
-            if cleaned_data.get('ae_grade') == GRADE4:
-                raise forms.ValidationError({
-                    'followup': (
-                        'Expected No. Submit a new initial AE when the '
-                        'severity increases to grade 4.')})
-            elif (cleaned_data.get('ae_grade') == GRADE5
-                  or cleaned_data.get('outcome') == DEAD):
+            if (cleaned_data.get('ae_grade') == GRADE5
+                    or cleaned_data.get('outcome') == DEAD):
                 raise forms.ValidationError({
                     'followup': (
                         'Expected No. Submit a death report when the '

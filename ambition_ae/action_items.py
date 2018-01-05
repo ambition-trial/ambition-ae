@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from edc_action_item import Action, HIGH_PRIORITY, site_action_items
 from edc_constants.constants import YES, DEAD, LOST_TO_FOLLOWUP, NO,\
-    NOT_APPLICABLE
+    NOT_APPLICABLE, CLOSED
 from django.utils.safestring import mark_safe
 
 from .email_contacts import email_contacts
@@ -39,6 +39,9 @@ class AeTmgAction(BaseNonAeInitialAction):
     instructions = mark_safe(
         f'This report is to be completed by the TMG only.')
 
+    def close_action_item_on_save(self):
+        return self.model_obj.report_status == CLOSED
+
 
 class AeFollowupAction(BaseNonAeInitialAction):
     name = AE_FOLLOWUP_ACTION
@@ -75,18 +78,11 @@ class AeFollowupAction(BaseNonAeInitialAction):
             action_cls=self,
             required=self.model_obj.followup == YES)
 
-        # add next AE Initial
-        next_actions = self.append_to_next_if_required(
-            next_actions=next_actions,
-            action_cls=AeInitialAction,
-            required=(self.model_obj.followup == NO
-                      and self.model_obj.ae_grade != NOT_APPLICABLE))
-
         # add next AeTmg if severity increased
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,
             action_cls=AeTmgAction,
-            required=self.model_obj.ae_grade in [GRADE4, GRADE5])
+            required=self.model_obj.ae_grade in [GRADE4])
 
         # add next Death report if G5/Death
         next_actions = self.append_to_next_if_required(
@@ -96,7 +92,7 @@ class AeFollowupAction(BaseNonAeInitialAction):
 
         # add next Study termination if LTFU
         offschedule_action_cls = self.get_offschedule_action_cls()
-        if offschedule_action_cls:  # only None in tests
+        if offschedule_action_cls:  # TODO: fix for tests - only None in tests
             next_actions = self.append_to_next_if_required(
                 next_actions=next_actions,
                 action_cls=offschedule_action_cls,
