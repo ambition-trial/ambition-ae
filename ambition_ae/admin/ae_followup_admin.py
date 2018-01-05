@@ -36,8 +36,8 @@ class AeFollowupAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelA
         'ae_grade': admin.VERTICAL,
     }
 
-    list_display = ('identifier', 'ae_grade', 'followup',
-                    'outcome_date', 'initial')
+    list_display = ('identifier', 'dashboard', 'outcome_date', 'initial', 'severity', 'next',
+                    'outcome')
 
     list_filter = ('ae_grade', 'followup', 'outcome_date', 'report_datetime')
 

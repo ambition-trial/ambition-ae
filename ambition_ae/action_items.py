@@ -1,6 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from edc_action_item import Action, HIGH_PRIORITY, site_action_items
-from edc_constants.constants import YES, DEAD, LOST_TO_FOLLOWUP, NO
+from edc_constants.constants import YES, DEAD, LOST_TO_FOLLOWUP, NO,\
+    NOT_APPLICABLE
 from django.utils.safestring import mark_safe
 
 from .email_contacts import email_contacts
@@ -51,38 +52,54 @@ class AeFollowupAction(BaseNonAeInitialAction):
         f'{email_contacts.get("ae_reports")}">'
         f'{email_contacts.get("ae_reports")}</a>')
 
+    def get_offschedule_action_cls(self):
+        """Returns the action class for the offschedule model.
+        """
+        action_cls = None
+        for onschedule_model_obj in SubjectScheduleHistory.objects.onschedules(
+                subject_identifier=self.subject_identifier,
+                report_datetime=self.model_obj.report_datetime):
+            _, schedule = site_visit_schedules.get_by_onschedule_model(
+                onschedule_model=onschedule_model_obj._meta.label_lower)
+            offschedule_model = schedule.offschedule_model
+            action_cls = site_action_items.get_by_model(
+                model=offschedule_model)
+        return action_cls
+
     def get_next_actions(self):
         next_actions = []
-        if self.model_obj.followup == YES:
-            next_actions = self.append_to_next_if_required(
-                next_actions=next_actions,
-                action_cls=self, required=True)
-        elif self.model_obj.followup == NO:
-            self.delete_if_new(action_cls=self)
-        # AeTmg if severity increased
+
+        # add next AE followup
+        next_actions = self.append_to_next_if_required(
+            next_actions=next_actions,
+            action_cls=self,
+            required=self.model_obj.followup == YES)
+
+        # add next AE Initial
+        next_actions = self.append_to_next_if_required(
+            next_actions=next_actions,
+            action_cls=AeInitialAction,
+            required=(self.model_obj.followup == NO
+                      and self.model_obj.ae_grade != NOT_APPLICABLE))
+
+        # add next AeTmg if severity increased
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,
             action_cls=AeTmgAction,
             required=self.model_obj.ae_grade in [GRADE4, GRADE5])
-        # Death report if G5/Death
+
+        # add next Death report if G5/Death
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,
             action_cls=site_action_items.get(DEATH_REPORT_ACTION),
             required=self.model_obj.outcome == DEAD)
-        # Study termination if LTFU
-        if self.model_obj.outcome == LOST_TO_FOLLOWUP:
-            # get the action class for the offschedule model
-            for onschedule_model_obj in SubjectScheduleHistory.objects.onschedules(
-                    subject_identifier=self.subject_identifier,
-                    report_datetime=self.model_obj.report_datetime):
-                _, schedule = site_visit_schedules.get_by_onschedule_model(
-                    onschedule_model=onschedule_model_obj._meta.label_lower)
-                offschedule_model = schedule.offschedule_model
-                action_cls = site_action_items.get_by_model(
-                    model=offschedule_model)
-                next_actions = self.append_to_next_if_required(
-                    next_actions=next_actions,
-                    action_cls=action_cls)
+
+        # add next Study termination if LTFU
+        offschedule_action_cls = self.get_offschedule_action_cls()
+        next_actions = self.append_to_next_if_required(
+            next_actions=next_actions,
+            action_cls=offschedule_action_cls,
+            required=self.model_obj.outcome == LOST_TO_FOLLOWUP)
         return next_actions
 
 

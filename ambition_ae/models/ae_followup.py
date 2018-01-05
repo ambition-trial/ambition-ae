@@ -10,7 +10,7 @@ from edc_base.sites.site_model_mixin import SiteModelMixin
 from edc_base.model_validators import date_not_future
 from edc_base.utils import get_utcnow
 from edc_constants.choices import YES_NO
-from edc_constants.constants import YES, NOT_APPLICABLE
+from edc_constants.constants import YES, NOT_APPLICABLE, NO
 from edc_identifier.model_mixins import NonUniqueSubjectIdentifierFieldMixin
 from edc_identifier.model_mixins import TrackingIdentifierModelMixin
 
@@ -43,7 +43,7 @@ class AeFollowup(ActionItemModelMixin,
     outcome_date = models.DateField(
         validators=[date_not_future])
 
-    # TOD: add validation against 'outcome'
+    # TODO: add validation against 'outcome'
     # if increased create TMG action
     ae_grade = models.CharField(
         verbose_name='If severity increased, indicate grade',
@@ -78,6 +78,22 @@ class AeFollowup(ActionItemModelMixin,
 
     def natural_key(self):
         return (self.report_datetime, ) + self.ae_initial.natural_key()
+
+    @property
+    def next(self):
+        if self.followup == YES:
+            return 'AE Followup'
+        elif self.followup == NO and self.ae_grade != NOT_APPLICABLE:
+            return 'AE Initial'
+        else:
+            return 'Final'
+        return self.followup
+
+    @property
+    def severity(self):
+        if self.ae_grade == NOT_APPLICABLE:
+            return 'unchanged'
+        return self.ae_grade
 
     @property
     def initial(self):
