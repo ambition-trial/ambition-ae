@@ -1,6 +1,7 @@
-from edc_constants.constants import NOT_APPLICABLE, OTHER, YES, NO
+from edc_constants.constants import NOT_APPLICABLE, OTHER, YES, NO, DEAD, LOST_TO_FOLLOWUP
 
 from .constants import GRADE3, GRADE4, GRADE5, MILD, MODERATE, SEVERE
+from .constants import SEVERITY_INCREASED_FROM_G3
 
 AE_INTENSITY = (
     (MILD, 'Mild'),
@@ -23,18 +24,19 @@ AE_GRADE = (
 AE_GRADE_SIMPLE = (
     (GRADE4, 'Grade 4 - Life-threatening'),
     (GRADE5, 'Grade 5 - Death'),
+    (NOT_APPLICABLE, 'Not applicable')
 )
 
 # TODO: validate Severity increased from Grade III
 AE_OUTCOME = (
     ('continuing/update', 'Continuing/Update'),
-    ('increase_from_g3', 'Severity increased from Grade III'),
+    (SEVERITY_INCREASED_FROM_G3, 'Severity increased from Grade III'),
     ('recovered', 'Recovered/Resolved'),
     ('recovering', 'Recovering/Resolving at end of study'),
     ('not_recovered', 'Not Recovered/Resolved at end of study'),
-    ('unknown', 'Unknown/Lost to follow-up'),
+    (LOST_TO_FOLLOWUP, 'Unknown/Lost to follow-up'),
     ('recovered_with_sequelae', 'Recovered with sequelae'),
-    ('death', 'Death'),
+    (DEAD, 'Death'),
 )
 
 

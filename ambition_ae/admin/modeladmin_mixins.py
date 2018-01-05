@@ -1,3 +1,4 @@
+from django.conf import settings
 from django_revision.modeladmin_mixin import ModelAdminRevisionMixin
 from edc_model_admin import (
     ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin,
@@ -7,6 +8,7 @@ from edc_model_admin import (
 from edc_metadata import NextFormGetter
 
 from ..models import AeInitial
+from django.urls.base import reverse
 
 
 class ModelAdminMixin(ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin,
@@ -18,6 +20,19 @@ class ModelAdminMixin(ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructions
     date_hierarchy = 'modified'
     empty_value_display = '-'
     next_form_getter_cls = NextFormGetter
+
+    post_url_on_delete_name = settings.DASHBOARD_URL_NAMES.get(
+        'subject_dashboard_url')
+
+    def post_url_on_delete_kwargs(self, request, obj):
+        return dict(subject_identifier=obj.subject_identifier)
+
+    def redirect_url(self, request, obj, post_url_continue=None):
+        if obj:
+            return reverse(settings.DASHBOARD_URL_NAMES.get(
+                'subject_dashboard_url'), kwargs=dict(subject_identifier=obj.subject_identifier))
+        else:
+            return super().redirect_url(request, obj, post_url_continue)
 
 
 class NonAeInitialModelAdminMixin:

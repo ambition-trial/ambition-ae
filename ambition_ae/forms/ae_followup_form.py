@@ -1,10 +1,23 @@
 from django import forms
+from edc_form_validators import FormValidatorMixin, FormValidator
 
+from ..constants import SEVERITY_INCREASED_FROM_G3
 from ..models import AeFollowup
 from .modelform_mixin import ModelformMixin
 
 
-class AeFollowupForm(ModelformMixin, forms.ModelForm):
+class AeFollowupFormValidator(FormValidator):
+
+    def clean(self):
+
+        self.applicable_if(
+            SEVERITY_INCREASED_FROM_G3,
+            field='outcome', field_applicable='ae_grade')
+
+
+class AeFollowupForm(FormValidatorMixin, ModelformMixin, forms.ModelForm):
+
+    form_validator_cls = AeFollowupFormValidator
 
     action_identifier = forms.CharField(
         label='Action Identifier',

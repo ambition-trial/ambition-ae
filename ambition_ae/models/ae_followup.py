@@ -10,7 +10,7 @@ from edc_base.sites.site_model_mixin import SiteModelMixin
 from edc_base.model_validators import date_not_future
 from edc_base.utils import get_utcnow
 from edc_constants.choices import YES_NO
-from edc_constants.constants import YES
+from edc_constants.constants import YES, NOT_APPLICABLE
 from edc_identifier.model_mixins import NonUniqueSubjectIdentifierFieldMixin
 from edc_identifier.model_mixins import TrackingIdentifierModelMixin
 
@@ -49,8 +49,7 @@ class AeFollowup(ActionItemModelMixin,
         verbose_name='If severity increased, indicate grade',
         max_length=25,
         choices=AE_GRADE_SIMPLE,
-        blank=True,
-        null=True)
+        default=NOT_APPLICABLE)
 
     relevant_history = models.TextField(
         verbose_name='Description summary of Adverse Event outcome',

@@ -19,8 +19,9 @@ class AeFollowupAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelA
                 'subject_identifier',
                 'ae_initial',
                 'report_datetime',
-                'outcome',
                 'outcome_date',
+                'outcome',
+                'ae_grade',
                 'relevant_history',
                 'followup')},
          ),
@@ -32,15 +33,19 @@ class AeFollowupAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelA
     radio_fields = {
         'outcome': admin.VERTICAL,
         'followup': admin.VERTICAL,
+        'ae_grade': admin.VERTICAL,
     }
 
-    list_display = ('identifier', 'followup', 'outcome_date', 'initial')
+    list_display = ('identifier', 'ae_grade', 'followup',
+                    'outcome_date', 'initial')
 
-    list_filter = ('followup', 'outcome_date', 'report_datetime')
+    list_filter = ('ae_grade', 'followup', 'outcome_date', 'report_datetime')
 
     search_fields = ['ae_initial__tracking_identifier',
                      'ae_initial__subject_identifier']
 
     def get_readonly_fields(self, request, obj=None):
         fields = super().get_readonly_fields(request, obj=obj)
+        if obj:
+            fields = fields + ('ae_initial', )
         return fields + ('tracking_identifier', 'action_identifier')
