@@ -45,3 +45,9 @@ class NonAeInitialModelAdminMixin:
             else:
                 kwargs["queryset"] = AeInitial.objects.none()
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    def get_readonly_fields(self, request, obj=None):
+        fields = super().get_readonly_fields(request, obj=obj)
+        if obj:
+            fields = fields + ('ae_initial', )
+        return fields + ('tracking_identifier', 'action_identifier')

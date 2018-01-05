@@ -54,8 +54,10 @@ INSTALLED_APPS = [
     'edc_list_data.apps.AppConfig',
     'edc_identifier.apps.AppConfig',
     'edc_action_item.apps.AppConfig',
+    'edc_visit_schedule.apps.AppConfig',
     'edc_prn.apps.AppConfig',
     'ambition_rando.apps.AppConfig',
+    'ambition_prn.apps.AppConfig',
     'ambition_ae.apps.AppConfig',
 ]
 
@@ -149,6 +151,13 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 EMAIL_CONTACTS = {'ae_reports': 'user@example.com'}
+
+DASHBOARD_URL_NAMES = {
+    'subject_models_url': 'subject_models_url',
+    'subject_listboard_url': 'ambition_dashboard:subject_listboard_url',
+    'screening_listboard_url': 'ambition_dashboard:screening_listboard_url',
+    'subject_dashboard_url': 'ambition_dashboard:subject_dashboard_url',
+}
 
 if 'test' in sys.argv:
 

@@ -96,10 +96,11 @@ class AeFollowupAction(BaseNonAeInitialAction):
 
         # add next Study termination if LTFU
         offschedule_action_cls = self.get_offschedule_action_cls()
-        next_actions = self.append_to_next_if_required(
-            next_actions=next_actions,
-            action_cls=offschedule_action_cls,
-            required=self.model_obj.outcome == LOST_TO_FOLLOWUP)
+        if offschedule_action_cls:  # only None in tests
+            next_actions = self.append_to_next_if_required(
+                next_actions=next_actions,
+                action_cls=offschedule_action_cls,
+                required=self.model_obj.outcome == LOST_TO_FOLLOWUP)
         return next_actions
 
 

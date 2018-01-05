@@ -24,7 +24,8 @@ list_data = {
         ('ceftriaxone', 'Ceftriaxone'),
         ('erythromycin', 'Erythromycin'),
         ('ciprofloxacin', 'Ciprofloxacin'),
-        (OTHER, 'Other, specify')
+        ('no_treatment', '- No treatment'),
+        (OTHER, '- Other, specify')
     ],
     'ambition_ae.meningitissymptom': [
         ('headache', 'Headache'),
@@ -32,7 +33,8 @@ list_data = {
         ('fever', 'Fever'),
         ('seizures', 'Seizures'),
         ('neck_pain', 'Neck pain'),
-        (OTHER, 'Other, specify')
+        ('no_symptoms', '- No symptoms'),
+        (OTHER, '- Other, specify')
     ],
     'ambition_ae.neurological': [
         ('meningism', 'Meningism'),
@@ -43,7 +45,8 @@ list_data = {
         ('CN_IV_palsy', 'Cranial Nerve IV palsy'),
         ('CN_VII_palsy', 'Cranial Nerve VII palsy'),
         ('CN_VIII_palsy', 'Cranial Nerve VIII palsy'),
-        (OTHER, 'Other CN palsy'),
+        ('no_symptoms', '- No symptoms'),
+        (OTHER, '- Other CN palsy'),
     ],
 }
 

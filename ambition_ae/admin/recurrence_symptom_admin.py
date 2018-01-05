@@ -17,7 +17,9 @@ class RecurrenceSymptomAdmin(ModelAdminMixin, admin.ModelAdmin):
         (None, {
             'fields': [
                 'subject_identifier',
-                'report_datetime',
+                'report_datetime']}),
+        ('Meningitis', {
+            'fields': [
                 'meningitis_symptom',
                 'meningitis_symptom_other',
                 'patient_readmitted']}

@@ -43,9 +43,3 @@ class AeFollowupAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelA
 
     search_fields = ['ae_initial__tracking_identifier',
                      'ae_initial__subject_identifier']
-
-    def get_readonly_fields(self, request, obj=None):
-        fields = super().get_readonly_fields(request, obj=obj)
-        if obj:
-            fields = fields + ('ae_initial', )
-        return fields + ('tracking_identifier', 'action_identifier')

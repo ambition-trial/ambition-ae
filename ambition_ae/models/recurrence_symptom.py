@@ -31,7 +31,6 @@ class RecurrenceSymptom(NonUniqueSubjectIdentifierFieldMixin,
 
     meningitis_symptom = models.ManyToManyField(
         MeningitisSymptom,
-        blank=True,
         verbose_name='What are your current symptoms?')
 
     meningitis_symptom_other = models.CharField(
@@ -67,7 +66,6 @@ class RecurrenceSymptom(NonUniqueSubjectIdentifierFieldMixin,
 
     neurological = models.ManyToManyField(
         Neurological,
-        blank=True,
         verbose_name='neurologic:')
 
     focal_neurologic_deficit = models.CharField(
@@ -132,8 +130,7 @@ class RecurrenceSymptom(NonUniqueSubjectIdentifierFieldMixin,
 
     antibiotic_treatment = models.ManyToManyField(
         AntibioticTreatment,
-        verbose_name='Antibiotics treatment',
-        blank=True)
+        verbose_name='Antibiotics treatment')
 
     antibiotic_treatment_other = models.CharField(
         verbose_name='If other antibiotic treatment, please specify',

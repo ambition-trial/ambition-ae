@@ -5,16 +5,6 @@ from edc_registration.models import RegisteredSubject
 
 class ModelformMixin:
 
-    action_identifier = forms.CharField(
-        label='Action Identifier',
-        required=False,
-        widget=forms.TextInput(attrs={'readonly': 'readonly'}))
-
-    subject_identifier = forms.CharField(
-        label='Subject Identifier',
-        required=False,
-        widget=forms.TextInput(attrs={'readonly': 'readonly'}))
-
     def clean(self):
         cleaned_data = super().clean()
         subject_identifier = cleaned_data.get('subject_identifier')
