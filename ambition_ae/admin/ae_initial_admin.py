@@ -15,7 +15,7 @@ from .modeladmin_mixins import ModelAdminMixin
 class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
 
     form = AeInitialForm
-    email_contact = email_contacts.get('ae_report')
+    email_contact = email_contacts.get('ae_reports')
 
     additional_instructions = mark_safe(
         'Complete the initial AE report and forward to the TMG. '

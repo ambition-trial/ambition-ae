@@ -1,11 +1,12 @@
 from django import forms
+from edc_form_validators import FormValidatorMixin
 
 from ..form_validators import RecurrenceSymptomFormValidator
 from ..models import RecurrenceSymptom
 from .modelform_mixin import ModelformMixin
 
 
-class RecurrenceSymptomForm(ModelformMixin, forms.ModelForm):
+class RecurrenceSymptomForm(FormValidatorMixin, ModelformMixin, forms.ModelForm):
 
     form_validator_cls = RecurrenceSymptomFormValidator
 

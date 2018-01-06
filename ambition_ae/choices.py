@@ -54,7 +54,7 @@ DR_OPINION = (
 
 SAE_REASONS = (
     (NOT_APPLICABLE, 'Not applicable'),
-    ('death', 'Death (Please complete Death form and Study termination form)'),
+    (DEAD, 'Death'),
     ('life_threatening', 'Life-threatening'),
     ('significant_disability', 'Significant disability'),
     ('in-patient_hospitalization',

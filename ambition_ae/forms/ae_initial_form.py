@@ -5,6 +5,9 @@ from edc_form_validators import FormValidatorMixin
 from ..form_validators import AeInitialFormValidator
 from ..models import AeInitial
 from .modelform_mixin import ModelformMixin
+from ambition_ae.models.ae_followup import AeFollowup
+from django.urls.base import reverse
+from django.utils.safestring import mark_safe
 
 
 class AeInitialForm(FormValidatorMixin, ModelformMixin, forms.ModelForm):
@@ -38,13 +41,21 @@ class AeInitialForm(FormValidatorMixin, ModelformMixin, forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        drug_assignment = self.get_drug_assignment(
-            cleaned_data.get('subject_identifier'))
+        subject_identfier = cleaned_data.get('subject_identifier')
+        drug_assignment = self.get_drug_assignment(subject_identfier)
         if cleaned_data.get('regimen') != drug_assignment:
             raise forms.ValidationError({
                 'regimen':
                 f'Incorrect. Subject was allocated to the '
                 f'\'{drug_assignment.replace("_", " ")}\' arm.'})
+        if AeFollowup.objects.filter(ae_initial=self.instance.pk).exists():
+            url = reverse(
+                'ambition_ae_admin:ambition_ae_aefollowup_changelist')
+            url = f'{url}?q={self.instance.action_identifier}'
+            raise forms.ValidationError(
+                mark_safe('Unable to save. Follow-up reports exist. Provide updates '
+                          'to this report using the AE Follow-up Report instead. '
+                          f'See <A href="{url}">AE Follow-ups for {self.instance}</A>.'))
 
     class Meta:
         model = AeInitial

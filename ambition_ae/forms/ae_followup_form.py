@@ -1,10 +1,10 @@
 from django import forms
-from edc_form_validators import FormValidatorMixin, FormValidator
 from edc_constants.constants import YES, DEAD
+from edc_form_validators import FormValidatorMixin, FormValidator
+
 from ..constants import SEVERITY_INCREASED_FROM_G3, GRADE5
 from ..models import AeFollowup
 from .modelform_mixin import ModelformMixin
-from ambition_ae.constants import GRADE4
 
 
 class AeFollowupFormValidator(FormValidator):

@@ -89,7 +89,7 @@ class AeInitial(AeModelMixin, ActionItemModelMixin,
         max_length=5)
 
     ae_cause_other = OtherCharField(
-        verbose_name='If YES, specify',
+        verbose_name='If "Yes", specify',
         max_length=250,
         blank=True,
         null=True)
@@ -102,7 +102,7 @@ class AeInitial(AeModelMixin, ActionItemModelMixin,
         max_length=10,
         choices=YES_NO,
         default=UNKNOWN,
-        help_text='If YES, fill in the "Recurrence of Symptoms" form')
+        help_text='If "Yes", fill in the "Recurrence of Symptoms" form')
 
     sae = models.CharField(
         verbose_name='Is this event a SAE?',
@@ -113,10 +113,11 @@ class AeInitial(AeModelMixin, ActionItemModelMixin,
                    'life-threatening)'))
 
     sae_reason = models.CharField(
-        verbose_name='If YES, reason for SAE:',
+        verbose_name='If "Yes", reason for SAE:',
         max_length=50,
         choices=SAE_REASONS,
-        default=NOT_APPLICABLE)
+        default=NOT_APPLICABLE,
+        help_text='If subject deceased, submit a Death Report')
 
     susar = models.CharField(
         verbose_name=(

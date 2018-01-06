@@ -42,4 +42,5 @@ class AeFollowupAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelA
     list_filter = ('ae_grade', 'followup', 'outcome_date', 'report_datetime')
 
     search_fields = ['ae_initial__tracking_identifier',
-                     'ae_initial__subject_identifier']
+                     'ae_initial__subject_identifier',
+                     'ae_initial__action_identifier']
