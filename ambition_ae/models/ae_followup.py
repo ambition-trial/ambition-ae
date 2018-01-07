@@ -109,6 +109,14 @@ class AeFollowup(ActionItemModelMixin,
         return None
 
     @property
+    def description(self):
+        """Returns a description from the initial AE
+        """
+        if self.ae_initial:
+            return self.ae_initial.ae_name
+        return None
+
+    @property
     def action_item_reason(self):
         return self.ae_initial.ae_description
 
