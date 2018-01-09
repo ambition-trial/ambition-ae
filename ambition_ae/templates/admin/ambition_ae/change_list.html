@@ -3,3 +3,9 @@
 
 {% block object-tools-items %}{% endblock object-tools-items %}
 
+{% block extrastyle %}
+    {{ block.super }}
+
+        <link rel="stylesheet" type="text/css" href="{% static 'edc_base/css/font-awesome/css/font-awesome.min.css' %}">
+
+{% endblock %}
