@@ -113,7 +113,7 @@ class AeFollowup(ActionItemModelMixin,
         """Returns a description from the initial AE
         """
         if self.ae_initial:
-            return self.ae_initial.ae_name
+            return self.ae_initial.ae_description
         return None
 
     @property

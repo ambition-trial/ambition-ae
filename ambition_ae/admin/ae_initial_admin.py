@@ -25,7 +25,8 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
         (None, {
             'fields': (
                 'subject_identifier',
-                'ae_name',
+                'ae_classification',
+                'ae_classification_other',
                 'regimen',
                 'report_datetime',
                 'ae_description',
@@ -55,32 +56,35 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
     )
 
     radio_fields = {
-        'regimen': admin.VERTICAL,
+        'ae_cause': admin.VERTICAL,
+        'ae_classification': admin.VERTICAL,
+        'ae_cm_recurrence': admin.VERTICAL,
         'ae_grade': admin.VERTICAL,
         'ae_intensity': admin.VERTICAL,
         'ae_study_relation_possibility': admin.VERTICAL,
         'ambisome_relation': admin.VERTICAL,
-        'fluconazole_relation': admin.VERTICAL,
         'amphotericin_b_relation': admin.VERTICAL,
+        'fluconazole_relation': admin.VERTICAL,
         'flucytosine_relation': admin.VERTICAL,
-        'ae_cause': admin.VERTICAL,
-        'ae_cm_recurrence': admin.VERTICAL,
+        'regimen': admin.VERTICAL,
         'sae': admin.VERTICAL,
         'sae_reason': admin.VERTICAL,
         'susar': admin.VERTICAL,
-        'susar_reported': admin.VERTICAL}
+        'susar_reported': admin.VERTICAL,
+    }
 
     ordering = ['-tracking_identifier']
 
     list_display = ['identifier', 'dashboard',
-                    'ae_name', 'ae_awareness_date', 'ae_grade', 'sae', 'sae_reason',
+                    'ae_classification', 'ae_awareness_date',
+                    'ae_grade', 'sae', 'sae_reason',
                     'susar', 'susar_reported']
 
-    list_filter = ['ae_awareness_date', 'ae_grade',
+    list_filter = ['ae_awareness_date', 'ae_grade', 'ae_classification',
                    'ae_intensity', 'sae', 'sae_reason', 'susar',
                    'susar_reported']
 
-    search_fields = ['ae_name', 'tracking_identifier', 'subject_identifier']
+    search_fields = ['tracking_identifier', 'subject_identifier']
 
     def get_readonly_fields(self, request, obj=None):
         fields = super().get_readonly_fields(request, obj=obj)

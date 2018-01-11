@@ -4,6 +4,21 @@ from edc_constants.constants import OPEN, CLOSED
 from .constants import GRADE3, GRADE4, GRADE5, MILD, MODERATE, SEVERE
 from .constants import SEVERITY_INCREASED_FROM_G3
 
+AE_CLASSIFICATION = (
+    ('anaemia', 'Anaemia'),
+    ('bacteraemia/sepsis', 'Bacteraemia/Sepsis'),
+    ('CM_IRIS', 'CM IRIS'),
+    ('diarrhoea', 'Diarrhoea'),
+    ('hypokalaemia', 'Hypokalaemia'),
+    ('neutropaenia', 'Neutropaenia'),
+    ('pneumonia', 'Pneumonia'),
+    ('respiratory_distress', 'Respiratory distress'),
+    ('TB', 'TB'),
+    ('thrombocytopenia', 'Thrombocytopenia'),
+    ('thrombophlebitis', 'Renal impairment'),
+    (OTHER, 'Other'),
+)
+
 AE_INTENSITY = (
     (MILD, 'Mild'),
     (MODERATE, 'Moderate'),

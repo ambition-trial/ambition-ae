@@ -18,7 +18,7 @@ class AeTmgAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelAdmin)
     list_display = ['subject_identifier', 'dashboard', 'status', 'ae_initial', 'report_datetime',
                     'officials_notified', 'report_closed_datetime']
 
-    list_filter = ('report_datetime', 'report_status', 'ae_classification')
+    list_filter = ('report_datetime', 'report_status')
 
     search_fields = ['ae_initial__tracking_identifier',
                      'ae_initial__action_identifier',
@@ -45,6 +45,5 @@ class AeTmgAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelAdmin)
     )
 
     radio_fields = {
-        'report_status': admin.VERTICAL}
-
-    filter_horizontal = ('ae_classification',)
+        'report_status': admin.VERTICAL,
+        'ae_classification': admin.VERTICAL}

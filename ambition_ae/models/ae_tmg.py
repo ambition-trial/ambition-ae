@@ -8,15 +8,14 @@ from edc_base.model_mixins import BaseUuidModel
 from edc_base.model_validators.date import datetime_not_future
 from edc_base.sites.site_model_mixin import SiteModelMixin
 from edc_base.utils import get_utcnow
+from edc_constants.constants import CLOSED
 from edc_identifier.model_mixins import NonUniqueSubjectIdentifierFieldMixin
 from edc_identifier.model_mixins import TrackingIdentifierModelMixin
 
 from ..action_items import AeTmgAction
-from ..choices import AE_TMG_REPORT_STATUS
+from ..choices import AE_TMG_REPORT_STATUS, AE_CLASSIFICATION
 from ..managers import AeManager
-from .list_models import AeClassification
 from .ae_initial import AeInitial
-from edc_constants.constants import CLOSED
 
 
 class AeTmg(ActionItemModelMixin, TrackingIdentifierModelMixin,
@@ -49,9 +48,9 @@ class AeTmg(ActionItemModelMixin, TrackingIdentifierModelMixin,
         null=True,
         verbose_name='Investigator comments:')
 
-    ae_classification = models.ManyToManyField(
-        AeClassification,
-        verbose_name='Classification of AE:')
+    ae_classification = models.CharField(
+        max_length=50,
+        choices=AE_CLASSIFICATION)
 
     ae_classification_other = OtherCharField(
         max_length=250,

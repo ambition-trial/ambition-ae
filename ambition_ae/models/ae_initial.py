@@ -15,7 +15,7 @@ from edc_identifier.model_mixins import NonUniqueSubjectIdentifierFieldMixin
 from edc_identifier.model_mixins import TrackingIdentifierModelMixin
 
 from ..action_items import AeInitialAction
-from ..choices import STUDY_DRUG_RELATIONSHIP, SAE_REASONS
+from ..choices import STUDY_DRUG_RELATIONSHIP, SAE_REASONS, AE_CLASSIFICATION
 from ..model_mixins import AeModelMixin
 
 
@@ -27,10 +27,13 @@ class AeInitial(AeModelMixin, ActionItemModelMixin,
 
     action_cls = AeInitialAction
 
-    ae_name = models.CharField(
-        verbose_name=('Short description of AE'),
-        max_length=25,
-        blank=False,
+    ae_classification = models.CharField(
+        max_length=50,
+        choices=AE_CLASSIFICATION)
+
+    ae_classification_other = OtherCharField(
+        max_length=250,
+        blank=True,
         null=True)
 
     # TODO: Get this from the Randomization

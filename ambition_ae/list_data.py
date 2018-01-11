@@ -3,20 +3,6 @@ from edc_constants.constants import OTHER
 
 
 list_data = {
-    'ambition_ae.aeclassification': [
-        ('anaemia', 'Anaemia'),
-        ('thrombocytopenia', 'Thrombocytopenia'),
-        ('diarrhoea', 'Diarrhoea'),
-        ('thrombophlebitis', 'Renal impairment'),
-        ('pneumonia', 'Pneumonia'),
-        ('TB', 'TB'),
-        ('hypokalaemia', 'Hypokalaemia'),
-        ('bacteraemia/sepsis', 'Bacteraemia/Sepsis'),
-        ('neutropaenia', 'Neutropaenia'),
-        ('CM_IRIS', 'CM IRIS'),
-        ('respiratory_distress', 'Respiratory distress'),
-        (OTHER, 'Other')
-    ],
     'ambition_ae.antibiotictreatment': [
         ('amoxicillin', 'Amoxicillin'),
         ('flucloxacillin', 'Flucloxacillin'),
