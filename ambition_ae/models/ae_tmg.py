@@ -24,7 +24,7 @@ class AeTmg(ActionItemModelMixin, TrackingIdentifierModelMixin,
     action_cls = AeTmgAction
     tracking_identifier_prefix = 'AT'
 
-    ae_initial = models.OneToOneField(AeInitial, on_delete=PROTECT)
+    ae_initial = models.ForeignKey(AeInitial, on_delete=PROTECT)
 
     report_datetime = models.DateTimeField(
         verbose_name="Report date and time",

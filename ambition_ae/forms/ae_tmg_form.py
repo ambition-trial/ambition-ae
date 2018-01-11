@@ -1,17 +1,9 @@
 from django import forms
-from edc_form_validators import FormValidatorMixin, FormValidator
+from edc_form_validators import FormValidatorMixin
 
 from ..models import AeTmg
+from ..form_validators import AeTmgFormValidator
 from .modelform_mixin import ModelformMixin
-from edc_constants.constants import CLOSED
-
-
-class AeTmgFormValidator(FormValidator):
-
-    def clean(self):
-
-        self.required_if(
-            CLOSED, field='report_status', field_required='report_closed_datetime')
 
 
 class AeTmgForm(FormValidatorMixin, ModelformMixin, forms.ModelForm):

@@ -92,12 +92,6 @@ class TestAeAndActions(AmbitionTestCaseMixin, TestCase):
             'ambition_ae.aetmg',
             ae_initial=ae_initial,
             subject_identifier=self.subject_identifier)
-        self.assertRaises(
-            IntegrityError,
-            mommy.make_recipe,
-            'ambition_ae.aetmg',
-            ae_initial=ae_initial,
-            subject_identifier=self.subject_identifier)
 
     def test_fk2(self):
         ae_initial = mommy.make_recipe(

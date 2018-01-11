@@ -1,18 +1,17 @@
-from django.core.exceptions import ObjectDoesNotExist
-from edc_action_item import Action, HIGH_PRIORITY, site_action_items
-from edc_constants.constants import YES, DEAD, LOST_TO_FOLLOWUP, NO,\
-    NOT_APPLICABLE, CLOSED
-from django.utils.safestring import mark_safe
-
-from .email_contacts import email_contacts
-from ambition_ae.constants import GRADE4, GRADE5
 from ambition_prn.action_items import DEATH_REPORT_ACTION
-from edc_visit_schedule.site_visit_schedules import site_visit_schedules
+from django.core.exceptions import MultipleObjectsReturned
+from django.utils.safestring import mark_safe
+from edc_action_item import Action, HIGH_PRIORITY, site_action_items
+from edc_constants.constants import YES, DEAD, LOST_TO_FOLLOWUP, CLOSED
 from edc_visit_schedule.models.subject_schedule_history import SubjectScheduleHistory
+from edc_visit_schedule.site_visit_schedules import site_visit_schedules
 
+from .constants import GRADE4, GRADE5
+from .email_contacts import email_contacts
+
+AE_FOLLOWUP_ACTION = 'submit-ae-followup-report'
 AE_INITIAL_ACTION = 'submit-initial-ae-report'
 AE_TMG_ACTION = 'submit-ae-tmg-report'
-AE_FOLLOWUP_ACTION = 'submit-ae-followup-report'
 RECURRENCE_OF_SYMPTOMS_ACTION = 'submit-recurrence-of-symptoms'
 
 
@@ -41,6 +40,19 @@ class AeTmgAction(BaseNonAeInitialAction):
 
     def close_action_item_on_save(self):
         return self.model_obj.report_status == CLOSED
+
+    def get_next_actions(self):
+        next_actions = []
+        try:
+            self.reference_model_cls().objects.get(
+                ae_initial=self.model_obj.ae_initial)
+        except MultipleObjectsReturned:
+            pass
+        else:
+            if (self.model_obj.ae_initial.ae_classification
+                    != self.model_obj.ae_classification):
+                next_actions = [self]
+        return next_actions
 
 
 class AeFollowupAction(BaseNonAeInitialAction):

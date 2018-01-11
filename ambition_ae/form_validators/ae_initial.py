@@ -13,6 +13,8 @@ class AeInitialFormValidator(FormValidator):
                 YES, UNKNOWN, field='ae_study_relation_possibility',
                 field_applicable=drug)
 
+        self.validate_other_specify(field='ae_classification')
+
         self.required_if(
             YES,
             field='ae_cause',
