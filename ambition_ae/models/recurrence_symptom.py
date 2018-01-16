@@ -171,11 +171,11 @@ class RecurrenceSymptom(NonUniqueSubjectIdentifierFieldMixin,
         max_length=50,
         null=True)
 
+    on_site = CurrentSiteManager()
+
     objects = TrackingIdentifierManager()
 
     history = HistoricalRecords()
-
-    on_site = CurrentSiteManager()
 
     def natural_key(self):
         return (self.tracking_identifier, )

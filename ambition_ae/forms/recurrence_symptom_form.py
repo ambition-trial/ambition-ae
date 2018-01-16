@@ -3,10 +3,10 @@ from edc_form_validators import FormValidatorMixin
 
 from ..form_validators import RecurrenceSymptomFormValidator
 from ..models import RecurrenceSymptom
-from .modelform_mixin import ModelformMixin
+from .modelform_mixin import ModelFormMixin
 
 
-class RecurrenceSymptomForm(FormValidatorMixin, ModelformMixin, forms.ModelForm):
+class RecurrenceSymptomForm(FormValidatorMixin, ModelFormMixin, forms.ModelForm):
 
     form_validator_cls = RecurrenceSymptomFormValidator
 

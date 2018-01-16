@@ -1,10 +1,11 @@
 from django import forms
+from edc_base.sites.forms import SiteModelFormMixin
 from edc_constants.constants import YES, DEAD
 from edc_form_validators import FormValidatorMixin, FormValidator
 
 from ..constants import SEVERITY_INCREASED_FROM_G3, GRADE5
 from ..models import AeFollowup
-from .modelform_mixin import ModelformMixin
+from .modelform_mixin import ModelFormMixin
 
 
 class AeFollowupFormValidator(FormValidator):
@@ -20,7 +21,8 @@ class AeFollowupFormValidator(FormValidator):
             field='outcome', field_applicable='ae_grade')
 
 
-class AeFollowupForm(FormValidatorMixin, ModelformMixin, forms.ModelForm):
+class AeFollowupForm(FormValidatorMixin, ModelFormMixin,
+                     forms.ModelForm):
 
     form_validator_cls = AeFollowupFormValidator
 

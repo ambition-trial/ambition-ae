@@ -144,11 +144,11 @@ class AeInitial(AeModelMixin, ActionItemModelMixin,
             'AEs ≥ Grade 4 or SAE must be reported to the Trial '
             'Management Group (TMG) within 24 hours'))
 
+    on_site = CurrentSiteManager()
+
     objects = TrackingIdentifierManager()
 
     history = HistoricalRecords()
-
-    on_site = CurrentSiteManager()
 
     def __str__(self):
         return f'{self.tracking_identifier[-9:]} Grade {self.ae_grade}'

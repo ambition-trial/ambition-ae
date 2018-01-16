@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.urls.base import reverse
 from django_revision.modeladmin_mixin import ModelAdminRevisionMixin
+from edc_base.sites.admin import ModelAdminSiteMixin
 from edc_model_admin import (
     ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin,
     ModelAdminFormAutoNumberMixin, ModelAdminAuditFieldsMixin,
@@ -16,7 +17,7 @@ class ModelAdminMixin(ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructions
                       ModelAdminFormAutoNumberMixin, ModelAdminRevisionMixin,
                       ModelAdminAuditFieldsMixin, ModelAdminReadOnlyMixin,
                       ModelAdminInstitutionMixin, ModelAdminRedirectOnDeleteMixin,
-                      ModelAdminSubjectDashboardMixin):
+                      ModelAdminSubjectDashboardMixin, ModelAdminSiteMixin):
 
     list_per_page = 10
     date_hierarchy = 'modified'

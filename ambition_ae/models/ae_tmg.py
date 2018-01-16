@@ -79,11 +79,11 @@ class AeTmg(ActionItemModelMixin, TrackingIdentifierModelMixin,
         validators=[datetime_not_future],
         verbose_name=('Date and time report closed.'))
 
+    on_site = CurrentSiteManager()
+
     objects = AeManager()
 
     history = HistoricalRecords()
-
-    on_site = CurrentSiteManager()
 
     def save(self, *args, **kwargs):
         self.subject_identifier = self.ae_initial.subject_identifier

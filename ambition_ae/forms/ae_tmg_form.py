@@ -3,10 +3,10 @@ from edc_form_validators import FormValidatorMixin
 
 from ..models import AeTmg
 from ..form_validators import AeTmgFormValidator
-from .modelform_mixin import ModelformMixin
+from .modelform_mixin import ModelFormMixin
 
 
-class AeTmgForm(FormValidatorMixin, ModelformMixin, forms.ModelForm):
+class AeTmgForm(FormValidatorMixin, ModelFormMixin, forms.ModelForm):
 
     form_validator_cls = AeTmgFormValidator
 

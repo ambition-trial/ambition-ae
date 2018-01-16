@@ -1,9 +1,10 @@
 from django import forms
+from edc_base.sites.forms import SiteModelFormMixin
 from django.core.exceptions import ObjectDoesNotExist
 from edc_registration.models import RegisteredSubject
 
 
-class ModelformMixin:
+class ModelFormMixin(SiteModelFormMixin):
 
     def clean(self):
         cleaned_data = super().clean()

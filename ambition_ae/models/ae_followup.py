@@ -64,11 +64,11 @@ class AeFollowup(ActionItemModelMixin,
         default=YES,
         help_text='If NO, this will be considered the final report')
 
+    on_site = CurrentSiteManager()
+
     objects = AeManager()
 
     history = HistoricalRecords()
-
-    on_site = CurrentSiteManager()
 
     def save(self, *args, **kwargs):
         self.subject_identifier = self.ae_initial.subject_identifier
