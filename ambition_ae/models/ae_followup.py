@@ -1,4 +1,3 @@
-from django.contrib.sites.managers import CurrentSiteManager
 from django.db import models
 from django.db.models.deletion import PROTECT
 from django.urls.base import reverse
@@ -6,8 +5,9 @@ from django.utils.safestring import mark_safe
 from edc_action_item.model_mixins import ActionItemModelMixin
 from edc_base.model_managers import HistoricalRecords
 from edc_base.model_mixins import BaseUuidModel
-from edc_base.sites.site_model_mixin import SiteModelMixin
 from edc_base.model_validators import date_not_future
+from edc_base.sites import CurrentSiteManager
+from edc_base.sites.site_model_mixin import SiteModelMixin
 from edc_base.utils import get_utcnow
 from edc_constants.choices import YES_NO
 from edc_constants.constants import YES, NOT_APPLICABLE, NO
