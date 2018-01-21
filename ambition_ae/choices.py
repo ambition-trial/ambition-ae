@@ -1,5 +1,4 @@
 from edc_constants.constants import NOT_APPLICABLE, OTHER, YES, NO, DEAD, LOST_TO_FOLLOWUP
-from edc_constants.constants import OPEN, CLOSED
 
 from .constants import GRADE3, GRADE4, GRADE5, MILD, MODERATE, SEVERE
 from .constants import SEVERITY_INCREASED_FROM_G3
@@ -23,11 +22,6 @@ AE_INTENSITY = (
     (MILD, 'Mild'),
     (MODERATE, 'Moderate'),
     (SEVERE, 'Severe')
-)
-
-AE_TMG_REPORT_STATUS = (
-    (OPEN, 'Open. Some information is still pending.'),
-    (CLOSED, 'Closed. This report is complete'),
 )
 
 AE_REPORT_TYPE = (

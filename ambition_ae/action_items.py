@@ -22,10 +22,6 @@ class BaseNonAeInitialAction(Action):
     admin_site_name = 'ambition_ae_admin'
     priority = HIGH_PRIORITY
 
-    @property
-    def action_item_reason(self):
-        return self.ae_initial.action_item_reason
-
 
 class AeTmgAction(BaseNonAeInitialAction):
     name = AE_TMG_ACTION

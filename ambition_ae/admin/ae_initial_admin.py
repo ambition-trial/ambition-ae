@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from simple_history.admin import SimpleHistoryAdmin
-
+from edc_action_item import action_fieldset
 from edc_model_admin import audit_fieldset_tuple
+from simple_history.admin import SimpleHistoryAdmin
 
 from ..admin_site import ambition_ae_admin
 from ..email_contacts import email_contacts
@@ -50,8 +50,7 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
                 'susar',
                 'susar_reported')},
          ),
-        ['Action', {'classes': ('collapse', ), 'fields': (
-            'tracking_identifier', 'action_identifier')}],
+        action_fieldset,
         audit_fieldset_tuple
     )
 
@@ -84,7 +83,8 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
                    'ae_intensity', 'sae', 'sae_reason', 'susar',
                    'susar_reported']
 
-    search_fields = ['tracking_identifier', 'subject_identifier']
+    search_fields = ['action_identifier',
+                     'tracking_identifier', 'subject_identifier']
 
     def get_readonly_fields(self, request, obj=None):
         fields = super().get_readonly_fields(request, obj=obj)
