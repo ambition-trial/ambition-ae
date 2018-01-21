@@ -35,6 +35,7 @@ class AeTmgAction(BaseNonAeInitialAction):
         f'This report is to be completed by the TMG only.')
 
     def close_action_item_on_save(self):
+        self.delete_if_new(action_cls=self)
         return self.model_obj.report_status == CLOSED
 
     def get_next_actions(self):
