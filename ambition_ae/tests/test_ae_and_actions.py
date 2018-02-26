@@ -4,7 +4,7 @@ from edc_action_item.models.action_item import ActionItem
 from edc_constants.constants import CLOSED, NO, NEW, YES
 from edc_list_data.site_list_data import site_list_data
 from edc_registration.models import RegisteredSubject
-from edc_reportable import GRADE3, GRADE4
+from edc_reportable import GRADE3, GRADE4, GRADE5
 
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.test import TestCase, tag
@@ -441,6 +441,25 @@ class TestAeAndActions(AmbitionTestCaseMixin, TestCase):
         self.assertRaises(
             ObjectDoesNotExist,
             ActionItem.objects.get,
+            parent_reference_identifier=ae_initial.tracking_identifier,
+            parent_model='ambition_ae.aeinitial',
+            reference_model='ambition_ae.aetmg')
+
+    @tag('1')
+    def test_ae_creates_death_report_action(self):
+
+        ae_initial = mommy.make_recipe(
+            'ambition_ae.aeinitial',
+            subject_identifier=self.subject_identifier,
+            ae_grade=GRADE5,
+            sae=NO)
+
+        ActionItem.objects.get(
+            parent_reference_identifier=ae_initial.tracking_identifier,
+            parent_model='ambition_ae.aeinitial',
+            reference_model='ambition_prn.deathreport')
+
+        ActionItem.objects.get(
             parent_reference_identifier=ae_initial.tracking_identifier,
             parent_model='ambition_ae.aeinitial',
             reference_model='ambition_ae.aetmg')

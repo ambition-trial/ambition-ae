@@ -104,6 +104,14 @@ class AeFollowupAction(BaseNonAeInitialAction):
                 self.model_obj.outcome == DEAD
                 or self.model_obj.ae_grade == GRADE5))
 
+        # add next AE TMG if G5/Death
+        next_actions = self.append_to_next_if_required(
+            next_actions=next_actions,
+            action_cls=site_action_items.get(AE_TMG_ACTION),
+            required=(
+                self.model_obj.outcome == DEAD
+                or self.model_obj.ae_grade == GRADE5))
+
         # add next Study termination if LTFU
         offschedule_action_cls = self.get_offschedule_action_cls()
         if offschedule_action_cls:  # TODO: fix for tests - only None in tests
@@ -142,6 +150,11 @@ class AeInitialAction(Action):
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,
             action_cls=site_action_items.get(DEATH_REPORT_ACTION),
+            required=deceased)
+        # add next AE Tmg if G5/Death
+        next_actions = self.append_to_next_if_required(
+            next_actions=next_actions,
+            action_cls=site_action_items.get(AE_TMG_ACTION),
             required=deceased)
         # add next AeTmgAction if G4
         next_actions = self.append_to_next_if_required(
