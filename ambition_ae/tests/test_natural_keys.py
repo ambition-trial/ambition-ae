@@ -8,7 +8,7 @@ from edc_registration.models import RegisteredSubject
 from edc_sync.tests import SyncTestHelper
 from model_mommy import mommy
 from edc_sync.models import OutgoingTransaction
-from pprint import pprint
+from edc_constants.constants import NO
 
 
 @tag('sync')
@@ -30,25 +30,10 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
         self.sync_test_helper.sync_test_get_by_natural_key_attr(
             'ambition_ae')
 
-    def complete_non_crf_models(self, exclude_models=None):
-        exclude_models = exclude_models or []
-        completed_models = []
-        models = django_apps.get_app_config('ambition_ae').get_models()
-        for model in models:
-            if ((model._meta.label_lower not in exclude_models and
-                    not issubclass(model, ListModelMixin)) and
-                    not model._meta.label_lower.startswith('ambition_ae.historical')):
-                completed_models.append(
-                    mommy.make_recipe(
-                        model._meta.label_lower,
-                        subject_identifier=self.subject_identifier))
-        return completed_models
-
     def test_deserialize_ae_initial(self):
         ae_initial = mommy.make_recipe(
             'ambition_ae.aeinitial',
             subject_identifier=self.subject_identifier)
-        pprint(ae_initial.__dict__)
         for outgoing_transaction in OutgoingTransaction.objects.filter(
                 tx_name=ae_initial._meta.label_lower):
             self.sync_test_helper.sync_test_deserialize(
@@ -66,6 +51,19 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
                 tx_name=ae_tmg._meta.label_lower):
             self.sync_test_helper.sync_test_deserialize(
                 ae_tmg, outgoing_transaction)
+
+    def test_deserialize_ae_followup(self):
+        ae_initial = mommy.make_recipe(
+            'ambition_ae.aeinitial',
+            subject_identifier=self.subject_identifier)
+        ae_followup = mommy.make_recipe(
+            'ambition_ae.aefollowup',
+            ae_initial=ae_initial,
+            subject_identifier=self.subject_identifier)
+        for outgoing_transaction in OutgoingTransaction.objects.filter(
+                tx_name=ae_followup._meta.label_lower):
+            self.sync_test_helper.sync_test_deserialize(
+                ae_followup, outgoing_transaction)
 
     def test_deserialize_recurrence_symptom(self):
         recurrence_symptoms = mommy.make_recipe(

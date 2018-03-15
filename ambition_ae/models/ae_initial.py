@@ -5,7 +5,7 @@ from edc_action_item.model_mixins import ActionItemModelMixin
 from edc_base.model_fields import OtherCharField
 from edc_base.model_managers import HistoricalRecords
 from edc_base.model_mixins import BaseUuidModel
-from edc_base.sites import CurrentSiteManager, SiteModelMixin
+from edc_base.sites import SiteModelMixin
 from edc_base.model_validators import datetime_not_future
 from edc_constants.choices import YES_NO, YES_NO_NA, YES_NO_UNKNOWN
 from edc_constants.constants import NOT_APPLICABLE, UNKNOWN
@@ -16,6 +16,7 @@ from edc_identifier.model_mixins import TrackingIdentifierModelMixin
 from ..action_items import AeInitialAction
 from ..choices import STUDY_DRUG_RELATIONSHIP, SAE_REASONS, AE_CLASSIFICATION
 from ..model_mixins import AeModelMixin
+from ..managers import CurrentSiteManager
 
 
 class AeInitial(AeModelMixin, ActionItemModelMixin,
