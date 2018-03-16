@@ -6,6 +6,7 @@ from .constants import GRADE4, MODERATE
 from .models import AeInitial, AeTmg, AeFollowup
 from .models import RecurrenceSymptom, Neurological
 from .models import MeningitisSymptom
+from edc_base.utils import get_utcnow
 
 fake = Faker()
 
@@ -15,6 +16,8 @@ aeinitial = Recipe(
     ae_grade=GRADE4,
     ae_intensity=MODERATE,
     ae_study_relation_possibility=YES,
+    ae_start_date=get_utcnow().date(),
+    ae_awareness_date=get_utcnow().date(),
     ambisome_relation='not_related',
     fluconazole_relation='not_related',
     amphotericin_b_relation='not_related',
