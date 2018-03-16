@@ -445,7 +445,6 @@ class TestAeAndActions(AmbitionTestCaseMixin, TestCase):
             parent_model='ambition_ae.aeinitial',
             reference_model='ambition_ae.aetmg')
 
-    @tag('1')
     def test_ae_creates_death_report_action(self):
 
         ae_initial = mommy.make_recipe(
