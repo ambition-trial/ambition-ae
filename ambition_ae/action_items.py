@@ -20,7 +20,7 @@ RECURRENCE_OF_SYMPTOMS_ACTION = 'submit-recurrence-of-symptoms'
 
 class BaseNonAeInitialAction(Action):
 
-    parent_model_fk_attr = 'ae_initial'
+    parent_reference_model_fk_attr = 'ae_initial'
     show_link_to_changelist = True
     admin_site_name = 'ambition_ae_admin'
     priority = HIGH_PRIORITY
