@@ -1,13 +1,12 @@
 from ambition_rando.tests import AmbitionTestCaseMixin
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
+from django.test import TestCase, tag
 from edc_action_item.models import SubjectDoesNotExist
 from edc_action_item.models.action_item import ActionItem
 from edc_constants.constants import CLOSED, NO, NEW, YES
 from edc_list_data.site_list_data import site_list_data
 from edc_registration.models import RegisteredSubject
 from edc_reportable import GRADE3, GRADE4, GRADE5
-
-from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
-from django.test import TestCase, tag
 from model_mommy import mommy
 
 from ..action_items import AeFollowupAction, AeInitialAction
@@ -69,7 +68,6 @@ class TestAeAndActions(AmbitionTestCaseMixin, TestCase):
                 subject_identifier=self.subject_identifier,
                 followup=NO)
 
-    @tag('1')
     def test_fk1(self):
         ae_initial = mommy.make_recipe(
             'ambition_ae.aeinitial',

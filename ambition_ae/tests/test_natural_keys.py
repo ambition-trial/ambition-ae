@@ -1,17 +1,13 @@
 from ambition_rando.tests import AmbitionTestCaseMixin
-from django.apps import apps as django_apps
 from django.test import TestCase, tag
 from django.test.utils import override_settings
-from edc_base.model_mixins import ListModelMixin
 from edc_metadata.tests import CrfTestHelper
 from edc_registration.models import RegisteredSubject
+from edc_sync.models import OutgoingTransaction
 from edc_sync.tests import SyncTestHelper
 from model_mommy import mommy
-from edc_sync.models import OutgoingTransaction
-from edc_constants.constants import NO
 
 
-@tag('sync')
 @override_settings(SITE_ID='10')
 class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
 
