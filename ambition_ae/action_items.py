@@ -1,12 +1,11 @@
 from ambition_prn.action_items import DEATH_REPORT_ACTION
-from edc_action_item import Action, HIGH_PRIORITY, site_action_items
-from edc_constants.constants import YES, DEAD, LOST_TO_FOLLOWUP, CLOSED
+from django.core.exceptions import MultipleObjectsReturned
+from django.utils.safestring import mark_safe
+from edc_action_item import HIGH_PRIORITY, Action, site_action_items
+from edc_constants.constants import CLOSED, DEAD, LOST_TO_FOLLOWUP, YES
 from edc_reportable import GRADE3
 from edc_visit_schedule.models.subject_schedule_history import SubjectScheduleHistory
 from edc_visit_schedule.site_visit_schedules import site_visit_schedules
-
-from django.core.exceptions import MultipleObjectsReturned
-from django.utils.safestring import mark_safe
 
 from .constants import GRADE4, GRADE5
 from .email_contacts import email_contacts
