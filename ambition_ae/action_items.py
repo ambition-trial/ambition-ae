@@ -10,7 +10,6 @@ from edc_visit_schedule.site_visit_schedules import site_visit_schedules
 from .constants import GRADE4, GRADE5
 from .email_contacts import email_contacts
 
-
 AE_FOLLOWUP_ACTION = 'submit-ae-followup-report'
 AE_INITIAL_ACTION = 'submit-initial-ae-report'
 AE_TMG_ACTION = 'submit-ae-tmg-report'
@@ -18,7 +17,6 @@ RECURRENCE_OF_SYMPTOMS_ACTION = 'submit-recurrence-of-symptoms'
 
 
 class BaseNonAeInitialAction(Action):
-
     parent_reference_model_fk_attr = 'ae_initial'
     show_link_to_changelist = True
     admin_site_name = 'ambition_ae_admin'
@@ -122,7 +120,6 @@ class AeFollowupAction(BaseNonAeInitialAction):
 
 
 class AeInitialAction(Action):
-
     name = AE_INITIAL_ACTION
     display_name = 'Submit AE Initial Report'
     reference_model = 'ambition_ae.aeinitial'
