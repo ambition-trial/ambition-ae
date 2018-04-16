@@ -16,7 +16,7 @@ setup(
     author_email='ew2789@gmail.com',
     packages=find_packages(),
     include_package_data=True,
-    url='https://github.com/botswana-harvard/ambition-ae',
+    url='https://github.com/ambition-study/ambition-ae',
     license='GPL license, see LICENSE',
     description='Adverse Event models and handling.',
     long_description=README,
