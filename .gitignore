@@ -1,3 +1,5 @@
+etc/
+
 # Swap
 [._]*.s[a-v][a-z]
 [._]*.sw[a-p]
@@ -17,9 +19,7 @@ tags
 .project
 .settings/
 db.sqlite3
-etc/
 .DS_Store
-geckodriver.log
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
