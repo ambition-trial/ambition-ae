@@ -3,15 +3,15 @@ from django.test import TestCase, tag
 from django.test.utils import override_settings
 from edc_metadata.tests import CrfTestHelper
 from edc_registration.models import RegisteredSubject
-from edc_sync.models import OutgoingTransaction
-from edc_sync.tests import SyncTestHelper
+from django_offline.models import OutgoingTransaction
+from django_offline.tests import OfflineTestHelper
 from model_mommy import mommy
 
 
 @override_settings(SITE_ID='10')
 class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
 
-    sync_test_helper = SyncTestHelper()
+    offline_test_helper = OfflineTestHelper()
     crf_test_helper = CrfTestHelper()
 
     def setUp(self):
@@ -20,10 +20,10 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
             subject_identifier=self.subject_identifier)
 
     def test_natural_key_attrs(self):
-        self.sync_test_helper.sync_test_natural_key_attr('ambition_ae')
+        self.offline_test_helper.offline_test_natural_key_attr('ambition_ae')
 
     def test_get_by_natural_key_attr(self):
-        self.sync_test_helper.sync_test_get_by_natural_key_attr(
+        self.offline_test_helper.offline_test_get_by_natural_key_attr(
             'ambition_ae')
 
     def test_deserialize_ae_initial(self):
@@ -32,7 +32,7 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
             subject_identifier=self.subject_identifier)
         for outgoing_transaction in OutgoingTransaction.objects.filter(
                 tx_name=ae_initial._meta.label_lower):
-            self.sync_test_helper.sync_test_deserialize(
+            self.offline_test_helper.offline_test_deserialize(
                 ae_initial, outgoing_transaction)
 
     def test_deserialize_ae_tmg(self):
@@ -45,7 +45,7 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
             subject_identifier=self.subject_identifier)
         for outgoing_transaction in OutgoingTransaction.objects.filter(
                 tx_name=ae_tmg._meta.label_lower):
-            self.sync_test_helper.sync_test_deserialize(
+            self.offline_test_helper.offline_test_deserialize(
                 ae_tmg, outgoing_transaction)
 
     def test_deserialize_ae_followup(self):
@@ -58,7 +58,7 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
             subject_identifier=self.subject_identifier)
         for outgoing_transaction in OutgoingTransaction.objects.filter(
                 tx_name=ae_followup._meta.label_lower):
-            self.sync_test_helper.sync_test_deserialize(
+            self.offline_test_helper.offline_test_deserialize(
                 ae_followup, outgoing_transaction)
 
     def test_deserialize_recurrence_symptom(self):
@@ -67,5 +67,5 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
             subject_identifier=self.subject_identifier)
         for outgoing_transaction in OutgoingTransaction.objects.filter(
                 tx_name=recurrence_symptoms._meta.label_lower):
-            self.sync_test_helper.sync_test_deserialize(
+            self.offline_test_helper.offline_test_deserialize(
                 recurrence_symptoms, outgoing_transaction)

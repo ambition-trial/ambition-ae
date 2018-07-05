@@ -1,12 +1,12 @@
 from django.db import models
 from django.db.models.deletion import PROTECT
 from edc_action_item.model_mixins import ActionModelMixin
-from edc_base.model_fields import OtherCharField
 from edc_base.model_managers import HistoricalRecords
 from edc_base.model_mixins import BaseUuidModel, ReportStatusModelMixin
 from edc_base.model_validators.date import datetime_not_future
 from edc_base.sites import SiteModelMixin
 from edc_base.utils import get_utcnow
+from edc_model_fields.fields import OtherCharField
 
 from ..action_items import AE_TMG_ACTION
 from ..choices import AE_CLASSIFICATION

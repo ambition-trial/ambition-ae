@@ -52,8 +52,8 @@ INSTALLED_APPS = [
     'edc_registration.apps.AppConfig',
     'edc_protocol.apps.AppConfig',
     'edc_device.apps.AppConfig',
-    'edc_sync.apps.AppConfig',
-    'edc_sync_files.apps.AppConfig',
+    'django_offline.apps.AppConfig',
+    'django_offline_files.apps.AppConfig',
     'edc_list_data.apps.AppConfig',
     'edc_identifier.apps.AppConfig',
     'edc_action_item.apps.AppConfig',
@@ -166,9 +166,9 @@ DASHBOARD_URL_NAMES = {
 }
 
 EDC_SYNC_SERVER_IP = None
-EDC_SYNC_FILES_REMOTE_HOST = None
-EDC_SYNC_FILES_USER = None
-EDC_SYNC_FILES_USB_VOLUME = None
+DJANGO_OFFLINE_FILES_REMOTE_HOST = None
+DJANGO_OFFLINE_FILES_USER = None
+DJANGO_OFFLINE_FILES_USB_VOLUME = None
 
 COUNTRY = 'botswana'
 HOLIDAY_FILE = os.path.join(BASE_DIR, 'holidays.csv')
