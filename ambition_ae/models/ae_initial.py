@@ -2,7 +2,7 @@ from ambition_rando import SINGLE_DOSE, CONTROL, SINGLE_DOSE_NAME, CONTROL_NAME
 from django.contrib.sites.models import Site
 from django.db import models
 from django.utils.safestring import mark_safe
-from edc_action_item.model_mixins import ActionModelMixin
+from edc_action_item.models import ActionModelMixin
 from edc_base.model_managers import HistoricalRecords
 from edc_base.model_mixins import BaseUuidModel
 from edc_base.model_validators import datetime_not_future
