@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from edc_action_item import action_fieldset_tuple
 from edc_model_admin import audit_fieldset_tuple
 
 from ..admin_site import ambition_ae_admin
@@ -25,8 +26,7 @@ class AeFollowupAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelA
                 'relevant_history',
                 'followup')},
          ),
-        ['Action', {'classes': ('collapse', ), 'fields': (
-            'tracking_identifier', 'action_identifier')}],
+        action_fieldset_tuple,
         audit_fieldset_tuple
     )
 

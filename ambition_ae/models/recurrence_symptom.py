@@ -185,6 +185,9 @@ class RecurrenceSymptom(ActionModelMixin, SiteModelMixin, BaseUuidModel):
 
     history = HistoricalRecords()
 
+    def __str__(self):
+        return f'{self.action_identifier[-9:]}'
+
     def natural_key(self):
         return (self.tracking_identifier, )
 
