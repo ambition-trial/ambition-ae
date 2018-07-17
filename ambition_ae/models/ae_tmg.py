@@ -80,7 +80,7 @@ class AeTmg(ActionModelMixin, ReportStatusModelMixin,
 
     def natural_key(self):
         return (self.report_datetime, ) + self.ae_initial.natural_key()
-    natural_key.dependencies = ['ambition_ae.ae_initial', 'sites.Site']
+    natural_key.dependencies = ['ambition_ae.aeinitial', 'sites.Site']
 
     @property
     def action_item_reason(self):
