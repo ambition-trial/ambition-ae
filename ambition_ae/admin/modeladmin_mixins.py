@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.urls.base import reverse
 from django_revision.modeladmin_mixin import ModelAdminRevisionMixin
+from edc_action_item import action_fields
 from edc_base.sites.admin import ModelAdminSiteMixin
 from edc_model_admin import (
     ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin,
@@ -55,4 +56,4 @@ class NonAeInitialModelAdminMixin:
         fields = super().get_readonly_fields(request, obj=obj)
         if obj:
             fields = fields + ('ae_initial', )
-        return fields + ('tracking_identifier', 'action_identifier')
+        return fields + action_fields

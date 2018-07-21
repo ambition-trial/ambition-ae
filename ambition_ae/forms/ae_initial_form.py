@@ -1,13 +1,13 @@
+from ambition_ae.models.ae_followup import AeFollowup
 from ambition_rando.models import RandomizationList
 from django import forms
+from django.urls.base import reverse
+from django.utils.safestring import mark_safe
 from edc_form_validators import FormValidatorMixin
 
 from ..form_validators import AeInitialFormValidator
 from ..models import AeInitial
 from .modelform_mixin import ModelFormMixin
-from ambition_ae.models.ae_followup import AeFollowup
-from django.urls.base import reverse
-from django.utils.safestring import mark_safe
 
 
 class AeInitialForm(FormValidatorMixin, ModelFormMixin, forms.ModelForm):
