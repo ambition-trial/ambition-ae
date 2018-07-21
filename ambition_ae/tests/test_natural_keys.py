@@ -3,8 +3,8 @@ from django.test import TestCase, tag
 from django.test.utils import override_settings
 from edc_metadata.tests import CrfTestHelper
 from edc_registration.models import RegisteredSubject
-from django_offline.models import OutgoingTransaction
-from django_offline.tests import OfflineTestHelper
+from django_collect_offline.models import OutgoingTransaction
+from django_collect_offline.tests import OfflineTestHelper
 from model_mommy import mommy
 
 
