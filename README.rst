@@ -1,4 +1,16 @@
-[![Build Status](https://travis-ci.com/ambition-trial/ambition-ae.svg?branch=develop)](https://travis-ci.com/ambition-trial/ambition-ae) [![Coverage Status](https://coveralls.io/repos/ambition-trial/ambition-ae/badge.svg?branch=develop&service=github)](https://coveralls.io/github/ambition-trial/ambition-ae?branch=develop)
 
-# ambition_ae
-Adverse Events models and handling
+|pypi| |travis| |coverage|
+
+ambition-ae
+------------------
+
+Adverse event handling
+
+.. |pypi| image:: https://img.shields.io/pypi/v/ambition-ae.svg
+    :target: https://pypi.python.org/pypi/ambition-ae
+    
+.. |travis| image:: https://travis-ci.com/ambition-trial/ambition-ae.svg?branch=develop
+    :target: https://travis-ci.com/ambition-trial/ambition-ae
+    
+.. |coverage| image:: https://coveralls.io/repos/github/ambition-trial/ambition-ae/badge.svg?branch=develop
+    :target: https://coveralls.io/github/ambition-trial/ambition-ae?branch=develop
