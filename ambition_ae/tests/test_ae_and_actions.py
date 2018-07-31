@@ -10,9 +10,7 @@ from edc_reportable import GRADE3, GRADE4, GRADE5
 from model_mommy import mommy
 
 from ..action_items import AeFollowupAction, AeInitialAction
-from ..models import AeInitial, AeFollowup
-from ambition_ae.models.ae_tmg import AeTmg
-from pprint import pprint
+from ..models import AeInitial, AeFollowup, AeTmg
 
 
 class TestAeAndActions(AmbitionTestCaseMixin, TestCase):
