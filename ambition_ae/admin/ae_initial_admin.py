@@ -83,8 +83,9 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
                    'ae_intensity', 'sae', 'sae_reason', 'susar',
                    'susar_reported']
 
-    search_fields = ['action_identifier',
-                     'tracking_identifier', 'subject_identifier']
+    search_fields = ['subject_identifier',
+                     'action_identifier',
+                     'tracking_identifier']
 
     def get_readonly_fields(self, request, obj=None):
         fields = super().get_readonly_fields(request, obj=obj)
