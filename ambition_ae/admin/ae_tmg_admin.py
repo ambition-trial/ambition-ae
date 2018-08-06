@@ -22,9 +22,11 @@ class AeTmgAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelAdmin)
 
     list_filter = ('report_datetime', 'report_status')
 
-    search_fields = ['ae_initial__tracking_identifier',
+    search_fields = ['subject_identifier',
+                     'action_identifier',
                      'ae_initial__action_identifier',
-                     'subject_identifier', 'action_identifier', 'tracking_identifier']
+                     'ae_initial__tracking_identifier',
+                     'tracking_identifier']
 
     fieldsets = (
         (None, {
