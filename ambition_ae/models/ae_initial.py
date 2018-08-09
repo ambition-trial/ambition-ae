@@ -9,6 +9,7 @@ from edc_base.model_validators import datetime_not_future
 from edc_base.sites import SiteModelMixin
 from edc_constants.choices import YES_NO, YES_NO_NA, YES_NO_UNKNOWN
 from edc_constants.constants import NOT_APPLICABLE, UNKNOWN
+from edc_identifier.model_mixins import TrackingModelMixin
 from edc_model_fields.fields import OtherCharField
 
 from ..action_items import AE_INITIAL_ACTION
@@ -34,7 +35,8 @@ class CurrentSiteManager(BaseManager, BaseCurrentSiteManager):
     pass
 
 
-class AeInitial(AeModelMixin, ActionModelMixin, SiteModelMixin, BaseUuidModel):
+class AeInitial(AeModelMixin, ActionModelMixin, TrackingModelMixin,
+                SiteModelMixin, BaseUuidModel):
 
     tracking_identifier_prefix = 'AE'
 
