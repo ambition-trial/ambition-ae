@@ -6,6 +6,7 @@ from edc_base.model_mixins import BaseUuidModel, ReportStatusModelMixin
 from edc_base.model_validators.date import datetime_not_future
 from edc_base.sites import SiteModelMixin
 from edc_base.utils import get_utcnow
+from edc_identifier.model_mixins import TrackingModelMixin
 from edc_model_fields.fields import OtherCharField
 
 from ..action_items import AE_TMG_ACTION
@@ -14,7 +15,7 @@ from .ae_initial import AeInitial
 from .managers import CurrentSiteManager, AeManager
 
 
-class AeTmg(ActionModelMixin, ReportStatusModelMixin,
+class AeTmg(ActionModelMixin, TrackingModelMixin, ReportStatusModelMixin,
             SiteModelMixin, BaseUuidModel):
 
     action_name = AE_TMG_ACTION

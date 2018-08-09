@@ -10,6 +10,7 @@ from edc_base.sites.site_model_mixin import SiteModelMixin
 from edc_base.utils import get_utcnow
 from edc_constants.choices import YES_NO
 from edc_constants.constants import YES, NOT_APPLICABLE, NO
+from edc_identifier.model_mixins import TrackingModelMixin
 
 from ..action_items import AE_FOLLOWUP_ACTION
 from ..admin_site import ambition_ae_admin
@@ -18,7 +19,7 @@ from .ae_initial import AeInitial
 from .managers import CurrentSiteManager, AeManager
 
 
-class AeFollowup(ActionModelMixin, SiteModelMixin, BaseUuidModel):
+class AeFollowup(ActionModelMixin, TrackingModelMixin, SiteModelMixin, BaseUuidModel):
 
     action_name = AE_FOLLOWUP_ACTION
 

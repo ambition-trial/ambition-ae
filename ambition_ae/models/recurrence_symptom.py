@@ -8,6 +8,7 @@ from edc_base.sites import CurrentSiteManager as BaseCurrentSiteManager, SiteMod
 from edc_base.model_validators import date_not_future
 from edc_base.utils import get_utcnow
 from edc_constants.choices import YES_NO, YES_NO_NA, NOT_APPLICABLE
+from edc_identifier.model_mixins import TrackingModelMixin
 
 from ..action_items import RECURRENCE_OF_SYMPTOMS_ACTION
 from ..choices import DR_OPINION, STEROIDS_CHOICES, YES_NO_ALREADY_ARV
@@ -27,7 +28,8 @@ class CurrentSiteManager(BaseManager, BaseCurrentSiteManager):
     pass
 
 
-class RecurrenceSymptom(ActionModelMixin, SiteModelMixin, BaseUuidModel):
+class RecurrenceSymptom(ActionModelMixin, TrackingModelMixin,
+                        SiteModelMixin, BaseUuidModel):
 
     tracking_identifier_prefix = 'RS'
 
