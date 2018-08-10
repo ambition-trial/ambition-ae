@@ -29,8 +29,8 @@ setup(
         'ambition-rando',
         'ambition-prn',
         'ambition-sites',
-        'django_collect_offline',
-        'django_collect_offline-files'
+        'django-collect-offline',
+        'django-collect-offline-files',
         'edc-action-item',
         'edc-base',
         'edc-reportable',
