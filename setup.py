@@ -25,6 +25,17 @@ setup(
     long_description=README,
     zip_safe=False,
     keywords='django ambition adverse event',
+    install_requires=[
+        'ambition-rando',
+        'ambition-prn',
+        'ambition-sites',
+        'django-collect-offline',
+        'django-collect-offline-files',
+        'edc-action-item',
+        'edc-base',
+        'edc-reportable',
+        'edc-subject-dashboard',
+    ],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
