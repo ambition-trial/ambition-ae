@@ -3,7 +3,7 @@ from edc_base.model_validators.date import date_not_future
 from edc_base.utils import get_utcnow
 from edc_constants.constants import NOT_APPLICABLE
 
-from ..choices import AE_GRADE, AE_INTENSITY
+from ..choices import AE_GRADE
 
 
 class AeModelMixin(models.Model):
@@ -39,11 +39,6 @@ class AeModelMixin(models.Model):
         verbose_name='Severity of AE',
         max_length=25,
         choices=AE_GRADE)
-
-    ae_intensity = models.CharField(
-        verbose_name='What is the intensity AE',
-        max_length=25,
-        choices=AE_INTENSITY)
 
     class Meta:
         abstract = True

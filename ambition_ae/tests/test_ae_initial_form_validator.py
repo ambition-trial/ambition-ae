@@ -1,18 +1,11 @@
-from ambition_rando.constants import SINGLE_DOSE, CONTROL
-from ambition_rando.randomization_list_importer import RandomizationListImporter
-from ambition_rando.randomizer import Randomizer
-from ambition_rando.tests.make_test_list import make_test_list
 from django import forms
 from django.core.exceptions import ValidationError
 from django.test import TestCase, tag
 from edc_base.tests import SiteTestCaseMixin
-from edc_base.utils import get_utcnow
 from edc_constants.constants import YES, NO, NOT_APPLICABLE
 from edc_form_validators import NOT_REQUIRED_ERROR
-from edc_registration.models import RegisteredSubject
 
 from ..form_validators import AeInitialFormValidator
-from ..forms import AeInitialForm
 
 
 class TestAeInitialFormValidator(SiteTestCaseMixin, TestCase):
@@ -137,30 +130,3 @@ class TestAeInitialFormValidator(SiteTestCaseMixin, TestCase):
         form_validator = AeInitialFormValidator(cleaned_data=cleaned_data)
         self.assertRaises(ValidationError, form_validator.validate)
         self.assertIn('susar_reported', form_validator._errors)
-
-    def test_ae_initial_form(self):
-        subject_identifier = '12345'
-        full_path = make_test_list(site_names=self.site_names)
-        RandomizationListImporter(path=full_path, overwrite=True)
-        rs = RegisteredSubject.objects.create(
-            subject_identifier=subject_identifier)
-        randomizer = Randomizer(
-            subject_identifier=subject_identifier,
-            site=rs.site,
-            report_datetime=get_utcnow())
-        drug_assignment = randomizer.model_obj.drug_assignment
-        form = AeInitialForm(
-            initial={'subject_identifier': subject_identifier})
-        self.assertEqual(
-            form.initial.get('regimen'), drug_assignment)
-        form = AeInitialForm(
-            initial={'subject_identifier': subject_identifier})
-        form.is_valid()
-        self.assertNotIn('regimen', form.errors)
-        opposite_drug_assignment = (
-            CONTROL if drug_assignment == SINGLE_DOSE else SINGLE_DOSE)
-        form = AeInitialForm(
-            data={'subject_identifier': subject_identifier,
-                  'regimen': opposite_drug_assignment})
-        form.is_valid()
-        self.assertIn('regimen', form.errors)

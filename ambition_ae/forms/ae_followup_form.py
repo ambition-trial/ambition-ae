@@ -1,5 +1,4 @@
 from django import forms
-from edc_base.sites.forms import SiteModelFormMixin
 from edc_constants.constants import YES, DEAD
 from edc_form_validators import FormValidatorMixin, FormValidator
 

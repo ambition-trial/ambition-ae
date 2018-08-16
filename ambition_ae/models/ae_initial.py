@@ -1,7 +1,5 @@
-from ambition_rando import SINGLE_DOSE, CONTROL, SINGLE_DOSE_NAME, CONTROL_NAME
 from django.contrib.sites.models import Site
 from django.db import models
-from django.utils.safestring import mark_safe
 from edc_action_item.models import ActionModelMixin
 from edc_base.model_managers import HistoricalRecords
 from edc_base.model_mixins import BaseUuidModel
@@ -50,17 +48,6 @@ class AeInitial(AeModelMixin, ActionModelMixin, TrackingModelMixin,
         max_length=250,
         blank=True,
         null=True)
-
-    # TODO: Get this from the Randomization
-    regimen = models.CharField(
-        verbose_name='Patient’s treatment regimen',
-        max_length=50,
-        choices=(
-            (SINGLE_DOSE, 'Single dose'),
-            (CONTROL, 'Control'),
-        ),
-        help_text=mark_safe(
-            f'<ul><li>{SINGLE_DOSE_NAME}<li>{CONTROL_NAME}</ul>'))
 
     ae_study_relation_possibility = models.CharField(
         verbose_name=(

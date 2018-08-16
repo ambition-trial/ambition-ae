@@ -16,7 +16,6 @@ aeinitial = Recipe(
     tracking_identifier=None,
     ae_description='A description of this event',
     ae_grade=GRADE4,
-    ae_intensity=MODERATE,
     ae_study_relation_possibility=YES,
     ae_start_date=get_utcnow().date(),
     ae_awareness_date=get_utcnow().date(),
