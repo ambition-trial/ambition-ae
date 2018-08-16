@@ -27,13 +27,11 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
                 'subject_identifier',
                 'ae_classification',
                 'ae_classification_other',
-                'regimen',
                 'report_datetime',
                 'ae_description',
                 'ae_awareness_date',
                 'ae_start_date',
                 'ae_grade',
-                'ae_intensity',
                 'ae_study_relation_possibility',
                 'ambisome_relation',
                 'fluconazole_relation',
@@ -59,13 +57,11 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
         'ae_classification': admin.VERTICAL,
         'ae_cm_recurrence': admin.VERTICAL,
         'ae_grade': admin.VERTICAL,
-        'ae_intensity': admin.VERTICAL,
         'ae_study_relation_possibility': admin.VERTICAL,
         'ambisome_relation': admin.VERTICAL,
         'amphotericin_b_relation': admin.VERTICAL,
         'fluconazole_relation': admin.VERTICAL,
         'flucytosine_relation': admin.VERTICAL,
-        'regimen': admin.VERTICAL,
         'sae': admin.VERTICAL,
         'sae_reason': admin.VERTICAL,
         'susar': admin.VERTICAL,
@@ -80,7 +76,7 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
                     'susar', 'susar_reported']
 
     list_filter = ['ae_awareness_date', 'ae_grade', 'ae_classification',
-                   'ae_intensity', 'sae', 'sae_reason', 'susar',
+                   'sae', 'sae_reason', 'susar',
                    'susar_reported']
 
     search_fields = ['subject_identifier',
