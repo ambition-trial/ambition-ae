@@ -163,6 +163,8 @@ DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME = None
 COUNTRY = 'botswana'
 HOLIDAY_FILE = os.path.join(BASE_DIR, APP_NAME, 'tests', 'holidays.csv')
 
+EDC_BOOTSTRAP = 3
+
 if 'test' in sys.argv:
 
     class DisableMigrations:
