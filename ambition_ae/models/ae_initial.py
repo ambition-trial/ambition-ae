@@ -55,25 +55,38 @@ class AeInitial(AeModelMixin, ActionModelMixin, TrackingModelMixin,
         max_length=10,
         choices=YES_NO_UNKNOWN)
 
+    # removed issue #4
     ambisome_relation = models.CharField(
         verbose_name='Relationship to Ambisome:',
         max_length=25,
-        choices=STUDY_DRUG_RELATIONSHIP)
+        choices=STUDY_DRUG_RELATIONSHIP,
+        null=True,
+        editable=False)
 
     fluconazole_relation = models.CharField(
         verbose_name='Relationship to Fluconozole:',
         max_length=25,
         choices=STUDY_DRUG_RELATIONSHIP)
 
+    # removed issue #4
     amphotericin_b_relation = models.CharField(
         verbose_name='Relationship to Amphotericin B:',
         max_length=25,
-        choices=STUDY_DRUG_RELATIONSHIP)
+        choices=STUDY_DRUG_RELATIONSHIP,
+        null=True,
+        editable=False)
 
     flucytosine_relation = models.CharField(
         verbose_name='Relationship to Flucytosine:',
         max_length=25,
         choices=STUDY_DRUG_RELATIONSHIP)
+
+    # added issue #4
+    amphotericin_formulation = models.CharField(
+        verbose_name='Amphotericin formulation:',
+        max_length=25,
+        choices=STUDY_DRUG_RELATIONSHIP,
+        null=True)
 
     details_last_study_drug = models.TextField(
         verbose_name='Details of the last implicated drug (name, dose, route):',

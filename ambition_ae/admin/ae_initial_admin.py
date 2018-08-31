@@ -16,7 +16,6 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
 
     form = AeInitialForm
     email_contact = email_contacts.get('ae_reports')
-
     additional_instructions = mark_safe(
         'Complete the initial AE report and forward to the TMG. '
         f'Email to <a href="mailto:{email_contact}">{email_contact}</a>')
@@ -33,10 +32,11 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
                 'ae_start_date',
                 'ae_grade',
                 'ae_study_relation_possibility',
-                'ambisome_relation',
+                # 'ambisome_relation',
                 'fluconazole_relation',
-                'amphotericin_b_relation',
+                # 'amphotericin_b_relation',
                 'flucytosine_relation',
+                'amphotericin_formulation',
                 'details_last_study_drug',
                 'med_administered_datetime',
                 'ae_cause',
@@ -58,8 +58,9 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
         'ae_cm_recurrence': admin.VERTICAL,
         'ae_grade': admin.VERTICAL,
         'ae_study_relation_possibility': admin.VERTICAL,
-        'ambisome_relation': admin.VERTICAL,
-        'amphotericin_b_relation': admin.VERTICAL,
+        # 'ambisome_relation': admin.VERTICAL,
+        # 'amphotericin_b_relation': admin.VERTICAL,
+        'amphotericin_formulation': admin.VERTICAL,
         'fluconazole_relation': admin.VERTICAL,
         'flucytosine_relation': admin.VERTICAL,
         'sae': admin.VERTICAL,
