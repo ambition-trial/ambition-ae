@@ -8,6 +8,7 @@ from edc_base.sites import SiteModelMixin
 from edc_base.utils import get_utcnow
 from edc_identifier.model_mixins import TrackingModelMixin
 from edc_model_fields.fields import OtherCharField
+from edc_search.model_mixins import SearchSlugModelMixin, SearchSlugManager
 
 from ..action_items import AE_TMG_ACTION
 from ..choices import AE_CLASSIFICATION
@@ -15,8 +16,13 @@ from .ae_initial import AeInitial
 from .managers import CurrentSiteManager, AeManager
 
 
+class AeTmgManager(SearchSlugManager, AeManager):
+
+    pass
+
+
 class AeTmg(ActionModelMixin, TrackingModelMixin, ReportStatusModelMixin,
-            SiteModelMixin, BaseUuidModel):
+            SearchSlugModelMixin, SiteModelMixin, BaseUuidModel):
 
     action_name = AE_TMG_ACTION
 
@@ -68,7 +74,7 @@ class AeTmg(ActionModelMixin, TrackingModelMixin, ReportStatusModelMixin,
 
     on_site = CurrentSiteManager()
 
-    objects = AeManager()
+    objects = AeTmgManager()
 
     history = HistoricalRecords()
 
@@ -86,6 +92,12 @@ class AeTmg(ActionModelMixin, TrackingModelMixin, ReportStatusModelMixin,
     @property
     def action_item_reason(self):
         return self.ae_initial.ae_description
+
+    def get_search_slug_fields(self):
+        fields = super().get_search_slug_fields()
+        fields.append('subject_identifier')
+        fields.append('status')
+        return fields
 
     class Meta:
         verbose_name = 'AE TMG Report'
