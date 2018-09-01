@@ -17,6 +17,8 @@ from .list_models import Neurological, MeningitisSymptom, AntibioticTreatment
 
 class BaseManager(models.Manager):
 
+    use_in_migrations = True
+
     def get_by_natural_key(self, action_identifier, site_name):
         site = Site.objects.get(name=site_name)
         return self.get(

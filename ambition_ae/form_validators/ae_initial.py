@@ -7,7 +7,7 @@ class AeInitialFormValidator(FormValidator):
     def clean(self):
 
         drugs = ['fluconazole_relation', 'flucytosine_relation',
-                 'amphotericin_formulation']
+                 'amphotericin_relation']
         for drug in drugs:
             self.applicable_if(
                 YES, UNKNOWN, field='ae_study_relation_possibility',

@@ -18,6 +18,8 @@ from ..managers import CurrentSiteManager as BaseCurrentSiteManager
 
 class BaseManager(models.Manager):
 
+    use_in_migrations = True
+
     def get_by_natural_key(self, action_identifier, site_name):
         site = Site.objects.get(name=site_name)
         return self.get(
@@ -26,6 +28,7 @@ class BaseManager(models.Manager):
 
 
 class AeInitialManager(BaseManager):
+
     pass
 
 
@@ -82,7 +85,7 @@ class AeInitial(AeModelMixin, ActionModelMixin, TrackingModelMixin,
         choices=STUDY_DRUG_RELATIONSHIP)
 
     # added issue #4
-    amphotericin_formulation = models.CharField(
+    amphotericin_relation = models.CharField(
         verbose_name='Amphotericin formulation:',
         max_length=25,
         choices=STUDY_DRUG_RELATIONSHIP,
