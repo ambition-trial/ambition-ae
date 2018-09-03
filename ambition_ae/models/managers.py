@@ -7,6 +7,8 @@ from .ae_initial import AeInitial
 
 class BaseManager(models.Manager):
 
+    use_in_migrations = True
+
     def get_by_natural_key(self, action_identifier, site_name,
                            ae_initial_action_identifier, *args):
         site = Site.objects.get(name=site_name)
@@ -20,6 +22,7 @@ class BaseManager(models.Manager):
 
 
 class AeManager(BaseManager):
+
     pass
 
 

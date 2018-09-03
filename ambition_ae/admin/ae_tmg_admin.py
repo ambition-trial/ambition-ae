@@ -7,6 +7,8 @@ from ..admin_site import ambition_ae_admin
 from ..forms import AeTmgForm
 from ..models import AeTmg
 from .modeladmin_mixins import ModelAdminMixin, NonAeInitialModelAdminMixin
+from django.urls.base import reverse
+from django.conf import settings
 
 
 @admin.register(AeTmg, site=ambition_ae_admin)
@@ -15,6 +17,7 @@ class AeTmgAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelAdmin)
     form = AeTmgForm
 
     additional_instructions = 'For completion by TMG Investigators Only'
+    subject_dashboard_url = 'tmg_listboard_url'
 
     list_display = ['subject_identifier', 'dashboard', 'status', 'ae_initial',
                     'report_datetime', 'officials_notified',
@@ -50,3 +53,7 @@ class AeTmgAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelAdmin)
     radio_fields = {
         'report_status': admin.VERTICAL,
         'ae_classification': admin.VERTICAL}
+
+#     def get_queryset(self, request):
+#         qs = super().get_queryset(request)
+#         return qs.filter(user_created=request.user)

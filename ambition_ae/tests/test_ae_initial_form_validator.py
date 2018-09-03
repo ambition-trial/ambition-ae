@@ -31,58 +31,41 @@ class TestAeInitialFormValidator(SiteTestCaseMixin, TestCase):
                       form_validator._errors)
         self.assertIn(NOT_REQUIRED_ERROR, form_validator._error_codes)
 
-    def test_ambisome_relation_invalid(self):
-        cleaned_data = {
-            'ae_study_relation_possibility': YES,
-            'ambisome_relation': NOT_APPLICABLE}
-        form_validator = AeInitialFormValidator(cleaned_data=cleaned_data)
-        self.assertRaises(ValidationError, form_validator.validate)
-        self.assertIn('ambisome_relation', form_validator._errors)
-
     def test_fluconazole_relation_invalid(self):
         cleaned_data = {
             'ae_study_relation_possibility': YES,
-            'ambisome_relation': 'possibly_related',
+            'amphotericin_relation': 'possibly_related',
+            'flucytosine_relation': 'possibly_related',
             'fluconazole_relation': NOT_APPLICABLE}
         form_validator = AeInitialFormValidator(cleaned_data=cleaned_data)
         self.assertRaises(ValidationError, form_validator.validate)
         self.assertIn('fluconazole_relation', form_validator._errors)
 
-    def test_amphotericin_b_relation_invalid(self):
+    def test_amphotericin_relation_invalid(self):
         cleaned_data = {
             'ae_study_relation_possibility': YES,
-            'ambisome_relation': 'possibly_related',
             'fluconazole_relation': 'possibly_related',
-            'amphotericin_b_relation': NOT_APPLICABLE}
+            'flucytosine_relation': 'possibly_related',
+            'amphotericin_relation': NOT_APPLICABLE}
         form_validator = AeInitialFormValidator(cleaned_data=cleaned_data)
         self.assertRaises(ValidationError, form_validator.validate)
-        self.assertIn('amphotericin_b_relation', form_validator._errors)
+        self.assertIn('amphotericin_relation', form_validator._errors)
 
     def test_flucytosine_relation_invalid(self):
         cleaned_data = {
             'ae_study_relation_possibility': YES,
-            'ambisome_relation': 'possibly_related',
             'fluconazole_relation': 'possibly_related',
-            'amphotericin_b_relation': 'not_related',
+            'amphotericin_relation': 'not_related',
             'flucytosine_relation': NOT_APPLICABLE}
         form_validator = AeInitialFormValidator(cleaned_data=cleaned_data)
         self.assertRaises(ValidationError, form_validator.validate)
         self.assertIn('flucytosine_relation', form_validator._errors)
 
-    def test_ambisome_relation_valid(self):
-        cleaned_data = {
-            'ae_study_relation_possibility': YES,
-            'ambisome_relation': 'not_related'}
-        form_validator = AeInitialFormValidator(cleaned_data=cleaned_data)
-        try:
-            form_validator.validate()
-        except ValidationError as e:
-            self.fail(f'ValidationError unexpectedly raised. Got{e}')
-
     def test_fluconazole_relation_valid(self):
         cleaned_data = {
             'ae_study_relation_possibility': YES,
-            'ambisome_relation': 'not_related',
+            'amphotericin_relation': 'not_related',
+            'flucytosine_relation': 'not_related',
             'fluconazole_relation': 'possibly_related'}
         form_validator = AeInitialFormValidator(cleaned_data=cleaned_data)
         try:
@@ -90,12 +73,12 @@ class TestAeInitialFormValidator(SiteTestCaseMixin, TestCase):
         except ValidationError as e:
             self.fail(f'ValidationError unexpectedly raised. Got{e}')
 
-    def test_amphotericin_b_relation_valid(self):
+    def test_amphotericin_relation_valid(self):
         cleaned_data = {
             'ae_study_relation_possibility': YES,
-            'ambisome_relation': 'not_related',
             'fluconazole_relation': 'possibly_related',
-            'amphotericin_b_relation': 'possibly_related'}
+            'flucytosine_relation': 'not_related',
+            'amphotericin_relation': 'possibly_related'}
         form_validator = AeInitialFormValidator(cleaned_data=cleaned_data)
         try:
             form_validator.validate()
@@ -105,9 +88,8 @@ class TestAeInitialFormValidator(SiteTestCaseMixin, TestCase):
     def test_flucytosine_relation_valid(self):
         cleaned_data = {
             'ae_study_relation_possibility': YES,
-            'ambisome_relation': 'not_related',
             'fluconazole_relation': 'possibly_related',
-            'amphotericin_b_relation': 'possibly_related',
+            'amphotericin_relation': 'possibly_related',
             'flucytosine_relation': 'not_related'}
         form_validator = AeInitialFormValidator(cleaned_data=cleaned_data)
         try:
