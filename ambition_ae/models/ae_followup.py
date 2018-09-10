@@ -79,6 +79,12 @@ class AeFollowup(ActionModelMixin, TrackingModelMixin, SiteModelMixin, BaseUuidM
     natural_key.dependencies = ['ambition_ae.aeinitial', 'sites.site']
 
     @property
+    def report_date(self):
+        """Returns a date based on the UTC datetime.
+        """
+        return self.report_datetime.date()
+
+    @property
     def next(self):
         if self.followup == YES:
             return 'AE Followup'
@@ -105,7 +111,7 @@ class AeFollowup(ActionModelMixin, TrackingModelMixin, SiteModelMixin, BaseUuidM
                 f'{namespace}:{url_name}_changelist')
             return mark_safe(
                 f'<a data-toggle="tooltip" title="go to ae initial report" '
-                f'href="{url}?q={self.ae_initial.tracking_identifier}">'
+                f'href="{url}?q={self.ae_initial.action_identifier}">'
                 f'{self.ae_initial.identifier}</a>')
         return None
 
