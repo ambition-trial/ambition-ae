@@ -1,3 +1,4 @@
+from django.apps import apps as django_apps
 from django.contrib.sites.models import Site
 from django.db import models
 from edc_action_item.models import ActionModelMixin
@@ -169,7 +170,7 @@ class AeInitial(AeModelMixin, ActionModelMixin, TrackingModelMixin,
     history = HistoricalRecords()
 
     def __str__(self):
-        return f'{self.tracking_identifier[-9:]} Grade {self.ae_grade}'
+        return f'{self.action_identifier[-9:]} Grade {self.ae_grade}'
 
     def natural_key(self):
         return (self.action_identifier, self.site.name)
@@ -180,10 +181,15 @@ class AeInitial(AeModelMixin, ActionModelMixin, TrackingModelMixin,
         return self.ae_description
 
     @property
+    def ae_follow_ups(self):
+        AeFollowup = django_apps.get_model('ambition_ae.aefollowup')
+        return AeFollowup.objects.filter(ae_initial=self)
+
+    @property
     def description(self):
         """Returns a description.
         """
-        return f'{self.tracking_identifier[-9:]} Grade-{self.ae_grade}. {self.ae_description}'
+        return f'{self.action_identifier[-9:]} Grade-{self.ae_grade}. {self.ae_description}'
 
     class Meta:
         verbose_name = 'AE Initial Report'

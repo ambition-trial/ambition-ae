@@ -83,7 +83,7 @@ class RecurrenceSymptomAdmin(ModelAdminMixin, admin.ModelAdmin):
 
     list_display = ('subject_identifier', 'dashboard',
                     'report_datetime', 'patient_readmitted',
-                    'tracking_identifier', 'action_identifier')
+                    'action_identifier', 'tracking_identifier')
 
     filter_horizontal = ('meningitis_symptom',
                          'neurological', 'antibiotic_treatment')
