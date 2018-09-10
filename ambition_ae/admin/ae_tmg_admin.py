@@ -1,5 +1,6 @@
+from ambition_auth import TMG
 from django.contrib import admin
-
+from django.core.exceptions import ObjectDoesNotExist
 from edc_action_item import action_fieldset_tuple
 from edc_model_admin import audit_fieldset_tuple
 
@@ -7,8 +8,6 @@ from ..admin_site import ambition_ae_admin
 from ..forms import AeTmgForm
 from ..models import AeTmg
 from .modeladmin_mixins import ModelAdminMixin, NonAeInitialModelAdminMixin
-from ambition_edc.permissions.group_names import TMG
-from django.core.exceptions import ObjectDoesNotExist
 
 
 @admin.register(AeTmg, site=ambition_ae_admin)
