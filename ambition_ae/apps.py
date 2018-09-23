@@ -6,6 +6,7 @@ from edc_facility.apps import AppConfig as BaseEdcFacilityAppConfig
 class AppConfig(DjangoApponfig):
     name = 'ambition_ae'
     verbose_name = 'Ambition Adverse Events'
+    has_exportable_data = True
 
 
 if settings.APP_NAME == 'ambition_ae':
