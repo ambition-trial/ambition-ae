@@ -26,6 +26,7 @@ setup(
     zip_safe=False,
     keywords='django ambition adverse event',
     install_requires=[
+        'ambition-auth',
         'ambition-rando',
         'ambition-prn',
         'ambition-sites',
