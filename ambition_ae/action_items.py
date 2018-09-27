@@ -1,4 +1,5 @@
 from ambition_prn.action_items import DEATH_REPORT_ACTION
+from django.conf import settings
 from django.core.exceptions import MultipleObjectsReturned
 from django.utils.safestring import mark_safe
 from edc_action_item import HIGH_PRIORITY, Action, site_action_items
@@ -35,6 +36,7 @@ class AeTmgAction(BaseNonAeInitialAction):
     admin_site_name = 'ambition_ae_admin'
     instructions = mark_safe(
         f'This report is to be completed by the TMG only.')
+    email_recipients = [settings.EMAIL_CONTACTS.get('tmg')]
 
     def close_action_item_on_save(self):
         self.delete_if_new(action_cls=self)
@@ -67,6 +69,7 @@ class AeFollowupAction(BaseNonAeInitialAction):
         f'Email to the TMG at <a href="mailto:'
         f'{email_contacts.get("ae_reports")}">'
         f'{email_contacts.get("ae_reports")}</a>')
+    # email_recipients = [settings.EMAIL_CONTACTS.get('tmg')]
 
     def get_offschedule_action_cls(self):
         """Returns the action class for the offschedule model.
@@ -132,6 +135,7 @@ class AeInitialAction(Action):
     admin_site_name = 'ambition_ae_admin'
     instructions = 'Complete the initial AE report'
     priority = HIGH_PRIORITY
+    # email_recipients = [settings.EMAIL_CONTACTS.get('tmg')]
 
     def get_next_actions(self):
         """Returns next actions.
