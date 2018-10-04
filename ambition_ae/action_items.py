@@ -36,10 +36,13 @@ class AeTmgAction(BaseNonAeInitialAction):
     admin_site_name = 'ambition_ae_admin'
     instructions = mark_safe(
         f'This report is to be completed by the TMG only.')
-    email_recipients = [settings.EMAIL_CONTACTS.get('tmg')]
+    try:
+        email_recipients = [settings.EMAIL_CONTACTS.get('tmg')]
+    except AttributeError:
+        email_recipients = []
 
     def close_action_item_on_save(self):
-        self.delete_if_new(action_cls=self)
+        # self.delete_children_if_new(parent_action_identifier=self)
         return self.reference_obj.report_status == CLOSED
 
     def get_next_actions(self):
@@ -139,17 +142,21 @@ class AeInitialAction(Action):
 
     def get_next_actions(self):
         """Returns next actions.
+
+        1. Add death report action if death
+        2.
         """
         next_actions = []
         deceased = (
             self.reference_obj.ae_grade == GRADE5
             or self.reference_obj.sae_reason == DEAD)
-        # add next Followup
+
+        # add next AeFollowup if not deceased
         if not deceased:
             next_actions = self.append_to_next_if_required(
-                action_cls=AeFollowupAction)
-        else:
-            self.delete_if_new(AeFollowupAction)
+                action_cls=AeFollowupAction,
+                next_actions=next_actions)
+
         # add next Death report if G5/Death
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,

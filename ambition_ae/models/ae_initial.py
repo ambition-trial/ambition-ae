@@ -1,6 +1,6 @@
 from django.apps import apps as django_apps
-from django.contrib.sites.models import Site
 from django.db import models
+from edc_action_item.managers import ActionIdentifierSiteManager, ActionIdentifierManager
 from edc_action_item.models import ActionModelMixin
 from edc_base.model_managers import HistoricalRecords
 from edc_base.model_mixins import BaseUuidModel
@@ -14,27 +14,6 @@ from edc_model_fields.fields import OtherCharField
 from ..action_items import AE_INITIAL_ACTION
 from ..choices import STUDY_DRUG_RELATIONSHIP, SAE_REASONS, AE_CLASSIFICATION
 from ..model_mixins import AeModelMixin
-from ..managers import CurrentSiteManager as BaseCurrentSiteManager
-
-
-class BaseManager(models.Manager):
-
-    use_in_migrations = True
-
-    def get_by_natural_key(self, action_identifier, site_name):
-        site = Site.objects.get(name=site_name)
-        return self.get(
-            action_identifier=action_identifier,
-            site=site)
-
-
-class AeInitialManager(BaseManager):
-
-    pass
-
-
-class CurrentSiteManager(BaseManager, BaseCurrentSiteManager):
-    pass
 
 
 class AeInitial(AeModelMixin, ActionModelMixin, TrackingModelMixin,
@@ -163,9 +142,9 @@ class AeInitial(AeModelMixin, ActionModelMixin, TrackingModelMixin,
             'AEs ≥ Grade 4 or SAE must be reported to the Trial '
             'Management Group (TMG) within 24 hours'))
 
-    on_site = CurrentSiteManager()
+    on_site = ActionIdentifierSiteManager()
 
-    objects = AeInitialManager()
+    objects = ActionIdentifierManager()
 
     history = HistoricalRecords()
 
@@ -173,8 +152,7 @@ class AeInitial(AeModelMixin, ActionModelMixin, TrackingModelMixin,
         return f'{self.action_identifier[-9:]} Grade {self.ae_grade}'
 
     def natural_key(self):
-        return (self.action_identifier, self.site.name)
-    natural_key.dependencies = ['sites.site']
+        return (self.action_identifier, )
 
     @property
     def action_item_reason(self):

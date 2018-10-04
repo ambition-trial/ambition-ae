@@ -1,12 +1,12 @@
+from edc_base.utils import get_utcnow
 from edc_constants.constants import YES, NO, OTHER
 from faker import Faker
 from model_mommy.recipe import Recipe
 
-from .constants import GRADE4, MODERATE
+from .constants import GRADE4
 from .models import AeInitial, AeTmg, AeFollowup
 from .models import RecurrenceSymptom, Neurological
 from .models import MeningitisSymptom
-from edc_base.utils import get_utcnow
 
 fake = Faker()
 

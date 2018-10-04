@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.deletion import PROTECT
+from edc_action_item.managers import ActionIdentifierSiteManager, ActionIdentifierManager
 from edc_action_item.models import ActionModelMixin
 from edc_base.model_managers import HistoricalRecords
 from edc_base.model_mixins import BaseUuidModel, ReportStatusModelMixin
@@ -8,17 +9,11 @@ from edc_base.sites import SiteModelMixin
 from edc_base.utils import get_utcnow
 from edc_identifier.model_mixins import TrackingModelMixin
 from edc_model_fields.fields import OtherCharField
-from edc_search.model_mixins import SearchSlugModelMixin, SearchSlugManager
+from edc_search.model_mixins import SearchSlugModelMixin
 
 from ..action_items import AE_TMG_ACTION
 from ..choices import AE_CLASSIFICATION
 from .ae_initial import AeInitial
-from .managers import CurrentSiteManager, AeManager
-
-
-class AeTmgManager(SearchSlugManager, AeManager):
-
-    pass
 
 
 class AeTmg(ActionModelMixin, TrackingModelMixin, ReportStatusModelMixin,
@@ -72,9 +67,9 @@ class AeTmg(ActionModelMixin, TrackingModelMixin, ReportStatusModelMixin,
         validators=[datetime_not_future],
         verbose_name='Date and time regulatory authorities notified (SUSARs)')
 
-    on_site = CurrentSiteManager()
+    on_site = ActionIdentifierSiteManager()
 
-    objects = AeTmgManager()
+    objects = ActionIdentifierManager()
 
     history = HistoricalRecords()
 
@@ -86,8 +81,7 @@ class AeTmg(ActionModelMixin, TrackingModelMixin, ReportStatusModelMixin,
         super().save(*args, **kwargs)
 
     def natural_key(self):
-        return (self.report_datetime, ) + self.ae_initial.natural_key()
-    natural_key.dependencies = ['ambition_ae.aeinitial', 'sites.Site']
+        return (self.action_identifier, )
 
     @property
     def action_item_reason(self):
