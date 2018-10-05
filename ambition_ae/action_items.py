@@ -68,10 +68,9 @@ class AeFollowupAction(BaseNonAeInitialAction):
     show_link_to_changelist = True
     admin_site_name = 'ambition_ae_admin'
     instructions = mark_safe(
-        f'Email to the TMG at <a href="mailto:'
-        f'{email_contacts.get("ae_reports")}">'
-        f'{email_contacts.get("ae_reports")}</a>')
-    # email_recipients = [settings.EMAIL_CONTACTS.get('tmg')]
+        f'Upon submission the TMG group will be notified '
+        f'by email at <a href="mailto:{email_contacts.get("tmg")}">'
+        f'{email_contacts.get("tmg")}</a>')
 
     def get_offschedule_action_cls(self):
         """Returns the action class for the offschedule model.
@@ -137,7 +136,7 @@ class AeInitialAction(Action):
     admin_site_name = 'ambition_ae_admin'
     instructions = 'Complete the initial AE report'
     priority = HIGH_PRIORITY
-    # email_recipients = [settings.EMAIL_CONTACTS.get('tmg')]
+#     email_recipients = [settings.EMAIL_CONTACTS.get('tmg')]
 
     def get_next_actions(self):
         """Returns next actions.
