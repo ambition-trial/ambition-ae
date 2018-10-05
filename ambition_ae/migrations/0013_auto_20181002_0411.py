@@ -29,7 +29,7 @@ def fill_action_item_fk(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ambition_ae', '0011_auto_20181001_2103'),
+        ('ambition_ae', '0012_auto_20181001_2112'),
         ('edc_action_item', '0012_auto_20181001_2256'),
     ]
 
