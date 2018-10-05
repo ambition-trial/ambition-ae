@@ -3,6 +3,7 @@
 import ambition_ae.models.ae_initial
 import ambition_ae.models.managers
 import ambition_ae.models.recurrence_symptom
+
 from django.db import migrations, models
 
 
@@ -22,7 +23,7 @@ class Migration(migrations.Migration):
         migrations.AlterModelManagers(
             name='aeinitial',
             managers=[
-                ('on_site', ambition_ae.models.ae_initial.CurrentSiteManager()),
+                ('on_site', ambition_ae.models.ae_initial.ActionIdentifierSiteManager()),
             ],
         ),
         migrations.AlterModelManagers(
@@ -34,7 +35,7 @@ class Migration(migrations.Migration):
         migrations.AlterModelManagers(
             name='recurrencesymptom',
             managers=[
-                ('on_site', ambition_ae.models.recurrence_symptom.CurrentSiteManager()),
+                ('on_site', ambition_ae.models.recurrence_symptom.ActionIdentifierSiteManager()),
             ],
         ),
         migrations.AddField(

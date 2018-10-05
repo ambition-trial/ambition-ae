@@ -42,7 +42,6 @@ class AeTmgAction(BaseNonAeInitialAction):
         email_recipients = []
 
     def close_action_item_on_save(self):
-        # self.delete_children_if_new(parent_action_identifier=self)
         return self.reference_obj.report_status == CLOSED
 
     def get_next_actions(self):
