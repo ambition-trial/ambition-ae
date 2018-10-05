@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.deletion import PROTECT
 from django.urls.base import reverse
 from django.utils.safestring import mark_safe
+from edc_action_item.managers import ActionIdentifierSiteManager, ActionIdentifierManager
 from edc_action_item.models import ActionModelMixin
 from edc_base.model_managers import HistoricalRecords
 from edc_base.model_mixins import BaseUuidModel
@@ -16,7 +17,6 @@ from ..action_items import AE_FOLLOWUP_ACTION
 from ..admin_site import ambition_ae_admin
 from ..choices import AE_OUTCOME, AE_GRADE_SIMPLE
 from .ae_initial import AeInitial
-from .managers import CurrentSiteManager, AeManager
 
 
 class AeFollowup(ActionModelMixin, TrackingModelMixin, SiteModelMixin, BaseUuidModel):
@@ -61,9 +61,9 @@ class AeFollowup(ActionModelMixin, TrackingModelMixin, SiteModelMixin, BaseUuidM
         default=YES,
         help_text='If NO, this will be considered the final report')
 
-    on_site = CurrentSiteManager()
+    on_site = ActionIdentifierSiteManager()
 
-    objects = AeManager()
+    objects = ActionIdentifierManager()
 
     history = HistoricalRecords()
 
@@ -75,8 +75,7 @@ class AeFollowup(ActionModelMixin, TrackingModelMixin, SiteModelMixin, BaseUuidM
         super().save(*args, **kwargs)
 
     def natural_key(self):
-        return (self.action_identifier, self.site.name) + self.ae_initial.natural_key()
-    natural_key.dependencies = ['ambition_ae.aeinitial', 'sites.site']
+        return (self.action_identifier, )
 
     @property
     def report_date(self):

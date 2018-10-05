@@ -1,10 +1,10 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
-from django.contrib.sites.models import Site
 from django.db import models
+from edc_action_item.managers import ActionIdentifierSiteManager, ActionIdentifierManager
 from edc_action_item.models import ActionModelMixin
 from edc_base.model_managers import HistoricalRecords
 from edc_base.model_mixins import BaseUuidModel
-from edc_base.sites import CurrentSiteManager as BaseCurrentSiteManager, SiteModelMixin
+from edc_base.sites import SiteModelMixin
 from edc_base.model_validators import date_not_future
 from edc_base.utils import get_utcnow
 from edc_constants.choices import YES_NO, YES_NO_NA, NOT_APPLICABLE
@@ -13,21 +13,6 @@ from edc_identifier.model_mixins import TrackingModelMixin
 from ..action_items import RECURRENCE_OF_SYMPTOMS_ACTION
 from ..choices import DR_OPINION, STEROIDS_CHOICES, YES_NO_ALREADY_ARV
 from .list_models import Neurological, MeningitisSymptom, AntibioticTreatment
-
-
-class BaseManager(models.Manager):
-
-    use_in_migrations = True
-
-    def get_by_natural_key(self, action_identifier, site_name):
-        site = Site.objects.get(name=site_name)
-        return self.get(
-            action_identifier=action_identifier,
-            site=site)
-
-
-class CurrentSiteManager(BaseManager, BaseCurrentSiteManager):
-    pass
 
 
 class RecurrenceSymptom(ActionModelMixin, TrackingModelMixin,
@@ -183,9 +168,9 @@ class RecurrenceSymptom(ActionModelMixin, TrackingModelMixin,
         max_length=50,
         null=True)
 
-    on_site = CurrentSiteManager()
+    on_site = ActionIdentifierSiteManager()
 
-    objects = BaseManager()
+    objects = ActionIdentifierManager()
 
     history = HistoricalRecords()
 
@@ -193,7 +178,7 @@ class RecurrenceSymptom(ActionModelMixin, TrackingModelMixin,
         return f'{self.action_identifier[-9:]}'
 
     def natural_key(self):
-        return (self.tracking_identifier, )
+        return (self.action_identifier, )
 
     class Meta:
         verbose_name = 'Recurrence of Symptoms'

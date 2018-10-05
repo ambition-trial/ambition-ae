@@ -36,10 +36,12 @@ class AeTmgAction(BaseNonAeInitialAction):
     admin_site_name = 'ambition_ae_admin'
     instructions = mark_safe(
         f'This report is to be completed by the TMG only.')
-    email_recipients = [settings.EMAIL_CONTACTS.get('tmg')]
+    try:
+        email_recipients = [settings.EMAIL_CONTACTS.get('tmg')]
+    except AttributeError:
+        email_recipients = []
 
     def close_action_item_on_save(self):
-        self.delete_if_new(action_cls=self)
         return self.reference_obj.report_status == CLOSED
 
     def get_next_actions(self):
@@ -66,10 +68,9 @@ class AeFollowupAction(BaseNonAeInitialAction):
     show_link_to_changelist = True
     admin_site_name = 'ambition_ae_admin'
     instructions = mark_safe(
-        f'Email to the TMG at <a href="mailto:'
-        f'{email_contacts.get("ae_reports")}">'
-        f'{email_contacts.get("ae_reports")}</a>')
-    # email_recipients = [settings.EMAIL_CONTACTS.get('tmg')]
+        f'Upon submission the TMG group will be notified '
+        f'by email at <a href="mailto:{email_contacts.get("tmg")}">'
+        f'{email_contacts.get("tmg")}</a>')
 
     def get_offschedule_action_cls(self):
         """Returns the action class for the offschedule model.
@@ -135,21 +136,25 @@ class AeInitialAction(Action):
     admin_site_name = 'ambition_ae_admin'
     instructions = 'Complete the initial AE report'
     priority = HIGH_PRIORITY
-    # email_recipients = [settings.EMAIL_CONTACTS.get('tmg')]
+#     email_recipients = [settings.EMAIL_CONTACTS.get('tmg')]
 
     def get_next_actions(self):
         """Returns next actions.
+
+        1. Add death report action if death
+        2.
         """
         next_actions = []
         deceased = (
             self.reference_obj.ae_grade == GRADE5
             or self.reference_obj.sae_reason == DEAD)
-        # add next Followup
+
+        # add next AeFollowup if not deceased
         if not deceased:
             next_actions = self.append_to_next_if_required(
-                action_cls=AeFollowupAction)
-        else:
-            self.delete_if_new(AeFollowupAction)
+                action_cls=AeFollowupAction,
+                next_actions=next_actions)
+
         # add next Death report if G5/Death
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,

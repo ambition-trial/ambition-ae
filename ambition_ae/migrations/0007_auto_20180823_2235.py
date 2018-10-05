@@ -13,11 +13,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='aetmg',
             name='slug',
-            field=models.CharField(db_index=True, default='', editable=False, help_text='a field used for quick search', max_length=250, null=True),
+            field=models.CharField(db_index=True, default='', editable=False,
+                                   help_text='a field used for quick search', max_length=250, null=True),
         ),
         migrations.AddField(
             model_name='historicalaetmg',
             name='slug',
-            field=models.CharField(db_index=True, default='', editable=False, help_text='a field used for quick search', max_length=250, null=True),
+            field=models.CharField(db_index=True, default='', editable=False,
+                                   help_text='a field used for quick search', max_length=250, null=True),
         ),
     ]
