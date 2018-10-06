@@ -10,6 +10,7 @@ from edc_visit_schedule.site_visit_schedules import site_visit_schedules
 
 from .constants import GRADE4, GRADE5
 from .email_contacts import email_contacts
+from pprint import pprint
 
 AE_FOLLOWUP_ACTION = 'submit-ae-followup-report'
 AE_INITIAL_ACTION = 'submit-initial-ae-report'
@@ -48,7 +49,7 @@ class AeTmgAction(BaseNonAeInitialAction):
         next_actions = []
         try:
             self.reference_model_cls().objects.get(
-                ae_initial=self.reference_obj.ae_initial)
+                ae_initial_id=self.reference_obj.ae_initial.id)
         except MultipleObjectsReturned:
             pass
         else:
