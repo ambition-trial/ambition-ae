@@ -10,7 +10,7 @@ from edc_base.utils import get_utcnow
 from edc_constants.choices import YES_NO, YES_NO_NA, NOT_APPLICABLE
 from edc_identifier.model_mixins import TrackingModelMixin
 
-from ..action_items import RECURRENCE_OF_SYMPTOMS_ACTION
+from ..constants import RECURRENCE_OF_SYMPTOMS_ACTION
 from ..choices import DR_OPINION, STEROIDS_CHOICES, YES_NO_ALREADY_ARV
 from .list_models import Neurological, MeningitisSymptom, AntibioticTreatment
 

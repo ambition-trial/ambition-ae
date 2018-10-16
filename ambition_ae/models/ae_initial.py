@@ -11,7 +11,7 @@ from edc_constants.constants import NOT_APPLICABLE, UNKNOWN
 from edc_identifier.model_mixins import TrackingModelMixin
 from edc_model_fields.fields import OtherCharField
 
-from ..action_items import AE_INITIAL_ACTION
+from ..constants import AE_INITIAL_ACTION
 from ..choices import STUDY_DRUG_RELATIONSHIP, SAE_REASONS, AE_CLASSIFICATION
 from ..model_mixins import AeModelMixin
 
