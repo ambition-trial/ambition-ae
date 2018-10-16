@@ -11,7 +11,7 @@ from edc_identifier.model_mixins import TrackingModelMixin
 from edc_model_fields.fields import OtherCharField
 from edc_search.model_mixins import SearchSlugModelMixin
 
-from ..action_items import AE_TMG_ACTION
+from ..constants import AE_TMG_ACTION
 from ..choices import AE_CLASSIFICATION
 from .ae_initial import AeInitial
 

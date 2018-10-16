@@ -1,4 +1,5 @@
-from ambition_prn.action_items import DEATH_REPORT_ACTION
+from ambition_prn.constants import DEATH_REPORT_ACTION
+from ambition_subject.constants import BLOOD_RESULTS_ACTION
 from django.conf import settings
 from django.core.exceptions import MultipleObjectsReturned
 from django.utils.safestring import mark_safe
@@ -8,14 +9,10 @@ from edc_reportable import GRADE3
 from edc_visit_schedule.models.subject_schedule_history import SubjectScheduleHistory
 from edc_visit_schedule.site_visit_schedules import site_visit_schedules
 
+from .constants import AE_FOLLOWUP_ACTION, AE_INITIAL_ACTION
+from .constants import AE_TMG_ACTION, RECURRENCE_OF_SYMPTOMS_ACTION
 from .constants import GRADE4, GRADE5
 from .email_contacts import email_contacts
-from pprint import pprint
-
-AE_FOLLOWUP_ACTION = 'submit-ae-followup-report'
-AE_INITIAL_ACTION = 'submit-initial-ae-report'
-AE_TMG_ACTION = 'submit-ae-tmg-report'
-RECURRENCE_OF_SYMPTOMS_ACTION = 'submit-recurrence-of-symptoms'
 
 
 class BaseNonAeInitialAction(Action):
@@ -28,6 +25,10 @@ class BaseNonAeInitialAction(Action):
 class AeTmgAction(BaseNonAeInitialAction):
     name = AE_TMG_ACTION
     display_name = 'AE TMG Report pending'
+    parent_action_names = [
+        AE_INITIAL_ACTION,
+        AE_FOLLOWUP_ACTION,
+        AE_TMG_ACTION]
     reference_model = 'ambition_ae.aetmg'
     related_reference_model = 'ambition_ae.aeinitial'
     related_reference_fk_attr = 'ae_initial'
@@ -55,13 +56,16 @@ class AeTmgAction(BaseNonAeInitialAction):
         else:
             if (self.reference_obj.ae_initial.ae_classification
                     != self.reference_obj.ae_classification):
-                next_actions = [self]
+                next_actions = ['self']
         return next_actions
 
 
 class AeFollowupAction(BaseNonAeInitialAction):
     name = AE_FOLLOWUP_ACTION
     display_name = 'Submit AE Followup Report'
+    parent_action_names = [
+        AE_INITIAL_ACTION,
+        AE_FOLLOWUP_ACTION]
     reference_model = 'ambition_ae.aefollowup'
     related_reference_model = 'ambition_ae.aeinitial'
     related_reference_fk_attr = 'ae_initial'
@@ -93,19 +97,19 @@ class AeFollowupAction(BaseNonAeInitialAction):
         # add next AE followup
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,
-            action_cls=self,
+            action_name=self.name,
             required=self.reference_obj.followup == YES)
 
         # add next AeTmg if severity increased
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,
-            action_cls=AeTmgAction,
+            action_name=AE_TMG_ACTION,
             required=self.reference_obj.ae_grade in [GRADE4])
 
         # add next Death report if G5/Death
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,
-            action_cls=site_action_items.get(DEATH_REPORT_ACTION),
+            action_name=DEATH_REPORT_ACTION,
             required=(
                 self.reference_obj.outcome == DEAD
                 or self.reference_obj.ae_grade == GRADE5))
@@ -113,7 +117,7 @@ class AeFollowupAction(BaseNonAeInitialAction):
         # add next AE TMG if G5/Death
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,
-            action_cls=site_action_items.get(AE_TMG_ACTION),
+            action_name=AE_TMG_ACTION,
             required=(
                 self.reference_obj.outcome == DEAD
                 or self.reference_obj.ae_grade == GRADE5))
@@ -123,7 +127,7 @@ class AeFollowupAction(BaseNonAeInitialAction):
         if offschedule_action_cls:  # TODO: fix for tests - only None in tests
             next_actions = self.append_to_next_if_required(
                 next_actions=next_actions,
-                action_cls=offschedule_action_cls,
+                action_name=offschedule_action_cls.name,
                 required=self.reference_obj.outcome == LOST_TO_FOLLOWUP)
         return next_actions
 
@@ -131,13 +135,13 @@ class AeFollowupAction(BaseNonAeInitialAction):
 class AeInitialAction(Action):
     name = AE_INITIAL_ACTION
     display_name = 'Submit AE Initial Report'
+    parent_action_names = [BLOOD_RESULTS_ACTION]
     reference_model = 'ambition_ae.aeinitial'
     show_link_to_changelist = True
     show_link_to_add = True
     admin_site_name = 'ambition_ae_admin'
     instructions = 'Complete the initial AE report'
     priority = HIGH_PRIORITY
-#     email_recipients = [settings.EMAIL_CONTACTS.get('tmg')]
 
     def get_next_actions(self):
         """Returns next actions.
@@ -153,34 +157,34 @@ class AeInitialAction(Action):
         # add next AeFollowup if not deceased
         if not deceased:
             next_actions = self.append_to_next_if_required(
-                action_cls=AeFollowupAction,
+                action_name=AE_FOLLOWUP_ACTION,
                 next_actions=next_actions)
 
         # add next Death report if G5/Death
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,
-            action_cls=site_action_items.get(DEATH_REPORT_ACTION),
+            action_name=DEATH_REPORT_ACTION,
             required=deceased)
         # add next AE Tmg if G5/Death
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,
-            action_cls=site_action_items.get(AE_TMG_ACTION),
+            action_name=AE_TMG_ACTION,
             required=deceased)
         # add next AeTmgAction if G4
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,
-            action_cls=AeTmgAction,
+            action_name=AE_TMG_ACTION,
             required=self.reference_obj.ae_grade == GRADE4)
         # add next AeTmgAction if G3 and is an SAE
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,
-            action_cls=AeTmgAction,
+            action_name=AE_TMG_ACTION,
             required=(self.reference_obj.ae_grade == GRADE3
                       and self.reference_obj.sae == YES))
         # add next Recurrence of Symptoms if YES
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,
-            action_cls=site_action_items.get(RECURRENCE_OF_SYMPTOMS_ACTION),
+            action_name=RECURRENCE_OF_SYMPTOMS_ACTION,
             required=self.reference_obj.ae_cm_recurrence == YES)
         return next_actions
 
@@ -188,6 +192,7 @@ class AeInitialAction(Action):
 class RecurrenceOfSymptomsAction(Action):
     name = RECURRENCE_OF_SYMPTOMS_ACTION
     display_name = 'Submit Recurrence of Symptoms Report'
+    parent_action_names = [AE_INITIAL_ACTION]
     reference_model = 'ambition_ae.recurrencesymptom'
     show_link_to_changelist = True
     admin_site_name = 'ambition_ae_admin'
