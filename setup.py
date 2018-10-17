@@ -28,6 +28,7 @@ setup(
     install_requires=[
         'ambition-auth',
         'ambition-rando',
+        'ambition-subject',
         'ambition-prn',
         'ambition-sites',
         'django-collect-offline',
