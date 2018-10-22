@@ -36,6 +36,7 @@ setup(
         'edc-action-item',
         'edc-base',
         'edc-reportable',
+        'edc_notification',
         'edc-subject-dashboard',
     ],
     classifiers=[
