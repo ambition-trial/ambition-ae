@@ -7,6 +7,7 @@ from edc_base.model_mixins import BaseUuidModel, ReportStatusModelMixin
 from edc_base.model_validators.date import datetime_not_future
 from edc_base.sites import SiteModelMixin
 from edc_base.utils import get_utcnow
+from edc_constants.choices import YES_NO
 from edc_identifier.model_mixins import TrackingModelMixin
 from edc_model_fields.fields import OtherCharField
 from edc_search.model_mixins import SearchSlugModelMixin
@@ -42,6 +43,11 @@ class AeTmg(ActionModelMixin, TrackingModelMixin, ReportStatusModelMixin,
         validators=[datetime_not_future],
         verbose_name='Date and time of clinical review: ')
 
+    ae_description = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name='Description of AE:')
+
     investigator_comments = models.TextField(
         blank=True,
         null=True,
@@ -56,10 +62,18 @@ class AeTmg(ActionModelMixin, TrackingModelMixin, ReportStatusModelMixin,
         blank=True,
         null=True)
 
-    ae_description = models.TextField(
-        blank=True,
+    original_report_agreed = models.CharField(
+        verbose_name='Does the TMG investigator agree with the original AE report?',
+        max_length=15,
+        choices=YES_NO,
+        blank=False,
         null=True,
-        verbose_name='Description of AE:')
+        help_text='If No, explain in the narrative below')
+
+    narrative = models.TextField(
+        verbose_name='Narrative',
+        blank=True,
+        null=True)
 
     officials_notified = models.DateTimeField(
         blank=True,
