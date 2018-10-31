@@ -46,18 +46,18 @@ class AeTmgAction(BaseNonAeInitialAction):
     def close_action_item_on_save(self):
         return self.reference_obj.report_status == CLOSED
 
-    def get_next_actions(self):
-        next_actions = []
-        try:
-            self.reference_model_cls().objects.get(
-                ae_initial_id=self.reference_obj.ae_initial.id)
-        except MultipleObjectsReturned:
-            pass
-        else:
-            if (self.reference_obj.ae_initial.ae_classification
-                    != self.reference_obj.ae_classification):
-                next_actions = ['self']
-        return next_actions
+#     def get_next_actions(self):
+#         next_actions = []
+#         try:
+#             self.reference_model_cls().objects.get(
+#                 ae_initial_id=self.reference_obj.ae_initial.id)
+#         except MultipleObjectsReturned:
+#             pass
+#         else:
+#             if (self.reference_obj.ae_initial.ae_classification
+#                     != self.reference_obj.ae_classification):
+#                 next_actions = ['self']
+#         return next_actions
 
 
 class AeFollowupAction(BaseNonAeInitialAction):

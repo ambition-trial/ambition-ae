@@ -278,7 +278,6 @@ class TestAeAndActions(AmbitionTestCaseMixin, TestCase):
             related_action_item=ae_initial.action_item,
             reference_model='ambition_ae.aetmg')
 
-    @tag('1')
     def test_next_action2(self):
         ae_initial = mommy.make_recipe(
             'ambition_ae.aeinitial',
@@ -303,7 +302,6 @@ class TestAeAndActions(AmbitionTestCaseMixin, TestCase):
             linked_to_reference=False,
             status=NEW)
 
-    @tag('1')
     def test_next_action3(self):
         ae_initial = mommy.make_recipe(
             'ambition_ae.aeinitial',
@@ -339,7 +337,6 @@ class TestAeAndActions(AmbitionTestCaseMixin, TestCase):
             linked_to_reference=False,
             status=NEW)
 
-    @tag('1')
     def test_next_action4(self):
         ae_initial = mommy.make_recipe(
             'ambition_ae.aeinitial',

@@ -171,6 +171,7 @@ EMAIL_CONTACTS = {'data_request': 'someone@example.com',
                   'data_manager': 'someone@example.com',
                   'tmg': 'someone@example.com'}
 EMAIL_ENABLED = False
+TWILIO_ENABLED = False
 
 if 'test' in sys.argv:
 

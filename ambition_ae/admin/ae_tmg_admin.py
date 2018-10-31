@@ -1,12 +1,14 @@
 from ambition_auth import TMG
+from django.conf import settings
 from django.contrib import admin
 from django.core.exceptions import ObjectDoesNotExist
 from edc_action_item import action_fieldset_tuple
+from edc_base.utils import convert_php_dateformat
 from edc_model_admin import audit_fieldset_tuple
 
 from ..admin_site import ambition_ae_admin
 from ..forms import AeTmgForm
-from ..models import AeTmg
+from ..models import AeTmg, AeInitial
 from .modeladmin_mixins import ModelAdminMixin, NonAeInitialModelAdminMixin
 
 
@@ -38,10 +40,12 @@ class AeTmgAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelAdmin)
                 'report_datetime',
                 'ae_received_datetime',
                 'clinical_review_datetime',
-                'investigator_comments',
                 'ae_description',
+                'investigator_comments',
                 'ae_classification',
                 'ae_classification_other',
+                'original_report_agreed',
+                'narrative',
                 'officials_notified',
                 'report_status',
                 'report_closed_datetime')}),
@@ -51,7 +55,8 @@ class AeTmgAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelAdmin)
 
     radio_fields = {
         'report_status': admin.VERTICAL,
-        'ae_classification': admin.VERTICAL}
+        'ae_classification': admin.VERTICAL,
+        'original_report_agreed': admin.VERTICAL}
 
     def get_queryset(self, request):
         """Returns for the current user only if in the TMG group.
@@ -62,3 +67,21 @@ class AeTmgAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelAdmin)
             return super().get_queryset(request)
         return super().get_queryset(request).filter(
             user_created=request.user)
+
+    def get_changeform_initial_data(self, request):
+        """Updates initial data with the description of the
+        original AE.
+        """
+        initial = super().get_changeform_initial_data(request)
+        try:
+            ae_initial = AeInitial.objects.get(
+                pk=request.GET.get('ae_initial'))
+        except ObjectDoesNotExist:
+            pass
+        else:
+            report_datetime = ae_initial.report_datetime.strftime(
+                convert_php_dateformat(settings.SHORT_DATETIME_FORMAT))
+            initial.update(
+                ae_description=(
+                    f'{ae_initial.ae_description} (reported: {report_datetime})'))
+        return initial

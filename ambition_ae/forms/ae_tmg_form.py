@@ -20,6 +20,11 @@ class AeTmgForm(FormValidatorMixin, ModelFormMixin, forms.ModelForm):
         required=False,
         widget=forms.TextInput(attrs={'readonly': 'readonly'}))
 
+    ae_description = forms.CharField(
+        label='Original AE Description',
+        required=False,
+        widget=forms.Textarea(attrs={'readonly': 'readonly', 'cols': '79'}))
+
     class Meta:
         model = AeTmg
         fields = '__all__'
