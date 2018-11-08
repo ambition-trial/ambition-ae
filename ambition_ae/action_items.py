@@ -1,7 +1,6 @@
 from ambition_prn.constants import DEATH_REPORT_ACTION
 from ambition_subject.constants import BLOOD_RESULTS_ACTION
 from django.conf import settings
-from django.core.exceptions import MultipleObjectsReturned
 from django.utils.safestring import mark_safe
 from edc_action_item import HIGH_PRIORITY, Action, site_action_items
 from edc_constants.constants import CLOSED, DEAD, LOST_TO_FOLLOWUP, YES
@@ -24,7 +23,7 @@ class BaseNonAeInitialAction(Action):
 
 class AeTmgAction(BaseNonAeInitialAction):
     name = AE_TMG_ACTION
-    display_name = 'AE TMG Report pending'
+    display_name = 'TMG AE Report pending'
     parent_action_names = [
         AE_INITIAL_ACTION,
         AE_FOLLOWUP_ACTION,
@@ -38,26 +37,10 @@ class AeTmgAction(BaseNonAeInitialAction):
     admin_site_name = 'ambition_ae_admin'
     instructions = mark_safe(
         f'This report is to be completed by the TMG only.')
-    try:
-        email_recipients = [settings.EMAIL_CONTACTS.get('tmg')]
-    except AttributeError:
-        email_recipients = []
+    notification_email_to = [settings.EMAIL_CONTACTS.get('tmg')]
 
     def close_action_item_on_save(self):
         return self.reference_obj.report_status == CLOSED
-
-#     def get_next_actions(self):
-#         next_actions = []
-#         try:
-#             self.reference_model_cls().objects.get(
-#                 ae_initial_id=self.reference_obj.ae_initial.id)
-#         except MultipleObjectsReturned:
-#             pass
-#         else:
-#             if (self.reference_obj.ae_initial.ae_classification
-#                     != self.reference_obj.ae_classification):
-#                 next_actions = ['self']
-#         return next_actions
 
 
 class AeFollowupAction(BaseNonAeInitialAction):
