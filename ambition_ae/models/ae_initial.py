@@ -75,13 +75,15 @@ class AeInitial(AeModelMixin, ActionModelMixin, TrackingModelMixin,
         verbose_name='Details of the last implicated drug (name, dose, route):',
         max_length=1000,
         null=True,
-        blank=True)
+        blank=True,
+        editable=False)
 
     med_administered_datetime = models.DateTimeField(
         verbose_name='Date and time of last implicated study medication administered',
         validators=[datetime_not_future],
         null=True,
-        blank=True)
+        blank=True,
+        editable=False)
 
     ae_cause = models.CharField(
         verbose_name=('Has a reason other than the specified study drug been '
