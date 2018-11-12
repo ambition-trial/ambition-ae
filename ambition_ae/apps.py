@@ -8,6 +8,9 @@ class AppConfig(DjangoApponfig):
     verbose_name = 'Ambition Adverse Events'
     has_exportable_data = True
 
+    def ready(self):
+        from .signals import update_ae_notifications_for_tmg_group
+
 
 if settings.APP_NAME == 'ambition_ae':
 
