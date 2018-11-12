@@ -1,8 +1,7 @@
 from ambition_prn.constants import DEATH_REPORT_ACTION
 from ambition_subject.constants import BLOOD_RESULTS_ACTION
-from django.conf import settings
 from django.utils.safestring import mark_safe
-from edc_action_item import HIGH_PRIORITY, Action, site_action_items
+from edc_action_item import HIGH_PRIORITY, ActionWithNotification, site_action_items
 from edc_constants.constants import CLOSED, DEAD, LOST_TO_FOLLOWUP, YES
 from edc_reportable import GRADE3
 from edc_visit_schedule.models.subject_schedule_history import SubjectScheduleHistory
@@ -14,7 +13,7 @@ from .constants import GRADE4, GRADE5
 from .email_contacts import email_contacts
 
 
-class BaseNonAeInitialAction(Action):
+class BaseNonAeInitialAction(ActionWithNotification):
     parent_reference_model_fk_attr = 'ae_initial'
     show_link_to_changelist = True
     admin_site_name = 'ambition_ae_admin'
@@ -24,6 +23,7 @@ class BaseNonAeInitialAction(Action):
 class AeTmgAction(BaseNonAeInitialAction):
     name = AE_TMG_ACTION
     display_name = 'TMG AE Report pending'
+    notification_display_name = 'TMG AE Report'
     parent_action_names = [
         AE_INITIAL_ACTION,
         AE_FOLLOWUP_ACTION,
@@ -37,7 +37,6 @@ class AeTmgAction(BaseNonAeInitialAction):
     admin_site_name = 'ambition_ae_admin'
     instructions = mark_safe(
         f'This report is to be completed by the TMG only.')
-    notification_email_to = [settings.EMAIL_CONTACTS.get('tmg')]
 
     def close_action_item_on_save(self):
         return self.reference_obj.report_status == CLOSED
@@ -46,6 +45,7 @@ class AeTmgAction(BaseNonAeInitialAction):
 class AeFollowupAction(BaseNonAeInitialAction):
     name = AE_FOLLOWUP_ACTION
     display_name = 'Submit AE Followup Report'
+    notification_display_name = 'AE Followup Report'
     parent_action_names = [
         AE_INITIAL_ACTION,
         AE_FOLLOWUP_ACTION]
@@ -115,9 +115,10 @@ class AeFollowupAction(BaseNonAeInitialAction):
         return next_actions
 
 
-class AeInitialAction(Action):
+class AeInitialAction(ActionWithNotification):
     name = AE_INITIAL_ACTION
     display_name = 'Submit AE Initial Report'
+    notification_display_name = 'AE Initial Report'
     parent_action_names = [BLOOD_RESULTS_ACTION]
     reference_model = 'ambition_ae.aeinitial'
     show_link_to_changelist = True
@@ -172,9 +173,10 @@ class AeInitialAction(Action):
         return next_actions
 
 
-class RecurrenceOfSymptomsAction(Action):
+class RecurrenceOfSymptomsAction(ActionWithNotification):
     name = RECURRENCE_OF_SYMPTOMS_ACTION
     display_name = 'Submit Recurrence of Symptoms Report'
+    notification_display_name = 'Recurrence of Symptoms Report'
     parent_action_names = [AE_INITIAL_ACTION]
     reference_model = 'ambition_ae.recurrencesymptom'
     show_link_to_changelist = True
