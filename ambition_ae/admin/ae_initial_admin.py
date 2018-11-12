@@ -28,7 +28,7 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
         f'Email to <a href="mailto:{email_contact}">{email_contact}</a>')
 
     fieldsets = (
-        (None, {
+        ('Part 1:', {
             'fields': (
                 'subject_identifier',
                 'ae_classification',
@@ -38,18 +38,23 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
                 'ae_awareness_date',
                 'ae_start_date',
                 'ae_grade',
-                'ae_study_relation_possibility',
-                # 'ambisome_relation',
+                'ae_study_relation_possibility')},
+         ),
+        ('Part 2: Relationship to study drug', {
+            'fields': (
                 'fluconazole_relation',
-                # 'amphotericin_b_relation',
                 'flucytosine_relation',
-                'amphotericin_relation',
-                # 'details_last_study_drug',
-                # 'med_administered_datetime',
+                'amphotericin_relation')}
+         ),
+        ('Part 3:', {
+            'fields': (
                 'ae_cause',
                 'ae_cause_other',
                 'ae_treatment',
-                'ae_cm_recurrence',
+                'ae_cm_recurrence')},
+         ),
+        ('Part 4:', {
+            'fields': (
                 'sae',
                 'sae_reason',
                 'susar',
@@ -126,6 +131,7 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
                     f'<span nowrap>{death_report.identifier}</span></a>')
             return mark_safe(f'{obj.get_sae_reason_display()}.<BR>{link}.')
         return obj.get_sae_reason_display()
+
     if_sae_reason.short_description = 'If SAE, reason'
 
     def description(self, obj):
