@@ -9,12 +9,14 @@ from edc_model_admin import (
     ModelAdminReadOnlyMixin, ModelAdminInstitutionMixin,
     ModelAdminRedirectOnDeleteMixin)
 from edc_metadata import NextFormGetter
+from edc_notification import NotificationModelAdminMixin
 from edc_subject_dashboard import ModelAdminSubjectDashboardMixin
 
 from ..models import AeInitial
 
 
-class ModelAdminMixin(ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin,
+class ModelAdminMixin(ModelAdminNextUrlRedirectMixin, NotificationModelAdminMixin,
+                      ModelAdminFormInstructionsMixin,
                       ModelAdminFormAutoNumberMixin, ModelAdminRevisionMixin,
                       ModelAdminAuditFieldsMixin, ModelAdminReadOnlyMixin,
                       ModelAdminInstitutionMixin, ModelAdminRedirectOnDeleteMixin,
@@ -55,5 +57,5 @@ class NonAeInitialModelAdminMixin:
     def get_readonly_fields(self, request, obj=None):
         fields = super().get_readonly_fields(request, obj=obj)
         if obj:
-            fields = fields + ('ae_initial', )
+            fields = fields + ('ae_initial',)
         return fields + action_fields
