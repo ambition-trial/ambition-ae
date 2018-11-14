@@ -55,12 +55,14 @@ class AeTmg(ActionModelMixin, TrackingModelMixin, ReportStatusModelMixin,
 
     ae_classification = models.CharField(
         max_length=50,
-        choices=AE_CLASSIFICATION)
+        blank=True,
+        null=True)
 
     ae_classification_other = OtherCharField(
         max_length=250,
         blank=True,
-        null=True)
+        null=True,
+        editable=False)
 
     original_report_agreed = models.CharField(
         verbose_name='Does the TMG investigator agree with the original AE report?',

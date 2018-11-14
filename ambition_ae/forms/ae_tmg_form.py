@@ -25,6 +25,11 @@ class AeTmgForm(FormValidatorMixin, ModelFormMixin, forms.ModelForm):
         required=False,
         widget=forms.Textarea(attrs={'readonly': 'readonly', 'cols': '79'}))
 
+    ae_classification = forms.CharField(
+        label='AE Classification',
+        required=False,
+        widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+
     class Meta:
         model = AeTmg
         fields = '__all__'

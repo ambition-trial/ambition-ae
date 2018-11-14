@@ -13,6 +13,7 @@ ambition_ae.append_item(
         # label='AE',
         fa_icon='fa-heartbeat',
         url_name='ambition_ae:home_url',
+        permission_codename=f'nav_ambition_ae',
         no_url_namespace=no_url_namespace))
 
 site_navbars.register(ambition_ae)
