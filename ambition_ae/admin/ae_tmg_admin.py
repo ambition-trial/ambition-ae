@@ -7,6 +7,7 @@ from edc_base.utils import convert_php_dateformat
 from edc_model_admin import audit_fieldset_tuple
 
 from ..admin_site import ambition_ae_admin
+from ..choices import AE_CLASSIFICATION
 from ..forms import AeTmgForm
 from ..models import AeTmg, AeInitial
 from .modeladmin_mixins import ModelAdminMixin, NonAeInitialModelAdminMixin
@@ -43,7 +44,7 @@ class AeTmgAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelAdmin)
                 'ae_description',
                 'investigator_comments',
                 'ae_classification',
-                'ae_classification_other',
+                # 'ae_classification_other',
                 'original_report_agreed',
                 'narrative',
                 'officials_notified',
@@ -55,7 +56,6 @@ class AeTmgAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelAdmin)
 
     radio_fields = {
         'report_status': admin.VERTICAL,
-        'ae_classification': admin.VERTICAL,
         'original_report_agreed': admin.VERTICAL}
 
     def get_queryset(self, request):
@@ -79,9 +79,14 @@ class AeTmgAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelAdmin)
         except ObjectDoesNotExist:
             pass
         else:
+            ae_classification = [
+                y for x, y in AE_CLASSIFICATION if x == ae_initial.ae_classification]
+            ae_classification.append(ae_initial.ae_classification_other or '')
+            ae_classification = ' '.join(ae_classification).rstrip()
             report_datetime = ae_initial.report_datetime.strftime(
                 convert_php_dateformat(settings.SHORT_DATETIME_FORMAT))
             initial.update(
+                ae_classification=ae_classification,
                 ae_description=(
                     f'{ae_initial.ae_description} (reported: {report_datetime})'))
         return initial

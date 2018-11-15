@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'edc_protocol.apps.AppConfig',
     'edc_registration.apps.AppConfig',
     'edc_visit_schedule.apps.AppConfig',
+    'ambition_lists.apps.AppConfig',
     'ambition_rando.apps.AppConfig',
     'ambition_prn.apps.AppConfig',
     'ambition_ae.apps.EdcFacilityAppConfig',
