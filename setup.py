@@ -36,6 +36,7 @@ setup(
         'django-collect-offline-files',
         'edc-action-item',
         'edc-base',
+        'edc-form-describer',
         'edc-reportable',
         'edc_notification',
         'edc-subject-dashboard',
