@@ -24,7 +24,7 @@ class AeInitial(AeModelMixin, ActionModelMixin, TrackingModelMixin,
     action_name = AE_INITIAL_ACTION
 
     ae_classification = models.CharField(
-        max_length=50,
+        max_length=150,
         choices=AE_CLASSIFICATION)
 
     ae_classification_other = OtherCharField(
