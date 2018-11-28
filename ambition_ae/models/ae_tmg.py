@@ -13,7 +13,6 @@ from edc_model_fields.fields import OtherCharField
 from edc_search.model_mixins import SearchSlugModelMixin
 
 from ..constants import AE_TMG_ACTION
-from ..choices import AE_CLASSIFICATION
 from .ae_initial import AeInitial
 
 
@@ -54,7 +53,7 @@ class AeTmg(ActionModelMixin, TrackingModelMixin, ReportStatusModelMixin,
         verbose_name='Investigator comments:')
 
     ae_classification = models.CharField(
-        max_length=50,
+        max_length=150,
         blank=True,
         null=True)
 
