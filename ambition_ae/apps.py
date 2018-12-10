@@ -9,7 +9,7 @@ class AppConfig(DjangoApponfig):
     has_exportable_data = True
 
     def ready(self):
-        from .signals import update_ae_notifications_for_tmg_group
+        from .signals import update_ae_notifications_for_tmg_group  # noqa
 
 
 if settings.APP_NAME == 'ambition_ae':
