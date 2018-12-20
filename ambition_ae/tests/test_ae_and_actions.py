@@ -1,10 +1,14 @@
+from unittest import mock
+
 from ambition_rando.tests import AmbitionTestCaseMixin
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.test import TestCase, tag
 from edc_action_item.get_action_type import get_action_type
 from edc_action_item.models import SubjectDoesNotExist
 from edc_action_item.models.action_item import ActionItem
-from edc_constants.constants import CLOSED, NO, NEW, YES
+from edc_base import get_utcnow
+from edc_constants.constants import CLOSED, NO, NEW, YES, LOST_TO_FOLLOWUP,\
+    DEAD
 from edc_list_data.site_list_data import site_list_data
 from edc_registration.models import RegisteredSubject
 from edc_reportable import GRADE3, GRADE4, GRADE5
@@ -31,7 +35,6 @@ class TestAeAndActions(AmbitionTestCaseMixin, TestCase):
             subject_identifier=self.subject_identifier)
 
     def test_subject_identifier(self):
-
         mommy.make_recipe(
             'ambition_ae.aeinitial',
             subject_identifier=self.subject_identifier)
@@ -379,7 +382,6 @@ class TestAeAndActions(AmbitionTestCaseMixin, TestCase):
             linked_to_reference=False,
             status=NEW)
 
-    @tag('2')
     def test_next_action5(self):
         ae_initial = mommy.make_recipe(
             'ambition_ae.aeinitial',
@@ -437,6 +439,56 @@ class TestAeAndActions(AmbitionTestCaseMixin, TestCase):
             ae_initial=ae_initial,
             subject_identifier=self.subject_identifier)
         ae_followup = AeFollowup.objects.get(pk=ae_followup.pk)
+
+    def test_ae_followup_outcome_ltfu_creates_action(self):
+
+        with mock.patch('ambition_ae.action_items.get_offschedule_models') as mocked:
+            mocked.return_value = [
+                'ambition_prn.studyterminationconclusion']
+
+            ae_initial = mommy.make_recipe(
+                'ambition_ae.aeinitial',
+                subject_identifier=self.subject_identifier)
+
+            ae_followup = mommy.make_recipe(
+                'ambition_ae.aefollowup',
+                ae_initial=ae_initial,
+                subject_identifier=self.subject_identifier,
+                report_datetime=get_utcnow(),
+                outcome=LOST_TO_FOLLOWUP)
+
+            try:
+                ActionItem.objects.get(
+                    parent_action_item=ae_followup.action_item,
+                    reference_model='ambition_prn.studyterminationconclusion')
+            except ObjectDoesNotExist:
+                self.fail('ObjectDoesNotExist unexpectedly raised')
+
+    def test_ae_followup_outcome_not_ltfu(self):
+
+        with mock.patch('ambition_ae.action_items.get_offschedule_models') as mocked:
+            mocked.return_value = [
+                'ambition_prn.studyterminationconclusion']
+
+            ae_initial = mommy.make_recipe(
+                'ambition_ae.aeinitial',
+                subject_identifier=self.subject_identifier)
+
+            ae_followup = mommy.make_recipe(
+                'ambition_ae.aefollowup',
+                ae_initial=ae_initial,
+                subject_identifier=self.subject_identifier,
+                report_datetime=get_utcnow(),
+                outcome=DEAD)
+
+            try:
+                ActionItem.objects.get(
+                    parent_action_item=ae_followup.action_item,
+                    reference_model='ambition_prn.studyterminationconclusion')
+            except ObjectDoesNotExist:
+                pass
+            else:
+                self.fail('ObjectDoesNotExist unexpectedly raised')
 
     def test_ae_tmg_required_if_g3_and_sae_yes(self):
 

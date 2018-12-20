@@ -1,12 +1,12 @@
-from django.test import TestCase, tag
+from ambition_ae.admin_site import ambition_ae_admin
+from ambition_ae.models.ae_tmg import AeTmg
 from ambition_rando.tests import AmbitionTestCaseMixin
+from django.contrib.auth.models import User, Permission
+from django.test import TestCase, tag
+from django.test.client import RequestFactory
 from edc_list_data.site_list_data import site_list_data
 from edc_registration.models import RegisteredSubject
 from model_mommy import mommy
-from ambition_ae.admin_site import ambition_ae_admin
-from ambition_ae.models.ae_tmg import AeTmg
-from django.test.client import RequestFactory
-from django.contrib.auth.models import User, Permission
 
 
 class TestAeTmg(AmbitionTestCaseMixin, TestCase):
@@ -36,7 +36,6 @@ class TestAeTmg(AmbitionTestCaseMixin, TestCase):
             'ambition_ae.aeinitial',
             subject_identifier=self.subject_identifier)
 
-    @tag('1')
     def test_(self):
         for model, model_admin in ambition_ae_admin._registry.items():
             if model == AeTmg:

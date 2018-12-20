@@ -67,8 +67,7 @@ SAE_REASONS = (
     ('life_threatening', 'Life-threatening'),
     ('significant_disability', 'Significant disability'),
     ('in-patient_hospitalization',
-     'In-patient hospitalization or prolongation '
-     '(beyond 1 week from study inclusion)'),
+     'In-patient hospitalization or prolongation (17 or more days from study inclusion)'),
     ('medically_important_event',
      'Medically important event (e.g. Severe thrombophlebitis, Bacteraemia, '
      'recurrence of symptoms not requiring admission, Hospital acquired '
