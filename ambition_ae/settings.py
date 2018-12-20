@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'edc_prn.apps.AppConfig',
     'edc_protocol.apps.AppConfig',
     'edc_registration.apps.AppConfig',
+    'edc_visit_tracking.apps.AppConfig',
     'edc_visit_schedule.apps.AppConfig',
     'ambition_lists.apps.AppConfig',
     'ambition_rando.apps.AppConfig',
@@ -171,7 +172,8 @@ EDC_BOOTSTRAP = 3
 EMAIL_CONTACTS = {'data_request': 'someone@example.com',
                   'data_manager': 'someone@example.com',
                   'tmg': 'someone@example.com'}
-EMAIL_ENABLED = False
+EMAIL_ENABLED = True
+EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 TWILIO_ENABLED = False
 
 if 'test' in sys.argv:

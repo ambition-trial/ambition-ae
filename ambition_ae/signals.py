@@ -16,6 +16,7 @@ def update_ae_notifications_for_tmg_group(
     except AttributeError:
         pass
     else:
+        print('hello')
         try:
             tmg_ae_notification = Notification.objects.get(
                 name=AE_TMG_ACTION)

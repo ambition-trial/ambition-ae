@@ -140,9 +140,9 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
         """
         ae_awareness_date = obj.ae_awareness_date.strftime(
             convert_php_dateformat(settings.SHORT_DATE_FORMAT))
-        classification = (obj.ae_classification_other
-                          if obj.ae_classification_other == OTHER
-                          else obj.ae_classification_other)
+        classification = (f'Other: {obj.ae_classification_other}'
+                          if obj.ae_classification == OTHER
+                          else obj.get_ae_classification_display())
         susar_reported = (
             'Reported' if obj.susar_reported == YES
             else '<font color="red">Not reported</font>')
