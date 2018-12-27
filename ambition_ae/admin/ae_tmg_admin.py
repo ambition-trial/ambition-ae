@@ -58,6 +58,9 @@ class AeTmgAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelAdmin)
         'report_status': admin.VERTICAL,
         'original_report_agreed': admin.VERTICAL}
 
+    def status(self, obj=None):
+        return obj.report_status.title()
+
     def get_queryset(self, request):
         """Returns for the current user only if in the TMG group.
         """

@@ -105,7 +105,7 @@ class AeTmg(ActionModelMixin, TrackingModelMixin, ReportStatusModelMixin,
     def get_search_slug_fields(self):
         fields = super().get_search_slug_fields()
         fields.append('subject_identifier')
-        fields.append('status')
+        fields.append('report_status')
         return fields
 
     class Meta:
