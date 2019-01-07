@@ -2,7 +2,6 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from edc_action_item.managers import ActionIdentifierSiteManager, ActionIdentifierManager
 from edc_action_item.models import ActionModelMixin
-from edc_base.model_managers import HistoricalRecords
 from edc_base.model_mixins import BaseUuidModel
 from edc_base.sites import SiteModelMixin
 from edc_base.model_validators import date_not_future
@@ -171,8 +170,6 @@ class RecurrenceSymptom(ActionModelMixin, TrackingModelMixin,
     on_site = ActionIdentifierSiteManager()
 
     objects = ActionIdentifierManager()
-
-    history = HistoricalRecords()
 
     def __str__(self):
         return f'{self.action_identifier[-9:]}'

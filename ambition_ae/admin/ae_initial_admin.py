@@ -1,5 +1,6 @@
 from ambition_prn.admin_site import ambition_prn_admin
 from ambition_prn.models import DeathReport
+from copy import copy
 from django.conf import settings
 from django.contrib import admin
 from django.core.exceptions import ObjectDoesNotExist
@@ -96,7 +97,9 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         fields = super().get_readonly_fields(request, obj=obj)
-        return fields + action_fields
+        action_flds = copy(list(action_fields))
+        action_flds.remove('action_identifier')
+        return fields + tuple(action_flds)
 
     def user(self, obj):
         """Returns formatted user names and creation/modification dates.
