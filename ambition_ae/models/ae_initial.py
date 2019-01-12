@@ -2,7 +2,6 @@ from django.apps import apps as django_apps
 from django.db import models
 from edc_action_item.managers import ActionIdentifierSiteManager, ActionIdentifierManager
 from edc_action_item.models import ActionModelMixin
-from edc_base.model_managers import HistoricalRecords
 from edc_base.model_mixins import BaseUuidModel
 from edc_base.model_validators import datetime_not_future
 from edc_base.sites import SiteModelMixin
@@ -147,8 +146,6 @@ class AeInitial(AeModelMixin, ActionModelMixin, TrackingModelMixin,
     on_site = ActionIdentifierSiteManager()
 
     objects = ActionIdentifierManager()
-
-    history = HistoricalRecords()
 
     def __str__(self):
         return f'{self.action_identifier[-9:]} Grade {self.ae_grade}'

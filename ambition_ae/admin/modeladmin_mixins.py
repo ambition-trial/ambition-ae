@@ -1,3 +1,4 @@
+from copy import copy
 from django.conf import settings
 from django.urls.base import reverse
 from django_revision.modeladmin_mixin import ModelAdminRevisionMixin
@@ -58,4 +59,6 @@ class NonAeInitialModelAdminMixin:
         fields = super().get_readonly_fields(request, obj=obj)
         if obj:
             fields = fields + ('ae_initial',)
-        return fields + action_fields
+        action_flds = copy(list(action_fields))
+        action_flds.remove('action_identifier')
+        return fields + tuple(action_flds)

@@ -2,7 +2,6 @@ from django.db import models
 from django.db.models.deletion import PROTECT
 from edc_action_item.managers import ActionIdentifierSiteManager, ActionIdentifierManager
 from edc_action_item.models import ActionModelMixin
-from edc_base.model_managers import HistoricalRecords
 from edc_base.model_mixins import BaseUuidModel, ReportStatusModelMixin
 from edc_base.model_validators.date import datetime_not_future
 from edc_base.sites import SiteModelMixin
@@ -85,8 +84,6 @@ class AeTmg(ActionModelMixin, TrackingModelMixin, ReportStatusModelMixin,
     on_site = ActionIdentifierSiteManager()
 
     objects = ActionIdentifierManager()
-
-    history = HistoricalRecords()
 
     def __str__(self):
         return f'{self.action_identifier[-9:]}'
