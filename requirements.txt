@@ -3,3 +3,4 @@ model-mommy
 django-crypto-fields
 django-revision
 django-rest-framework
+git+https://github.com/treyhunner/django-simple-history@master
