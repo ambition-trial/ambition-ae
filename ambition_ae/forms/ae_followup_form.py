@@ -1,4 +1,5 @@
 from django import forms
+from edc_action_item.forms import ActionItemFormMixin
 from edc_constants.constants import YES, DEAD
 from edc_form_validators import FormValidatorMixin, FormValidator
 
@@ -21,14 +22,9 @@ class AeFollowupFormValidator(FormValidator):
 
 
 class AeFollowupForm(FormValidatorMixin, ModelFormMixin,
-                     forms.ModelForm):
+                     ActionItemFormMixin, forms.ModelForm):
 
     form_validator_cls = AeFollowupFormValidator
-
-    action_identifier = forms.CharField(
-        label='Action Identifier',
-        required=False,
-        widget=forms.TextInput(attrs={'readonly': 'readonly'}))
 
     subject_identifier = forms.CharField(
         label='Subject Identifier',

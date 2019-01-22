@@ -1,4 +1,5 @@
 from django import forms
+from edc_action_item.forms import ActionItemFormMixin
 from edc_form_validators import FormValidatorMixin
 
 from ..models import AeTmg
@@ -6,14 +7,10 @@ from ..form_validators import AeTmgFormValidator
 from .modelform_mixin import ModelFormMixin
 
 
-class AeTmgForm(FormValidatorMixin, ModelFormMixin, forms.ModelForm):
+class AeTmgForm(FormValidatorMixin, ModelFormMixin,
+                ActionItemFormMixin, forms.ModelForm):
 
     form_validator_cls = AeTmgFormValidator
-
-    action_identifier = forms.CharField(
-        label='Action Identifier',
-        required=False,
-        widget=forms.TextInput(attrs={'readonly': 'readonly'}))
 
     subject_identifier = forms.CharField(
         label='Subject Identifier',

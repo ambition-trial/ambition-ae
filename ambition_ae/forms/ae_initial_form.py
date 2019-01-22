@@ -2,6 +2,7 @@ from ambition_ae.models.ae_followup import AeFollowup
 from django import forms
 from django.urls.base import reverse
 from django.utils.safestring import mark_safe
+from edc_action_item.forms import ActionItemFormMixin
 from edc_form_validators import FormValidatorMixin
 
 from ..form_validators import AeInitialFormValidator
@@ -9,14 +10,10 @@ from ..models import AeInitial
 from .modelform_mixin import ModelFormMixin
 
 
-class AeInitialForm(FormValidatorMixin, ModelFormMixin, forms.ModelForm):
+class AeInitialForm(FormValidatorMixin, ModelFormMixin,
+                    ActionItemFormMixin, forms.ModelForm):
 
     form_validator_cls = AeInitialFormValidator
-
-    action_identifier = forms.CharField(
-        label='Action Identifier',
-        required=False,
-        widget=forms.TextInput(attrs={'readonly': 'readonly'}))
 
     subject_identifier = forms.CharField(
         label='Subject Identifier',
