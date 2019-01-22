@@ -8,20 +8,16 @@ def fix(apps, schema_editor):
 
     fix_null_action_item_fk(
         apps,
-        app_label='ambition_ae',
-        models=['aeinitial',
-                'aefollowup',
-                'recurrencesymptom',
-                'aetmg'])
+        app_label="ambition_ae",
+        models=["aeinitial", "aefollowup", "recurrencesymptom", "aetmg"],
+    )
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ambition_ae', '0013_auto_20181007_0100'),
-        ('ambition_prn', '0009_auto_20181009_0545')
+        ("ambition_ae", "0013_auto_20181007_0100"),
+        ("ambition_prn", "0009_auto_20181009_0545"),
     ]
 
-    operations = [
-        migrations.RunPython(fix),
-    ]
+    operations = [migrations.RunPython(fix)]

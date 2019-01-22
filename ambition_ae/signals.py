@@ -6,10 +6,10 @@ from django.dispatch.dispatcher import receiver
 from edc_notification.models import Notification
 
 
-@receiver(m2m_changed, weak=False,
-          dispatch_uid='update_ae_notifications_for_tmg_group')
+@receiver(m2m_changed, weak=False, dispatch_uid="update_ae_notifications_for_tmg_group")
 def update_ae_notifications_for_tmg_group(
-        action, instance, reverse, model, pk_set, using, **kwargs):
+    action, instance, reverse, model, pk_set, using, **kwargs
+):
 
     try:
         instance.userprofile
@@ -17,16 +17,13 @@ def update_ae_notifications_for_tmg_group(
         pass
     else:
         try:
-            tmg_ae_notification = Notification.objects.get(
-                name=AE_TMG_ACTION)
+            tmg_ae_notification = Notification.objects.get(name=AE_TMG_ACTION)
         except ObjectDoesNotExist:
             pass
         else:
             try:
                 instance.groups.get(name=TMG)
             except ObjectDoesNotExist:
-                instance.userprofile.email_notifications.remove(
-                    tmg_ae_notification)
+                instance.userprofile.email_notifications.remove(tmg_ae_notification)
             else:
-                instance.userprofile.email_notifications.add(
-                    tmg_ae_notification)
+                instance.userprofile.email_notifications.add(tmg_ae_notification)

@@ -9,73 +9,150 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ambition_ae', '0007_auto_20180823_2235'),
-    ]
+    dependencies = [("ambition_ae", "0007_auto_20180823_2235")]
 
     operations = [
         migrations.AlterModelManagers(
-            name='aefollowup',
+            name="aefollowup",
             managers=[
-                ('on_site', ambition_ae.models.managers.CurrentSiteManager()),
-                ('objects', ambition_ae.models.managers.AeManager()),
+                ("on_site", ambition_ae.models.managers.CurrentSiteManager()),
+                ("objects", ambition_ae.models.managers.AeManager()),
             ],
         ),
         migrations.AlterModelManagers(
-            name='aeinitial',
+            name="aeinitial",
             managers=[
-                ('on_site', ambition_ae.models.ae_initial.ActionIdentifierSiteManager()),
-                ('objects', ambition_ae.models.ae_initial.ActionIdentifierManager()),
+                (
+                    "on_site",
+                    ambition_ae.models.ae_initial.ActionIdentifierSiteManager(),
+                ),
+                ("objects", ambition_ae.models.ae_initial.ActionIdentifierManager()),
             ],
         ),
         migrations.AlterModelManagers(
-            name='aetmg',
+            name="aetmg",
             managers=[
-                ('on_site', ambition_ae.models.ae_tmg.ActionIdentifierSiteManager()),
-                ('objects', ambition_ae.models.ae_tmg.ActionIdentifierManager()),
+                ("on_site", ambition_ae.models.ae_tmg.ActionIdentifierSiteManager()),
+                ("objects", ambition_ae.models.ae_tmg.ActionIdentifierManager()),
             ],
         ),
         migrations.AlterModelManagers(
-            name='recurrencesymptom',
+            name="recurrencesymptom",
             managers=[
-                ('on_site', ambition_ae.models.recurrence_symptom.ActionIdentifierSiteManager()),
-                ('objects', ambition_ae.models.recurrence_symptom.ActionIdentifierManager()),
+                (
+                    "on_site",
+                    ambition_ae.models.recurrence_symptom.ActionIdentifierSiteManager(),
+                ),
+                (
+                    "objects",
+                    ambition_ae.models.recurrence_symptom.ActionIdentifierManager(),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='aeinitial',
-            name='amphotericin_relation',
-            field=models.CharField(choices=[('not_related', 'Not related'), ('possibly_related', 'Possibly related'), ('probably_related', 'Probably related'), (
-                'definitely_related', 'Definitely related'), ('unlikely_related', 'Unlikely related'), ('N/A', 'Not applicable')], max_length=25, null=True, verbose_name='Amphotericin formulation:'),
+            model_name="aeinitial",
+            name="amphotericin_relation",
+            field=models.CharField(
+                choices=[
+                    ("not_related", "Not related"),
+                    ("possibly_related", "Possibly related"),
+                    ("probably_related", "Probably related"),
+                    ("definitely_related", "Definitely related"),
+                    ("unlikely_related", "Unlikely related"),
+                    ("N/A", "Not applicable"),
+                ],
+                max_length=25,
+                null=True,
+                verbose_name="Amphotericin formulation:",
+            ),
         ),
         migrations.AddField(
-            model_name='historicalaeinitial',
-            name='amphotericin_relation',
-            field=models.CharField(choices=[('not_related', 'Not related'), ('possibly_related', 'Possibly related'), ('probably_related', 'Probably related'), (
-                'definitely_related', 'Definitely related'), ('unlikely_related', 'Unlikely related'), ('N/A', 'Not applicable')], max_length=25, null=True, verbose_name='Amphotericin formulation:'),
+            model_name="historicalaeinitial",
+            name="amphotericin_relation",
+            field=models.CharField(
+                choices=[
+                    ("not_related", "Not related"),
+                    ("possibly_related", "Possibly related"),
+                    ("probably_related", "Probably related"),
+                    ("definitely_related", "Definitely related"),
+                    ("unlikely_related", "Unlikely related"),
+                    ("N/A", "Not applicable"),
+                ],
+                max_length=25,
+                null=True,
+                verbose_name="Amphotericin formulation:",
+            ),
         ),
         migrations.AlterField(
-            model_name='aeinitial',
-            name='ambisome_relation',
-            field=models.CharField(choices=[('not_related', 'Not related'), ('possibly_related', 'Possibly related'), ('probably_related', 'Probably related'), ('definitely_related', 'Definitely related'), (
-                'unlikely_related', 'Unlikely related'), ('N/A', 'Not applicable')], editable=False, max_length=25, null=True, verbose_name='Relationship to Ambisome:'),
+            model_name="aeinitial",
+            name="ambisome_relation",
+            field=models.CharField(
+                choices=[
+                    ("not_related", "Not related"),
+                    ("possibly_related", "Possibly related"),
+                    ("probably_related", "Probably related"),
+                    ("definitely_related", "Definitely related"),
+                    ("unlikely_related", "Unlikely related"),
+                    ("N/A", "Not applicable"),
+                ],
+                editable=False,
+                max_length=25,
+                null=True,
+                verbose_name="Relationship to Ambisome:",
+            ),
         ),
         migrations.AlterField(
-            model_name='aeinitial',
-            name='amphotericin_b_relation',
-            field=models.CharField(choices=[('not_related', 'Not related'), ('possibly_related', 'Possibly related'), ('probably_related', 'Probably related'), ('definitely_related', 'Definitely related'), (
-                'unlikely_related', 'Unlikely related'), ('N/A', 'Not applicable')], editable=False, max_length=25, null=True, verbose_name='Relationship to Amphotericin B:'),
+            model_name="aeinitial",
+            name="amphotericin_b_relation",
+            field=models.CharField(
+                choices=[
+                    ("not_related", "Not related"),
+                    ("possibly_related", "Possibly related"),
+                    ("probably_related", "Probably related"),
+                    ("definitely_related", "Definitely related"),
+                    ("unlikely_related", "Unlikely related"),
+                    ("N/A", "Not applicable"),
+                ],
+                editable=False,
+                max_length=25,
+                null=True,
+                verbose_name="Relationship to Amphotericin B:",
+            ),
         ),
         migrations.AlterField(
-            model_name='historicalaeinitial',
-            name='ambisome_relation',
-            field=models.CharField(choices=[('not_related', 'Not related'), ('possibly_related', 'Possibly related'), ('probably_related', 'Probably related'), ('definitely_related', 'Definitely related'), (
-                'unlikely_related', 'Unlikely related'), ('N/A', 'Not applicable')], editable=False, max_length=25, null=True, verbose_name='Relationship to Ambisome:'),
+            model_name="historicalaeinitial",
+            name="ambisome_relation",
+            field=models.CharField(
+                choices=[
+                    ("not_related", "Not related"),
+                    ("possibly_related", "Possibly related"),
+                    ("probably_related", "Probably related"),
+                    ("definitely_related", "Definitely related"),
+                    ("unlikely_related", "Unlikely related"),
+                    ("N/A", "Not applicable"),
+                ],
+                editable=False,
+                max_length=25,
+                null=True,
+                verbose_name="Relationship to Ambisome:",
+            ),
         ),
         migrations.AlterField(
-            model_name='historicalaeinitial',
-            name='amphotericin_b_relation',
-            field=models.CharField(choices=[('not_related', 'Not related'), ('possibly_related', 'Possibly related'), ('probably_related', 'Probably related'), ('definitely_related', 'Definitely related'), (
-                'unlikely_related', 'Unlikely related'), ('N/A', 'Not applicable')], editable=False, max_length=25, null=True, verbose_name='Relationship to Amphotericin B:'),
+            model_name="historicalaeinitial",
+            name="amphotericin_b_relation",
+            field=models.CharField(
+                choices=[
+                    ("not_related", "Not related"),
+                    ("possibly_related", "Possibly related"),
+                    ("probably_related", "Probably related"),
+                    ("definitely_related", "Definitely related"),
+                    ("unlikely_related", "Unlikely related"),
+                    ("N/A", "Not applicable"),
+                ],
+                editable=False,
+                max_length=25,
+                null=True,
+                verbose_name="Relationship to Amphotericin B:",
+            ),
         ),
     ]

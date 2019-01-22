@@ -10,28 +10,32 @@ from ..models import AeInitial
 from .modelform_mixin import ModelFormMixin
 
 
-class AeInitialForm(FormValidatorMixin, ModelFormMixin,
-                    ActionItemFormMixin, forms.ModelForm):
+class AeInitialForm(
+    FormValidatorMixin, ModelFormMixin, ActionItemFormMixin, forms.ModelForm
+):
 
     form_validator_cls = AeInitialFormValidator
 
     subject_identifier = forms.CharField(
-        label='Subject Identifier',
+        label="Subject Identifier",
         required=False,
-        widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+        widget=forms.TextInput(attrs={"readonly": "readonly"}),
+    )
 
     def clean(self):
         cleaned_data = super().clean()
         if AeFollowup.objects.filter(ae_initial=self.instance.pk).exists():
-            url = reverse(
-                'ambition_ae_admin:ambition_ae_aefollowup_changelist')
-            url = f'{url}?q={self.instance.action_identifier}'
+            url = reverse("ambition_ae_admin:ambition_ae_aefollowup_changelist")
+            url = f"{url}?q={self.instance.action_identifier}"
             raise forms.ValidationError(
-                mark_safe('Unable to save. Follow-up reports exist. Provide updates '
-                          'to this report using the AE Follow-up Report instead. '
-                          f'See <A href="{url}">AE Follow-ups for {self.instance}</A>.'))
+                mark_safe(
+                    "Unable to save. Follow-up reports exist. Provide updates "
+                    "to this report using the AE Follow-up Report instead. "
+                    f'See <A href="{url}">AE Follow-ups for {self.instance}</A>.'
+                )
+            )
         return cleaned_data
 
     class Meta:
         model = AeInitial
-        fields = '__all__'
+        fields = "__all__"

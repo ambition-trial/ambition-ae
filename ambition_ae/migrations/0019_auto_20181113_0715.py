@@ -6,29 +6,39 @@ import edc_model_fields.fields.other_charfield
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ambition_ae', '0018_auto_20181108_0632'),
-    ]
+    dependencies = [("ambition_ae", "0018_auto_20181108_0632")]
 
     operations = [
         migrations.AlterField(
-            model_name='aetmg',
-            name='ae_classification',
+            model_name="aetmg",
+            name="ae_classification",
             field=models.CharField(blank=True, max_length=50, null=True),
         ),
         migrations.AlterField(
-            model_name='aetmg',
-            name='ae_classification_other',
-            field=edc_model_fields.fields.other_charfield.OtherCharField(blank=True, editable=False, max_length=250, null=True, verbose_name='If Other, specify ...'),
+            model_name="aetmg",
+            name="ae_classification_other",
+            field=edc_model_fields.fields.other_charfield.OtherCharField(
+                blank=True,
+                editable=False,
+                max_length=250,
+                null=True,
+                verbose_name="If Other, specify ...",
+            ),
         ),
         migrations.AlterField(
-            model_name='historicalaetmg',
-            name='ae_classification',
+            model_name="historicalaetmg",
+            name="ae_classification",
             field=models.CharField(blank=True, max_length=50, null=True),
         ),
         migrations.AlterField(
-            model_name='historicalaetmg',
-            name='ae_classification_other',
-            field=edc_model_fields.fields.other_charfield.OtherCharField(blank=True, editable=False, max_length=250, null=True, verbose_name='If Other, specify ...'),
+            model_name="historicalaetmg",
+            name="ae_classification_other",
+            field=edc_model_fields.fields.other_charfield.OtherCharField(
+                blank=True,
+                editable=False,
+                max_length=250,
+                null=True,
+                verbose_name="If Other, specify ...",
+            ),
         ),
     ]

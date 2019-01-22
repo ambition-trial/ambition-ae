@@ -1,6 +1,9 @@
 from django.apps import apps as django_apps
 from django.db import models
-from edc_action_item.managers import ActionIdentifierSiteManager, ActionIdentifierManager
+from edc_action_item.managers import (
+    ActionIdentifierSiteManager,
+    ActionIdentifierManager,
+)
 from edc_action_item.models import ActionModelMixin
 from edc_base.model_mixins import BaseUuidModel
 from edc_base.model_validators import datetime_not_future
@@ -15,143 +18,162 @@ from ..choices import STUDY_DRUG_RELATIONSHIP, SAE_REASONS, AE_CLASSIFICATION
 from ..model_mixins import AeModelMixin
 
 
-class AeInitial(AeModelMixin, ActionModelMixin, TrackingModelMixin,
-                SiteModelMixin, BaseUuidModel):
+class AeInitial(
+    AeModelMixin, ActionModelMixin, TrackingModelMixin, SiteModelMixin, BaseUuidModel
+):
 
-    tracking_identifier_prefix = 'AE'
+    tracking_identifier_prefix = "AE"
 
     action_name = AE_INITIAL_ACTION
 
-    ae_classification = models.CharField(
-        max_length=150,
-        choices=AE_CLASSIFICATION)
+    ae_classification = models.CharField(max_length=150, choices=AE_CLASSIFICATION)
 
-    ae_classification_other = OtherCharField(
-        max_length=250,
-        blank=True,
-        null=True)
+    ae_classification_other = OtherCharField(max_length=250, blank=True, null=True)
 
     ae_study_relation_possibility = models.CharField(
         verbose_name=(
-            'Is the incident related to the patient involvement in the study?'),
+            "Is the incident related to the patient involvement in the study?"
+        ),
         max_length=10,
-        choices=YES_NO_UNKNOWN)
+        choices=YES_NO_UNKNOWN,
+    )
 
     # removed issue #4
     ambisome_relation = models.CharField(
-        verbose_name='Relationship to Ambisome:',
+        verbose_name="Relationship to Ambisome:",
         max_length=25,
         choices=STUDY_DRUG_RELATIONSHIP,
         null=True,
-        editable=False)
+        editable=False,
+    )
 
     fluconazole_relation = models.CharField(
-        verbose_name='Relationship to Fluconozole:',
+        verbose_name="Relationship to Fluconozole:",
         max_length=25,
-        choices=STUDY_DRUG_RELATIONSHIP)
+        choices=STUDY_DRUG_RELATIONSHIP,
+    )
 
     # removed issue #4
     amphotericin_b_relation = models.CharField(
-        verbose_name='Relationship to Amphotericin B:',
+        verbose_name="Relationship to Amphotericin B:",
         max_length=25,
         choices=STUDY_DRUG_RELATIONSHIP,
         null=True,
-        editable=False)
+        editable=False,
+    )
 
     flucytosine_relation = models.CharField(
-        verbose_name='Relationship to Flucytosine:',
+        verbose_name="Relationship to Flucytosine:",
         max_length=25,
-        choices=STUDY_DRUG_RELATIONSHIP)
+        choices=STUDY_DRUG_RELATIONSHIP,
+    )
 
     # added issue #4
     amphotericin_relation = models.CharField(
-        verbose_name='Amphotericin formulation:',
+        verbose_name="Amphotericin formulation:",
         max_length=25,
         choices=STUDY_DRUG_RELATIONSHIP,
-        null=True)
+        null=True,
+    )
 
     details_last_study_drug = models.TextField(
-        verbose_name='Details of the last implicated drug (name, dose, route):',
+        verbose_name="Details of the last implicated drug (name, dose, route):",
         max_length=1000,
         null=True,
         blank=True,
-        editable=False)
+        editable=False,
+    )
 
     med_administered_datetime = models.DateTimeField(
-        verbose_name='Date and time of last implicated study medication administered',
+        verbose_name="Date and time of last implicated study medication administered",
         validators=[datetime_not_future],
         null=True,
         blank=True,
-        editable=False)
+        editable=False,
+    )
 
     ae_cause = models.CharField(
-        verbose_name=('Has a reason other than the specified study drug been '
-                      'identified as the cause of the event(s)?'),
+        verbose_name=(
+            "Has a reason other than the specified study drug been "
+            "identified as the cause of the event(s)?"
+        ),
         choices=YES_NO,
-        max_length=5)
+        max_length=5,
+    )
 
     ae_cause_other = OtherCharField(
-        verbose_name='If "Yes", specify',
-        max_length=250,
-        blank=True,
-        null=True)
+        verbose_name='If "Yes", specify', max_length=250, blank=True, null=True
+    )
 
     ae_treatment = models.TextField(
-        verbose_name='Specify action taken for treatment of AE:')
+        verbose_name="Specify action taken for treatment of AE:"
+    )
 
     ae_cm_recurrence = models.CharField(
-        verbose_name='Was the AE a recurrence of CM symptoms?',
+        verbose_name="Was the AE a recurrence of CM symptoms?",
         max_length=10,
         choices=YES_NO,
         default=UNKNOWN,
-        help_text='If "Yes", fill in the "Recurrence of Symptoms" form')
+        help_text='If "Yes", fill in the "Recurrence of Symptoms" form',
+    )
 
     sae = models.CharField(
-        verbose_name='Is this event a SAE?',
+        verbose_name="Is this event a SAE?",
         max_length=5,
         choices=YES_NO,
-        help_text=('(i.e. results in death, in-patient '
-                   'hospitalisation/prolongation, significant disability or is '
-                   'life-threatening)'))
+        help_text=(
+            "(i.e. results in death, in-patient "
+            "hospitalisation/prolongation, significant disability or is "
+            "life-threatening)"
+        ),
+    )
 
     sae_reason = models.CharField(
         verbose_name='If "Yes", reason for SAE:',
         max_length=50,
         choices=SAE_REASONS,
         default=NOT_APPLICABLE,
-        help_text='If subject deceased, submit a Death Report')
+        help_text="If subject deceased, submit a Death Report",
+    )
 
     susar = models.CharField(
         verbose_name=(
-            'Is this a Suspected Unexpected Serious Adverse Reaction (SUSAR)?'),
+            "Is this a Suspected Unexpected Serious Adverse Reaction (SUSAR)?"
+        ),
         choices=YES_NO,
         max_length=5,
-        help_text=('If yes, SUSAR must be reported to Principal '
-                   'Investigator and TMG immediately,'))
+        help_text=(
+            "If yes, SUSAR must be reported to Principal "
+            "Investigator and TMG immediately,"
+        ),
+    )
 
     susar_reported = models.CharField(
-        verbose_name='Is SUSAR reported?',
+        verbose_name="Is SUSAR reported?",
         max_length=5,
         choices=YES_NO_NA,
-        default=NOT_APPLICABLE)
+        default=NOT_APPLICABLE,
+    )
 
     tmg_report_datetime = models.DateTimeField(
-        verbose_name='Date and time AE reported to TMG',
+        verbose_name="Date and time AE reported to TMG",
         blank=True,
         null=True,
         help_text=(
-            'AEs ≥ Grade 4 or SAE must be reported to the Trial '
-            'Management Group (TMG) within 24 hours'))
+            "AEs ≥ Grade 4 or SAE must be reported to the Trial "
+            "Management Group (TMG) within 24 hours"
+        ),
+    )
 
     on_site = ActionIdentifierSiteManager()
 
     objects = ActionIdentifierManager()
 
     def __str__(self):
-        return f'{self.action_identifier[-9:]} Grade {self.ae_grade}'
+        return f"{self.action_identifier[-9:]} Grade {self.ae_grade}"
 
     def natural_key(self):
-        return (self.action_identifier, )
+        return (self.action_identifier,)
 
     @property
     def action_item_reason(self):
@@ -159,14 +181,14 @@ class AeInitial(AeModelMixin, ActionModelMixin, TrackingModelMixin,
 
     @property
     def ae_follow_ups(self):
-        AeFollowup = django_apps.get_model('ambition_ae.aefollowup')
+        AeFollowup = django_apps.get_model("ambition_ae.aefollowup")
         return AeFollowup.objects.filter(ae_initial=self)
 
     @property
     def description(self):
         """Returns a description.
         """
-        return f'{self.action_identifier[-9:]} Grade-{self.ae_grade}. {self.ae_description}'
+        return f"{self.action_identifier[-9:]} Grade-{self.ae_grade}. {self.ae_description}"
 
     class Meta:
-        verbose_name = 'AE Initial Report'
+        verbose_name = "AE Initial Report"

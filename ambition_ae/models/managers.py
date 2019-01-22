@@ -10,10 +10,9 @@ class BaseManager(models.Manager):
 
     def get_by_natural_key(self, action_identifier, ae_initial_action_identifier):
         ae_initial = AeInitial.objects.get(
-            action_identifier=ae_initial_action_identifier)
-        return self.get(
-            action_identifier=action_identifier,
-            ae_initial=ae_initial)
+            action_identifier=ae_initial_action_identifier
+        )
+        return self.get(action_identifier=action_identifier, ae_initial=ae_initial)
 
 
 class AeManager(BaseManager):

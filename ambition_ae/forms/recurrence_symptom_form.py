@@ -7,16 +7,18 @@ from ..models import RecurrenceSymptom
 from .modelform_mixin import ModelFormMixin
 
 
-class RecurrenceSymptomForm(FormValidatorMixin, ModelFormMixin,
-                            ActionItemFormMixin, forms.ModelForm):
+class RecurrenceSymptomForm(
+    FormValidatorMixin, ModelFormMixin, ActionItemFormMixin, forms.ModelForm
+):
 
     form_validator_cls = RecurrenceSymptomFormValidator
 
     subject_identifier = forms.CharField(
-        label='Subject Identifier',
+        label="Subject Identifier",
         required=False,
-        widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+        widget=forms.TextInput(attrs={"readonly": "readonly"}),
+    )
 
     class Meta:
         model = RecurrenceSymptom
-        fields = '__all__'
+        fields = "__all__"
