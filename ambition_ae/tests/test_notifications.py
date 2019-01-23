@@ -15,7 +15,6 @@ style = color_style()
 
 
 class TestNotifications(AmbitionTestCaseMixin, TestCase):
-
     @classmethod
     def setUpClass(cls):
         site_list_data.autodiscover()
@@ -24,19 +23,18 @@ class TestNotifications(AmbitionTestCaseMixin, TestCase):
     def setUp(self):
 
         self.user = User.objects.create(
-            username='erikvw',
-            is_staff=True,
-            is_active=True)
-        self.subject_identifier = '1234'
+            username="erikvw", is_staff=True, is_active=True
+        )
+        self.subject_identifier = "1234"
         permissions = Permission.objects.filter(
-            content_type__app_label='ambition_ae',
-            content_type__model__in=['aeinitial', 'aetmg'])
+            content_type__app_label="ambition_ae",
+            content_type__model__in=["aeinitial", "aetmg"],
+        )
         for permission in permissions:
             self.user.user_permissions.add(permission)
 
-        self.subject_identifier = '12345'
-        RegisteredSubject.objects.create(
-            subject_identifier=self.subject_identifier)
+        self.subject_identifier = "12345"
+        RegisteredSubject.objects.create(subject_identifier=self.subject_identifier)
 
         self.assertEqual(len(mail.outbox), 0)
         site_notifications._registry = {}
@@ -48,22 +46,24 @@ class TestNotifications(AmbitionTestCaseMixin, TestCase):
     def test_susar(self):
 
         mommy.make_recipe(
-            'ambition_ae.aeinitial',
+            "ambition_ae.aeinitial",
             subject_identifier=self.subject_identifier,
             susar=YES,
             susar_reported=NO,
-            user_created='erikvw')
+            user_created="erikvw",
+        )
 
         self.assertEqual(len(mail.outbox), 1)
 
     def test_susar_updates(self):
 
         ae_initial = mommy.make_recipe(
-            'ambition_ae.aeinitial',
+            "ambition_ae.aeinitial",
             subject_identifier=self.subject_identifier,
             susar=YES,
             susar_reported=NO,
-            user_created='erikvw')
+            user_created="erikvw",
+        )
 
         self.assertEqual(len(mail.outbox), 1)
 
@@ -90,26 +90,27 @@ class TestNotifications(AmbitionTestCaseMixin, TestCase):
 
     def test_susar_text(self):
         mommy.make_recipe(
-            'ambition_ae.aeinitial',
+            "ambition_ae.aeinitial",
             subject_identifier=self.subject_identifier,
             susar=YES,
             susar_reported=NO,
-            user_created='erikvw')
+            user_created="erikvw",
+        )
 
+        self.assertIn("a SUSAR report is due", mail.outbox[0].subject)
         self.assertIn(
-            'a SUSAR report is due', mail.outbox[0].subject)
-        self.assertIn(
-            'suspected unexpected serious adverse reaction', mail.outbox[0].body)
+            "suspected unexpected serious adverse reaction", mail.outbox[0].body
+        )
 
     def test_susar_manually(self):
         ae_initial = mommy.make_recipe(
-            'ambition_ae.aeinitial',
+            "ambition_ae.aeinitial",
             subject_identifier=self.subject_identifier,
             susar=YES,
             susar_reported=NO,
-            user_created='erikvw')
+            user_created="erikvw",
+        )
 
-        AeSusarNotification().notify(instance=ae_initial,
-                                     fail_silently=True)
+        AeSusarNotification().notify(instance=ae_initial, fail_silently=True)
 
         self.assertEqual(len(mail.outbox), 2)

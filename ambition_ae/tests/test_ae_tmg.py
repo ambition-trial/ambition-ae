@@ -10,7 +10,6 @@ from model_mommy import mommy
 
 
 class TestAeTmg(AmbitionTestCaseMixin, TestCase):
-
     @classmethod
     def setUpClass(cls):
         site_list_data.autodiscover()
@@ -19,33 +18,32 @@ class TestAeTmg(AmbitionTestCaseMixin, TestCase):
     def setUp(self):
 
         self.user = User.objects.create(
-            username='erikvw',
-            is_staff=True,
-            is_active=True)
-        self.subject_identifier = '1234'
+            username="erikvw", is_staff=True, is_active=True
+        )
+        self.subject_identifier = "1234"
         permissions = Permission.objects.filter(
-            content_type__app_label='ambition_ae',
-            content_type__model__in=['aeinitial', 'aetmg'])
+            content_type__app_label="ambition_ae",
+            content_type__model__in=["aeinitial", "aetmg"],
+        )
         for permission in permissions:
             self.user.user_permissions.add(permission)
 
-        self.subject_identifier = '12345'
-        RegisteredSubject.objects.create(
-            subject_identifier=self.subject_identifier)
+        self.subject_identifier = "12345"
+        RegisteredSubject.objects.create(subject_identifier=self.subject_identifier)
         self.ae_initial = mommy.make_recipe(
-            'ambition_ae.aeinitial',
-            subject_identifier=self.subject_identifier)
+            "ambition_ae.aeinitial", subject_identifier=self.subject_identifier
+        )
 
     def test_(self):
         for model, model_admin in ambition_ae_admin._registry.items():
             if model == AeTmg:
-                ae_tmg_model_admin = (
-                    model_admin.admin_site._registry.get(AeTmg))
+                ae_tmg_model_admin = model_admin.admin_site._registry.get(AeTmg)
         rf = RequestFactory()
 
         request = rf.get(
-            f'/?subject_identifier={self.subject_identifier}&'
-            f'ae_initial={str(self.ae_initial.pk)}')
+            f"/?subject_identifier={self.subject_identifier}&"
+            f"ae_initial={str(self.ae_initial.pk)}"
+        )
 
         request.user = self.user
 

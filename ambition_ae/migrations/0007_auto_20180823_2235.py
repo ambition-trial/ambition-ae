@@ -5,21 +5,31 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ambition_ae', '0006_auto_20180814_0313'),
-    ]
+    dependencies = [("ambition_ae", "0006_auto_20180814_0313")]
 
     operations = [
         migrations.AddField(
-            model_name='aetmg',
-            name='slug',
-            field=models.CharField(db_index=True, default='', editable=False,
-                                   help_text='a field used for quick search', max_length=250, null=True),
+            model_name="aetmg",
+            name="slug",
+            field=models.CharField(
+                db_index=True,
+                default="",
+                editable=False,
+                help_text="a field used for quick search",
+                max_length=250,
+                null=True,
+            ),
         ),
         migrations.AddField(
-            model_name='historicalaetmg',
-            name='slug',
-            field=models.CharField(db_index=True, default='', editable=False,
-                                   help_text='a field used for quick search', max_length=250, null=True),
+            model_name="historicalaetmg",
+            name="slug",
+            field=models.CharField(
+                db_index=True,
+                default="",
+                editable=False,
+                help_text="a field used for quick search",
+                max_length=250,
+                null=True,
+            ),
         ),
     ]

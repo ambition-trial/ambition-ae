@@ -6,29 +6,51 @@ import edc_base.model_validators.date
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ambition_ae', '0017_auto_20181108_0353'),
-    ]
+    dependencies = [("ambition_ae", "0017_auto_20181108_0353")]
 
     operations = [
         migrations.AlterField(
-            model_name='aeinitial',
-            name='details_last_study_drug',
-            field=models.TextField(blank=True, editable=False, max_length=1000, null=True, verbose_name='Details of the last implicated drug (name, dose, route):'),
+            model_name="aeinitial",
+            name="details_last_study_drug",
+            field=models.TextField(
+                blank=True,
+                editable=False,
+                max_length=1000,
+                null=True,
+                verbose_name="Details of the last implicated drug (name, dose, route):",
+            ),
         ),
         migrations.AlterField(
-            model_name='aeinitial',
-            name='med_administered_datetime',
-            field=models.DateTimeField(blank=True, editable=False, null=True, validators=[edc_base.model_validators.date.datetime_not_future], verbose_name='Date and time of last implicated study medication administered'),
+            model_name="aeinitial",
+            name="med_administered_datetime",
+            field=models.DateTimeField(
+                blank=True,
+                editable=False,
+                null=True,
+                validators=[edc_base.model_validators.date.datetime_not_future],
+                verbose_name="Date and time of last implicated study medication administered",
+            ),
         ),
         migrations.AlterField(
-            model_name='historicalaeinitial',
-            name='details_last_study_drug',
-            field=models.TextField(blank=True, editable=False, max_length=1000, null=True, verbose_name='Details of the last implicated drug (name, dose, route):'),
+            model_name="historicalaeinitial",
+            name="details_last_study_drug",
+            field=models.TextField(
+                blank=True,
+                editable=False,
+                max_length=1000,
+                null=True,
+                verbose_name="Details of the last implicated drug (name, dose, route):",
+            ),
         ),
         migrations.AlterField(
-            model_name='historicalaeinitial',
-            name='med_administered_datetime',
-            field=models.DateTimeField(blank=True, editable=False, null=True, validators=[edc_base.model_validators.date.datetime_not_future], verbose_name='Date and time of last implicated study medication administered'),
+            model_name="historicalaeinitial",
+            name="med_administered_datetime",
+            field=models.DateTimeField(
+                blank=True,
+                editable=False,
+                null=True,
+                validators=[edc_base.model_validators.date.datetime_not_future],
+                verbose_name="Date and time of last implicated study medication administered",
+            ),
         ),
     ]

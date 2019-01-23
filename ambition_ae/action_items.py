@@ -13,29 +13,25 @@ from .email_contacts import email_contacts
 
 
 class BaseNonAeInitialAction(ActionWithNotification):
-    parent_reference_model_fk_attr = 'ae_initial'
+    parent_reference_model_fk_attr = "ae_initial"
     show_link_to_changelist = True
-    admin_site_name = 'ambition_ae_admin'
+    admin_site_name = "ambition_ae_admin"
     priority = HIGH_PRIORITY
 
 
 class AeTmgAction(BaseNonAeInitialAction):
     name = AE_TMG_ACTION
-    display_name = 'TMG AE Report pending'
-    notification_display_name = 'TMG AE Report'
-    parent_action_names = [
-        AE_INITIAL_ACTION,
-        AE_FOLLOWUP_ACTION,
-        AE_TMG_ACTION]
-    reference_model = 'ambition_ae.aetmg'
-    related_reference_model = 'ambition_ae.aeinitial'
-    related_reference_fk_attr = 'ae_initial'
+    display_name = "TMG AE Report pending"
+    notification_display_name = "TMG AE Report"
+    parent_action_names = [AE_INITIAL_ACTION, AE_FOLLOWUP_ACTION, AE_TMG_ACTION]
+    reference_model = "ambition_ae.aetmg"
+    related_reference_model = "ambition_ae.aeinitial"
+    related_reference_fk_attr = "ae_initial"
     create_by_user = False
-    color_style = 'info'
+    color_style = "info"
     show_link_to_changelist = True
-    admin_site_name = 'ambition_ae_admin'
-    instructions = mark_safe(
-        f'This report is to be completed by the TMG only.')
+    admin_site_name = "ambition_ae_admin"
+    instructions = mark_safe(f"This report is to be completed by the TMG only.")
 
     def close_action_item_on_save(self):
         return self.reference_obj.report_status == CLOSED
@@ -43,21 +39,20 @@ class AeTmgAction(BaseNonAeInitialAction):
 
 class AeFollowupAction(BaseNonAeInitialAction):
     name = AE_FOLLOWUP_ACTION
-    display_name = 'Submit AE Followup Report'
-    notification_display_name = 'AE Followup Report'
-    parent_action_names = [
-        AE_INITIAL_ACTION,
-        AE_FOLLOWUP_ACTION]
-    reference_model = 'ambition_ae.aefollowup'
-    related_reference_model = 'ambition_ae.aeinitial'
-    related_reference_fk_attr = 'ae_initial'
+    display_name = "Submit AE Followup Report"
+    notification_display_name = "AE Followup Report"
+    parent_action_names = [AE_INITIAL_ACTION, AE_FOLLOWUP_ACTION]
+    reference_model = "ambition_ae.aefollowup"
+    related_reference_model = "ambition_ae.aeinitial"
+    related_reference_fk_attr = "ae_initial"
     create_by_user = False
     show_link_to_changelist = True
-    admin_site_name = 'ambition_ae_admin'
+    admin_site_name = "ambition_ae_admin"
     instructions = mark_safe(
-        f'Upon submission the TMG group will be notified '
+        f"Upon submission the TMG group will be notified "
         f'by email at <a href="mailto:{email_contacts.get("tmg")}">'
-        f'{email_contacts.get("tmg")}</a>')
+        f'{email_contacts.get("tmg")}</a>'
+    )
 
     def get_next_actions(self):
         next_actions = []
@@ -66,13 +61,15 @@ class AeFollowupAction(BaseNonAeInitialAction):
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,
             action_name=self.name,
-            required=self.reference_obj.followup == YES)
+            required=self.reference_obj.followup == YES,
+        )
 
         # add AeTmg to next_actions if severity increased
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,
             action_name=AE_TMG_ACTION,
-            required=self.reference_obj.ae_grade in [GRADE4])
+            required=self.reference_obj.ae_grade in [GRADE4],
+        )
 
         # add Death report to next_actions if G5/Death
         next_actions = self.append_to_next_if_required(
@@ -80,7 +77,9 @@ class AeFollowupAction(BaseNonAeInitialAction):
             action_name=DEATH_REPORT_ACTION,
             required=(
                 self.reference_obj.outcome == DEAD
-                or self.reference_obj.ae_grade == GRADE5))
+                or self.reference_obj.ae_grade == GRADE5
+            ),
+        )
 
         # add AE TMG to next_actions if G5/Death
         next_actions = self.append_to_next_if_required(
@@ -88,32 +87,35 @@ class AeFollowupAction(BaseNonAeInitialAction):
             action_name=AE_TMG_ACTION,
             required=(
                 self.reference_obj.outcome == DEAD
-                or self.reference_obj.ae_grade == GRADE5))
+                or self.reference_obj.ae_grade == GRADE5
+            ),
+        )
 
         # add Study termination to next_actions if LTFU
         if self.reference_obj.outcome == LOST_TO_FOLLOWUP:
             for offschedule_model in get_offschedule_models(
-                    subject_identifier=self.subject_identifier,
-                    report_datetime=self.reference_obj.report_datetime):
-                action_cls = site_action_items.get_by_model(
-                    model=offschedule_model)
+                subject_identifier=self.subject_identifier,
+                report_datetime=self.reference_obj.report_datetime,
+            ):
+                action_cls = site_action_items.get_by_model(model=offschedule_model)
                 next_actions = self.append_to_next_if_required(
                     next_actions=next_actions,
                     action_name=action_cls.name,
-                    required=True)
+                    required=True,
+                )
         return next_actions
 
 
 class AeInitialAction(ActionWithNotification):
     name = AE_INITIAL_ACTION
-    display_name = 'Submit AE Initial Report'
-    notification_display_name = 'AE Initial Report'
+    display_name = "Submit AE Initial Report"
+    notification_display_name = "AE Initial Report"
     parent_action_names = [BLOOD_RESULTS_ACTION]
-    reference_model = 'ambition_ae.aeinitial'
+    reference_model = "ambition_ae.aeinitial"
     show_link_to_changelist = True
     show_link_to_add = True
-    admin_site_name = 'ambition_ae_admin'
-    instructions = 'Complete the initial AE report'
+    admin_site_name = "ambition_ae_admin"
+    instructions = "Complete the initial AE report"
     priority = HIGH_PRIORITY
 
     def get_next_actions(self):
@@ -125,67 +127,72 @@ class AeInitialAction(ActionWithNotification):
         next_actions = []
         deceased = (
             self.reference_obj.ae_grade == GRADE5
-            or self.reference_obj.sae_reason == DEAD)
+            or self.reference_obj.sae_reason == DEAD
+        )
 
         # add next AeFollowup if not deceased
         if not deceased:
             next_actions = self.append_to_next_if_required(
-                action_name=AE_FOLLOWUP_ACTION,
-                next_actions=next_actions)
+                action_name=AE_FOLLOWUP_ACTION, next_actions=next_actions
+            )
 
         # add next Death report if G5/Death
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,
             action_name=DEATH_REPORT_ACTION,
-            required=deceased)
+            required=deceased,
+        )
         # add next AE Tmg if G5/Death
         next_actions = self.append_to_next_if_required(
-            next_actions=next_actions,
-            action_name=AE_TMG_ACTION,
-            required=deceased)
+            next_actions=next_actions, action_name=AE_TMG_ACTION, required=deceased
+        )
         # add next AeTmgAction if G4
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,
             action_name=AE_TMG_ACTION,
-            required=self.reference_obj.ae_grade == GRADE4)
+            required=self.reference_obj.ae_grade == GRADE4,
+        )
         # add next AeTmgAction if G3 and is an SAE
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,
             action_name=AE_TMG_ACTION,
-            required=(self.reference_obj.ae_grade == GRADE3
-                      and self.reference_obj.sae == YES))
+            required=(
+                self.reference_obj.ae_grade == GRADE3 and self.reference_obj.sae == YES
+            ),
+        )
         # add next Recurrence of Symptoms if YES
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,
             action_name=RECURRENCE_OF_SYMPTOMS_ACTION,
-            required=self.reference_obj.ae_cm_recurrence == YES)
+            required=self.reference_obj.ae_cm_recurrence == YES,
+        )
         return next_actions
 
 
 class AeSusarAction(ActionWithNotification):
     name = AE_SUSAR_ACTION
-    display_name = 'Submit AE SUSAR Report'
-    notification_display_name = 'AE SUSAR Report'
+    display_name = "Submit AE SUSAR Report"
+    notification_display_name = "AE SUSAR Report"
     parent_action_names = [AE_INITIAL_ACTION, AE_FOLLOWUP_ACTION]
-    reference_model = 'ambition_ae.aesusar'
+    reference_model = "ambition_ae.aesusar"
     show_link_to_changelist = True
     show_link_to_add = True
-    admin_site_name = 'ambition_ae_admin'
-    instructions = 'Complete the AE SUSAR report'
+    admin_site_name = "ambition_ae_admin"
+    instructions = "Complete the AE SUSAR report"
     priority = HIGH_PRIORITY
 
 
 class RecurrenceOfSymptomsAction(ActionWithNotification):
     name = RECURRENCE_OF_SYMPTOMS_ACTION
-    display_name = 'Submit Recurrence of Symptoms Report'
-    notification_display_name = 'Recurrence of Symptoms Report'
+    display_name = "Submit Recurrence of Symptoms Report"
+    notification_display_name = "Recurrence of Symptoms Report"
     parent_action_names = [AE_INITIAL_ACTION]
-    reference_model = 'ambition_ae.recurrencesymptom'
+    reference_model = "ambition_ae.recurrencesymptom"
     show_link_to_changelist = True
-    admin_site_name = 'ambition_ae_admin'
+    admin_site_name = "ambition_ae_admin"
     priority = HIGH_PRIORITY
     create_by_user = False
-    help_text = 'This document is triggered by AE Initial'
+    help_text = "This document is triggered by AE Initial"
 
 
 site_action_items.register(AeInitialAction)

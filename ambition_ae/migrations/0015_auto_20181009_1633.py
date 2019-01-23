@@ -5,49 +5,47 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ambition_ae', '0014_auto_20181009_0637'),
-    ]
+    dependencies = [("ambition_ae", "0014_auto_20181009_0637")]
 
     operations = [
         migrations.AlterField(
-            model_name='aefollowup',
-            name='action_identifier',
+            model_name="aefollowup",
+            name="action_identifier",
             field=models.CharField(max_length=50, unique=True),
         ),
         migrations.AlterField(
-            model_name='aeinitial',
-            name='action_identifier',
+            model_name="aeinitial",
+            name="action_identifier",
             field=models.CharField(max_length=50, unique=True),
         ),
         migrations.AlterField(
-            model_name='aetmg',
-            name='action_identifier',
+            model_name="aetmg",
+            name="action_identifier",
             field=models.CharField(max_length=50, unique=True),
         ),
         migrations.AlterField(
-            model_name='historicalaefollowup',
-            name='action_identifier',
+            model_name="historicalaefollowup",
+            name="action_identifier",
             field=models.CharField(db_index=True, max_length=50),
         ),
         migrations.AlterField(
-            model_name='historicalaeinitial',
-            name='action_identifier',
+            model_name="historicalaeinitial",
+            name="action_identifier",
             field=models.CharField(db_index=True, max_length=50),
         ),
         migrations.AlterField(
-            model_name='historicalaetmg',
-            name='action_identifier',
+            model_name="historicalaetmg",
+            name="action_identifier",
             field=models.CharField(db_index=True, max_length=50),
         ),
         migrations.AlterField(
-            model_name='historicalrecurrencesymptom',
-            name='action_identifier',
+            model_name="historicalrecurrencesymptom",
+            name="action_identifier",
             field=models.CharField(db_index=True, max_length=50),
         ),
         migrations.AlterField(
-            model_name='recurrencesymptom',
-            name='action_identifier',
+            model_name="recurrencesymptom",
+            name="action_identifier",
             field=models.CharField(max_length=50, unique=True),
         ),
     ]

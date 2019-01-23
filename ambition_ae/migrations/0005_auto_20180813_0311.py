@@ -5,17 +5,9 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ambition_ae', '0004_auto_20180809_0504'),
-    ]
+    dependencies = [("ambition_ae", "0004_auto_20180809_0504")]
 
     operations = [
-        migrations.RemoveField(
-            model_name='aeinitial',
-            name='regimen',
-        ),
-        migrations.RemoveField(
-            model_name='historicalaeinitial',
-            name='regimen',
-        ),
+        migrations.RemoveField(model_name="aeinitial", name="regimen"),
+        migrations.RemoveField(model_name="historicalaeinitial", name="regimen"),
     ]

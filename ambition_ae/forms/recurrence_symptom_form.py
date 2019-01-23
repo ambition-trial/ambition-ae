@@ -1,4 +1,5 @@
 from django import forms
+from edc_action_item.forms import ActionItemFormMixin
 from edc_form_validators import FormValidatorMixin
 
 from ..form_validators import RecurrenceSymptomFormValidator
@@ -6,20 +7,18 @@ from ..models import RecurrenceSymptom
 from .modelform_mixin import ModelFormMixin
 
 
-class RecurrenceSymptomForm(FormValidatorMixin, ModelFormMixin, forms.ModelForm):
+class RecurrenceSymptomForm(
+    FormValidatorMixin, ModelFormMixin, ActionItemFormMixin, forms.ModelForm
+):
 
     form_validator_cls = RecurrenceSymptomFormValidator
 
-    action_identifier = forms.CharField(
-        label='Action Identifier',
-        required=False,
-        widget=forms.TextInput(attrs={'readonly': 'readonly'}))
-
     subject_identifier = forms.CharField(
-        label='Subject Identifier',
+        label="Subject Identifier",
         required=False,
-        widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+        widget=forms.TextInput(attrs={"readonly": "readonly"}),
+    )
 
     class Meta:
         model = RecurrenceSymptom
-        fields = '__all__'
+        fields = "__all__"
