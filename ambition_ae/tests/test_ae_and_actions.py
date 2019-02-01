@@ -15,7 +15,7 @@ from edc_reportable import GRADE3, GRADE4, GRADE5
 from model_mommy import mommy
 
 from ..action_items import AeFollowupAction, AeInitialAction
-from ..models import AeInitial, AeFollowup, AeTmg
+from ..models import AeInitial, AeFollowup, AeTmg, AeSusar
 
 
 class TestAeAndActions(AmbitionTestCaseMixin, TestCase):
@@ -30,7 +30,8 @@ class TestAeAndActions(AmbitionTestCaseMixin, TestCase):
 
     def setUp(self):
         self.subject_identifier = "12345"
-        RegisteredSubject.objects.create(subject_identifier=self.subject_identifier)
+        RegisteredSubject.objects.create(
+            subject_identifier=self.subject_identifier)
 
     def test_subject_identifier(self):
         mommy.make_recipe(
@@ -261,8 +262,10 @@ class TestAeAndActions(AmbitionTestCaseMixin, TestCase):
         )
 
         action_item = ActionItem.objects.get(pk=action_item.pk)
-        self.assertEqual(action_item.reference_model, ae_initial._meta.label_lower)
-        self.assertEqual(action_item.action_identifier, ae_initial.action_identifier)
+        self.assertEqual(action_item.reference_model,
+                         ae_initial._meta.label_lower)
+        self.assertEqual(action_item.action_identifier,
+                         ae_initial.action_identifier)
 
     def test_ae_initial_creates_next_action_on_close(self):
         ae_initial = mommy.make_recipe(
@@ -633,3 +636,97 @@ class TestAeAndActions(AmbitionTestCaseMixin, TestCase):
             parent_action_item=ae_initial.action_item,
             reference_model="ambition_ae.aetmg",
         )
+
+    def test_ae_initial_creates_susar_if_not_reported(self):
+
+        ae_initial = mommy.make_recipe(
+            "ambition_ae.aeinitial",
+            subject_identifier=self.subject_identifier,
+            susar=YES,
+            susar_reported=YES,
+            user_created="erikvw",
+        )
+
+        self.assertRaises(
+            ObjectDoesNotExist,
+            ActionItem.objects.get,
+            parent_action_item=ae_initial.action_item,
+            reference_model="ambition_ae.aesusar",
+        )
+
+        ae_initial = mommy.make_recipe(
+            "ambition_ae.aeinitial",
+            subject_identifier=self.subject_identifier,
+            susar=YES,
+            susar_reported=NO,
+            user_created="erikvw",
+        )
+
+        ActionItem.objects.get(
+            parent_action_item=ae_initial.action_item,
+            reference_model="ambition_ae.aesusar")
+
+    def test_susar_updates_aeinitial_if_submitted(self):
+
+        # create ae initial
+        ae_initial = mommy.make_recipe(
+            "ambition_ae.aeinitial",
+            subject_identifier=self.subject_identifier,
+            susar=YES,
+            susar_reported=NO,
+            user_created="erikvw",
+        )
+
+        # confirm ae susar action item is created
+        action_item = ActionItem.objects.get(
+            parent_action_item=ae_initial.action_item,
+            reference_model="ambition_ae.aesusar")
+
+        self.assertEqual(action_item.status, NEW)
+
+        # create ae susar
+        mommy.make_recipe(
+            "ambition_ae.aesusar",
+            subject_identifier=self.subject_identifier,
+            submitted_datetime=get_utcnow(),
+            ae_initial=ae_initial,
+        )
+
+        # confirm action status is closed
+        action_item.refresh_from_db()
+        self.assertEqual(action_item.status, CLOSED)
+
+        # confirm susar updates ae_initial (thru signal)
+        ae_initial.refresh_from_db()
+        self.assertEqual(ae_initial.susar_reported, YES)
+
+    def test_aeinitial_can_close_action_without_susar_model(self):
+
+        # create ae initial
+        ae_initial = mommy.make_recipe(
+            "ambition_ae.aeinitial",
+            subject_identifier=self.subject_identifier,
+            susar=YES,
+            susar_reported=NO,
+            user_created="erikvw",
+        )
+
+        # confirm ae susar action item is created
+        action_item = ActionItem.objects.get(
+            parent_action_item=ae_initial.action_item,
+            reference_model="ambition_ae.aesusar")
+
+        # change to YES before submitting an AeSusar
+        ae_initial.susar_reported = YES
+        ae_initial.save()
+        ae_initial.refresh_from_db()
+
+        # confirm AeSusar was created (by signal)
+        try:
+            AeSusar.objects.get(ae_initial=ae_initial)
+        except ObjectDoesNotExist:
+            self.fail('AeSusar unexpectedly does not exist')
+
+        # confirm ActionItem is closed
+        action_item.refresh_from_db()
+        self.assertEqual(action_item.status, CLOSED)
