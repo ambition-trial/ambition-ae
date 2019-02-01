@@ -2,8 +2,8 @@ from django import forms
 from edc_action_item.forms import ActionItemFormMixin
 from edc_form_validators import FormValidatorMixin
 
-from ..models import AeTmg
 from ..form_validators import AeTmgFormValidator
+from ..models import AeTmg
 from .modelform_mixin import ModelFormMixin
 
 

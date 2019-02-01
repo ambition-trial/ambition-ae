@@ -4,7 +4,7 @@ from faker import Faker
 from model_mommy.recipe import Recipe
 
 from .constants import GRADE4
-from .models import AeInitial, AeTmg, AeFollowup
+from .models import AeInitial, AeTmg, AeFollowup, AeSusar
 from .models import RecurrenceSymptom, Neurological
 from .models import MeningitisSymptom
 
@@ -33,6 +33,8 @@ aeinitial = Recipe(
 
 aetmg = Recipe(AeTmg, action_identifier=None, tracking_identifier=None)
 
+aesusar = Recipe(AeSusar, action_identifier=None, tracking_identifier=None)
+
 aefollowup = Recipe(
     AeFollowup, relevant_history=NO, action_identifier=None, tracking_identifier=None
 )
@@ -43,4 +45,5 @@ recurrencesymptom = Recipe(
 
 meningitissymptom = Recipe(MeningitisSymptom, name=OTHER, short_name="Other")
 
-neurological = Recipe(Neurological, name="meningismus", short_name="Meningismus")
+neurological = Recipe(Neurological, name="meningismus",
+                      short_name="Meningismus")
