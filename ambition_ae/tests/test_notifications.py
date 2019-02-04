@@ -32,13 +32,12 @@ class TestNotifications(AmbitionTestCaseMixin, TestCase):
             self.user.user_permissions.add(permission)
 
         self.subject_identifier = "12345"
-        RegisteredSubject.objects.create(
-            subject_identifier=self.subject_identifier)
+        RegisteredSubject.objects.create(subject_identifier=self.subject_identifier)
 
         self.assertEqual(len(mail.outbox), 0)
         self.assertTrue(site_notifications.loaded)
 
-    @tag('1')
+    @tag("1")
     def test_susar(self):
 
         mommy.make_recipe(
@@ -50,7 +49,7 @@ class TestNotifications(AmbitionTestCaseMixin, TestCase):
         )
         self.assertEqual(len(mail.outbox), 5)
 
-    @tag('1')
+    @tag("1")
     def test_susar_updates(self):
 
         ae_initial = mommy.make_recipe(
@@ -61,35 +60,35 @@ class TestNotifications(AmbitionTestCaseMixin, TestCase):
             user_created="erikvw",
         )
 
-        subject = ''.join([msg.subject for msg in mail.outbox])
+        subject = "".join([msg.subject for msg in mail.outbox])
         self.assertEqual(1, subject.count("AE SUSAR Report"))
 
         ae_initial.save()
 
-        subject = ''.join([msg.subject for msg in mail.outbox])
+        subject = "".join([msg.subject for msg in mail.outbox])
         self.assertEqual(1, subject.count("AE SUSAR Report"))
 
         ae_initial.susar_reported = YES
         ae_initial.save()
 
-        subject = ''.join([msg.subject for msg in mail.outbox])
+        subject = "".join([msg.subject for msg in mail.outbox])
         self.assertEqual(1, subject.count("AE SUSAR Report"))
 
         ae_initial.susar = NO
         ae_initial.susar_reported = NOT_APPLICABLE
         ae_initial.save()
 
-        subject = ''.join([msg.subject for msg in mail.outbox])
+        subject = "".join([msg.subject for msg in mail.outbox])
         self.assertEqual(2, subject.count("AE SUSAR Report"))
 
         ae_initial.susar = YES
         ae_initial.susar_reported = NO
         ae_initial.save()
 
-        subject = ''.join([msg.subject for msg in mail.outbox])
+        subject = "".join([msg.subject for msg in mail.outbox])
         self.assertEqual(2, subject.count("AE SUSAR Report"))
 
-    @tag('1')
+    @tag("1")
     def test_susar_text(self):
         mommy.make_recipe(
             "ambition_ae.aeinitial",
@@ -98,5 +97,5 @@ class TestNotifications(AmbitionTestCaseMixin, TestCase):
             susar_reported=NO,
             user_created="erikvw",
         )
-        subject = ''.join([msg.subject for msg in mail.outbox])
+        subject = "".join([msg.subject for msg in mail.outbox])
         self.assertEqual(1, subject.count("AE SUSAR Report"))

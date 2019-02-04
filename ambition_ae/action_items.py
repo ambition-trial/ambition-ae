@@ -16,8 +16,7 @@ class AeTmgAction(ActionWithNotification):
     name = AE_TMG_ACTION
     display_name = "TMG AE Report pending"
     notification_display_name = "TMG AE Report"
-    parent_action_names = [AE_INITIAL_ACTION,
-                           AE_FOLLOWUP_ACTION, AE_TMG_ACTION]
+    parent_action_names = [AE_INITIAL_ACTION, AE_FOLLOWUP_ACTION, AE_TMG_ACTION]
     reference_model = "ambition_ae.aetmg"
     related_reference_model = "ambition_ae.aeinitial"
     related_reference_fk_attr = "ae_initial"
@@ -25,8 +24,7 @@ class AeTmgAction(ActionWithNotification):
     color_style = "info"
     show_link_to_changelist = True
     admin_site_name = "ambition_ae_admin"
-    instructions = mark_safe(
-        f"This report is to be completed by the TMG only.")
+    instructions = mark_safe(f"This report is to be completed by the TMG only.")
     priority = HIGH_PRIORITY
 
     def close_action_item_on_save(self):
@@ -94,8 +92,7 @@ class AeFollowupAction(ActionWithNotification):
                 subject_identifier=self.subject_identifier,
                 report_datetime=self.reference_obj.report_datetime,
             ):
-                action_cls = site_action_items.get_by_model(
-                    model=offschedule_model)
+                action_cls = site_action_items.get_by_model(model=offschedule_model)
                 next_actions = self.append_to_next_if_required(
                     next_actions=next_actions,
                     action_name=action_cls.name,
@@ -138,8 +135,10 @@ class AeInitialAction(ActionWithNotification):
         next_actions = self.append_to_next_if_required(
             next_actions=next_actions,
             action_name=AE_SUSAR_ACTION,
-            required=(self.reference_obj.susar == YES
-                      and self.reference_obj.susar_reported == NO),
+            required=(
+                self.reference_obj.susar == YES
+                and self.reference_obj.susar_reported == NO
+            ),
         )
 
         # add next Death report if G5/Death

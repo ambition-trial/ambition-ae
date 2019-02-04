@@ -15,12 +15,17 @@ from ..constants import AE_SUSAR_ACTION
 from .ae_initial import AeInitial
 
 
-class AeSusar(ActionModelMixin, TrackingModelMixin,
-              ReportStatusModelMixin, SiteModelMixin, BaseUuidModel):
+class AeSusar(
+    ActionModelMixin,
+    TrackingModelMixin,
+    ReportStatusModelMixin,
+    SiteModelMixin,
+    BaseUuidModel,
+):
 
     action_name = AE_SUSAR_ACTION
 
-    tracking_identifier_prefix = 'AS'
+    tracking_identifier_prefix = "AS"
 
     ae_initial = models.ForeignKey(AeInitial, on_delete=PROTECT)
 
@@ -58,4 +63,4 @@ class AeSusar(ActionModelMixin, TrackingModelMixin,
         return fields
 
     class Meta:
-        verbose_name = 'AE SUSAR Report'
+        verbose_name = "AE SUSAR Report"
