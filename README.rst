@@ -1,5 +1,5 @@
 
-|pypi| |travis| |coverage|
+|pypi| |travis| |codecov| |downloads|
 
 ambition-ae
 ------------------
@@ -12,5 +12,8 @@ Adverse event handling
 .. |travis| image:: https://travis-ci.com/ambition-trial/ambition-ae.svg?branch=develop
     :target: https://travis-ci.com/ambition-trial/ambition-ae
     
-.. |coverage| image:: https://coveralls.io/repos/github/ambition-trial/ambition-ae/badge.svg?branch=develop
-    :target: https://coveralls.io/github/ambition-trial/ambition-ae?branch=develop
+.. |codecov| image:: https://codecov.io/gh/ambition-trial/ambition-ae/branch/develop/graph/badge.svg
+  :target: https://codecov.io/gh/ambition-trial/ambition-ae
+
+.. |downloads| image:: https://pepy.tech/badge/ambition-ae
+   :target: https://pepy.tech/project/ambition-ae

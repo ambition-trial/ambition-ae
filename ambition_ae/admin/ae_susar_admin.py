@@ -52,9 +52,7 @@ class AeSusarAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelAdmi
         audit_fieldset_tuple,
     )
 
-    radio_fields = {
-        "report_status": admin.VERTICAL,
-    }
+    radio_fields = {"report_status": admin.VERTICAL}
 
     def status(self, obj=None):
         return obj.report_status.title()
