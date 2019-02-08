@@ -2,13 +2,12 @@ from ambition_auth.group_names import TMG
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.signals import m2m_changed, post_save
 from django.dispatch.dispatcher import receiver
+from edc_base import get_utcnow
 from edc_constants.constants import YES, NO
 from edc_notification.models import Notification
 
 from .constants import AE_TMG_ACTION
 from .models import AeSusar, AeInitial
-from pprint import pprint
-from edc_base.utils import get_utcnow
 
 
 @receiver(m2m_changed, weak=False, dispatch_uid="update_ae_notifications_for_tmg_group")
