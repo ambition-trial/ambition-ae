@@ -14,7 +14,7 @@ class AeSusarAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelAdmi
     form = AeSusarForm
 
     # additional_instructions = "For completion by TMG Investigators Only"
-    subject_dashboard_url = "susar_ae_listboard_url"
+    # subject_dashboard_url = "susar_ae_listboard_url"
 
     list_display = [
         "subject_identifier",
