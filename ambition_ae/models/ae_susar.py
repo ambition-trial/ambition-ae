@@ -9,10 +9,12 @@ from edc_base.model_mixins import BaseUuidModel, ReportStatusModelMixin
 from edc_base.model_validators.date import datetime_not_future
 from edc_base.sites import SiteModelMixin
 from edc_base.utils import get_utcnow
+from edc_constants.constants import CLOSED
 from edc_identifier.model_mixins import TrackingModelMixin
 
 from ..constants import AE_SUSAR_ACTION
 from .ae_initial import AeInitial
+from edc_base.choices import REPORT_STATUS
 
 
 class AeSusar(
@@ -40,6 +42,14 @@ class AeSusar(
         validators=[datetime_not_future],
         null=True,
         blank=True,
+    )
+
+    report_status = models.CharField(
+        verbose_name="What is the status of this report?",
+        max_length=25,
+        choices=REPORT_STATUS,
+        default=CLOSED,
+        editable=False,
     )
 
     on_site = ActionIdentifierSiteManager()

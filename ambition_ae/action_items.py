@@ -188,9 +188,6 @@ class AeSusarAction(ActionWithNotification):
     instructions = "Complete the AE SUSAR report"
     priority = HIGH_PRIORITY
 
-    def close_action_item_on_save(self):
-        return self.reference_obj.submitted_datetime
-
 
 class RecurrenceOfSymptomsAction(ActionWithNotification):
     name = RECURRENCE_OF_SYMPTOMS_ACTION
