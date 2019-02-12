@@ -1,13 +1,17 @@
+from django.core.exceptions import ObjectDoesNotExist
+from edc_base.utils import formatted_datetime
 from ambition_ae.models.ae_followup import AeFollowup
 from django import forms
 from django.urls.base import reverse
 from django.utils.safestring import mark_safe
 from edc_action_item.forms import ActionItemFormMixin
+from edc_constants.constants import NO
 from edc_form_validators import FormValidatorMixin
 
 from ..form_validators import AeInitialFormValidator
-from ..models import AeInitial
+from ..models import AeInitial, AeSusar
 from .modelform_mixin import ModelFormMixin
+from django.db import transaction
 
 
 class AeInitialForm(
@@ -34,6 +38,28 @@ class AeInitialForm(
                     f'See <A href="{url}">AE Follow-ups for {self.instance}</A>.'
                 )
             )
+
+        # don't allow user to change response to NO if
+        # SUSAR already submitted.
+        if self.cleaned_data.get("susar_reported") == NO:
+            try:
+                with transaction.atomic():
+                    ae_susar = AeSusar.objects.get(ae_initial=self.instance.pk)
+            except ObjectDoesNotExist:
+                pass
+            else:
+                url = reverse("ambition_ae_admin:ambition_ae_aesusar_changelist")
+                url = f"{url}?q={self.instance.action_identifier}"
+                dt = formatted_datetime(ae_susar.submitted_datetime)
+                raise forms.ValidationError(
+                    {
+                        "susar_reported": mark_safe(
+                            f"SUSAR reported as submitted on {dt}. "
+                            f'See <A href="{url}">AE SUSAR for {self.instance}</A>.'
+                        )
+                    }
+                )
+
         return cleaned_data
 
     class Meta:
