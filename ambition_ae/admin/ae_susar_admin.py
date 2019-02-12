@@ -25,7 +25,7 @@ class AeSusarAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelAdmi
         "submitted_datetime",
     ]
 
-    list_filter = ("report_status", "report_datetime", "submitted_datetime")
+    list_filter = ("report_datetime", "submitted_datetime")
 
     search_fields = [
         "subject_identifier",
@@ -44,7 +44,6 @@ class AeSusarAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelAdmi
                     "ae_initial",
                     "report_datetime",
                     "submitted_datetime",
-                    "report_status",
                 )
             },
         ),

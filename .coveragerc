@@ -1,4 +1,4 @@
 [run]
 include = ambition_ae/*
-omit = ambition_ae/tests/*
+omit = ambition_ae/tests/*,ambition_ae/migrations/*
 branch = 1
