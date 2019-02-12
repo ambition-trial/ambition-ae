@@ -20,8 +20,7 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
 
     def setUp(self):
         self.subject_identifier = "12345"
-        RegisteredSubject.objects.create(
-            subject_identifier=self.subject_identifier)
+        RegisteredSubject.objects.create(subject_identifier=self.subject_identifier)
 
     def test_ae_followup_status(self):
         modeladmin = ambition_ae_admin._registry.get(AeFollowup)
@@ -58,11 +57,9 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
             subject_identifier=self.subject_identifier,
         )
 
-        self.assertIn(
-            ae_followup.identifier, modeladmin.ae_followup(ae_followup)
-        )
+        self.assertIn(ae_followup.identifier, modeladmin.ae_followup(ae_followup))
 
-    @tag('4')
+    @tag("4")
     def test_ae_initial_follow_up_reports(self):
         modeladmin = ambition_ae_admin._registry.get(AeInitial)
         ae_initial = mommy.make_recipe(
@@ -84,14 +81,10 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
             subject_identifier=self.subject_identifier,
         )
 
-        self.assertIn(
-            ae_followup1.identifier,
-            modeladmin.follow_up_reports(ae_initial))
-        self.assertIn(
-            ae_followup2.identifier,
-            modeladmin.follow_up_reports(ae_initial))
+        self.assertIn(ae_followup1.identifier, modeladmin.follow_up_reports(ae_initial))
+        self.assertIn(ae_followup2.identifier, modeladmin.follow_up_reports(ae_initial))
 
-    @tag('4')
+    @tag("4")
     def test_ae_initial_if_sae_reason(self):
         modeladmin = ambition_ae_admin._registry.get(AeInitial)
         ae_initial = mommy.make_recipe(
@@ -106,7 +99,7 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
         )
         self.assertTrue(modeladmin.description(ae_initial))
 
-    @tag('4')
+    @tag("4")
     def test_ae_initial_description(self):
         modeladmin = ambition_ae_admin._registry.get(AeInitial)
         ae_initial = mommy.make_recipe(
@@ -114,7 +107,7 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
         )
         self.assertTrue(modeladmin.description(ae_initial))
 
-    @tag('4')
+    @tag("4")
     def test_ae_initial_user(self):
         modeladmin = ambition_ae_admin._registry.get(AeInitial)
         ae_initial = mommy.make_recipe(
