@@ -8,12 +8,11 @@ from django.urls.base import reverse
 from django.utils.safestring import mark_safe
 from edc_action_item import action_fieldset_tuple, action_fields
 from edc_base.utils import convert_php_dateformat
-from edc_constants.constants import OTHER, YES, NO, DEAD
+from edc_constants.constants import OTHER, YES, DEAD
 from edc_model_admin import audit_fieldset_tuple
 from simple_history.admin import SimpleHistoryAdmin
 
 from ..admin_site import ambition_ae_admin
-from ..email_contacts import email_contacts
 from ..forms import AeInitialForm
 from ..models import AeInitial, AeFollowup
 from .modeladmin_mixins import ModelAdminMixin
@@ -23,7 +22,7 @@ from .modeladmin_mixins import ModelAdminMixin
 class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
 
     form = AeInitialForm
-    email_contact = email_contacts.get("ae_reports")
+    email_contact = settings.EMAIL_CONTACTS.get("ae_reports")
     additional_instructions = mark_safe(
         "Complete the initial AE report and forward to the TMG. "
         f'Email to <a href="mailto:{email_contact}">{email_contact}</a>'
@@ -110,7 +109,8 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
         "susar_reported",
     ]
 
-    search_fields = ["subject_identifier", "action_identifier", "tracking_identifier"]
+    search_fields = ["subject_identifier",
+                     "action_identifier", "tracking_identifier"]
 
     def get_readonly_fields(self, request, obj=None):
         fields = super().get_readonly_fields(request, obj=obj)
@@ -179,7 +179,9 @@ class AeInitialAdmin(ModelAdminMixin, SimpleHistoryAdmin):
             if obj.susar_reported == YES
             else '<font color="red">Not reported</font>'
         )
-        susar = "No" if obj.susar == NO else f"Yes. {susar_reported}"
+        susar = (
+            f"Yes. {susar_reported}" if obj.susar == YES else obj.get_susar_display()
+        )
         return mark_safe(
             ".<BR>".join(
                 [

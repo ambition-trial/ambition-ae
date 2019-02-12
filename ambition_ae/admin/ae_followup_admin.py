@@ -67,25 +67,25 @@ class AeFollowupAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, admin.ModelA
         link = None
         if obj.followup == YES:
             try:
-                ae_follow_up = self.model.objects.get(
+                ae_followup = self.model.objects.get(
                     parent_action_item=obj.action_item
                 )
             except ObjectDoesNotExist:
-                ae_follow_up = None
-            link = self.ae_follow_up(ae_follow_up)
+                ae_followup = None
+            link = self.ae_followup(ae_followup)
         elif obj.followup == NO and obj.ae_grade != NOT_APPLICABLE:
             link = self.initial_ae(obj)
         if link:
             return mark_safe(f"{obj.get_outcome_display()}. See {link}.")
         return obj.get_outcome_display()
 
-    def ae_follow_up(self, obj):
+    def ae_followup(self, obj):
         if obj:
             url_name = "_".join(obj._meta.label_lower.split("."))
             namespace = ambition_ae_admin.name
             url = reverse(f"{namespace}:{url_name}_changelist")
             return mark_safe(
-                f'<a title="go to next AE follow up report" '
+                f'<a title="go to next {obj._meta.verbose_name} report" '
                 f'href="{url}?q={obj.action_identifier}">'
                 f"{obj.identifier}</a>"
             )

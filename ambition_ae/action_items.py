@@ -1,5 +1,6 @@
 from ambition_prn.constants import DEATH_REPORT_ACTION
 from ambition_subject.constants import BLOOD_RESULTS_ACTION
+from django.conf import settings
 from django.utils.safestring import mark_safe
 from edc_action_item import HIGH_PRIORITY, ActionWithNotification, site_action_items
 from edc_constants.constants import CLOSED, DEAD, LOST_TO_FOLLOWUP, YES, NO
@@ -9,7 +10,6 @@ from edc_visit_schedule.utils import get_offschedule_models
 from .constants import AE_FOLLOWUP_ACTION, AE_INITIAL_ACTION, AE_SUSAR_ACTION
 from .constants import AE_TMG_ACTION, RECURRENCE_OF_SYMPTOMS_ACTION
 from .constants import GRADE4, GRADE5
-from .email_contacts import email_contacts
 
 
 class AeTmgAction(ActionWithNotification):
@@ -44,8 +44,8 @@ class AeFollowupAction(ActionWithNotification):
     admin_site_name = "ambition_ae_admin"
     instructions = mark_safe(
         f"Upon submission the TMG group will be notified "
-        f'by email at <a href="mailto:{email_contacts.get("tmg")}">'
-        f'{email_contacts.get("tmg")}</a>'
+        f'by email at <a href="mailto:{settings.EMAIL_CONTACTS.get("tmg") or "#"}">'
+        f'{settings.EMAIL_CONTACTS.get("tmg") or "unknown"}</a>'
     )
     priority = HIGH_PRIORITY
 

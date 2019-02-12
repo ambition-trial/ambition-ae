@@ -30,11 +30,9 @@ def update_ae_notifications_for_tmg_group(
                 with transaction.atomic():
                     instance.groups.get(name=TMG)
             except ObjectDoesNotExist:
-                instance.userprofile.email_notifications.remove(
-                    tmg_ae_notification)
+                instance.userprofile.email_notifications.remove(tmg_ae_notification)
             else:
-                instance.userprofile.email_notifications.add(
-                    tmg_ae_notification)
+                instance.userprofile.email_notifications.add(tmg_ae_notification)
 
 
 @receiver(post_save, weak=False, dispatch_uid="update_ae_initial_for_susar")

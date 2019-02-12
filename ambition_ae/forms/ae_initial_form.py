@@ -29,8 +29,7 @@ class AeInitialForm(
     def clean(self):
         cleaned_data = super().clean()
         if AeFollowup.objects.filter(ae_initial=self.instance.pk).exists():
-            url = reverse(
-                "ambition_ae_admin:ambition_ae_aefollowup_changelist")
+            url = reverse("ambition_ae_admin:ambition_ae_aefollowup_changelist")
             url = f"{url}?q={self.instance.action_identifier}"
             raise forms.ValidationError(
                 mark_safe(
@@ -49,8 +48,7 @@ class AeInitialForm(
             except ObjectDoesNotExist:
                 pass
             else:
-                url = reverse(
-                    "ambition_ae_admin:ambition_ae_aesusar_changelist")
+                url = reverse("ambition_ae_admin:ambition_ae_aesusar_changelist")
                 url = f"{url}?q={self.instance.action_identifier}"
                 dt = formatted_datetime(ae_susar.submitted_datetime)
                 raise forms.ValidationError(
