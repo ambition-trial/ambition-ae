@@ -17,6 +17,7 @@ class AppConfig(DjangoApponfig):
 if settings.APP_NAME == "ambition_ae":
 
     from dateutil.relativedelta import MO, TU, WE, TH, FR, SA, SU
+    from edc_lab.apps import AppConfig as BaseEdcLabAppConfig
 
     class EdcFacilityAppConfig(BaseEdcFacilityAppConfig):
         country = "botswana"
@@ -29,3 +30,15 @@ if settings.APP_NAME == "ambition_ae":
                 days=[MO, TU, WE, TH, FR], slots=[100, 100, 100, 100, 100]
             ),
         }
+
+    class EdcLabAppConfig(BaseEdcLabAppConfig):
+        base_template_name = f"ambition/bootstrap{settings.EDC_BOOTSTRAP}/base.html"
+        result_model = "edc_lab.result"
+
+        @property
+        def site_name(self):
+            return "Gaborone"
+
+        @property
+        def site_code(self):
+            return "40"
