@@ -5,12 +5,12 @@ from edc_action_item.managers import (
     ActionIdentifierManager,
 )
 from edc_action_item.models import ActionModelMixin
-from edc_base.model_mixins import BaseUuidModel
-from edc_base.sites import SiteModelMixin
-from edc_base.model_validators import date_not_future
-from edc_base.utils import get_utcnow
 from edc_constants.choices import YES_NO, YES_NO_NA, NOT_APPLICABLE
 from edc_identifier.model_mixins import TrackingModelMixin
+from edc_model.model_mixins import BaseUuidModel
+from edc_model.model_validators import date_not_future
+from edc_sites.model_mixins import SiteModelMixin
+from edc_utils import get_utcnow
 
 from ..constants import RECURRENCE_OF_SYMPTOMS_ACTION
 from ..choices import DR_OPINION, STEROIDS_CHOICES, YES_NO_ALREADY_ARV

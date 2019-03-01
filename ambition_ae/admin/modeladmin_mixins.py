@@ -3,7 +3,6 @@ from django.conf import settings
 from django.urls.base import reverse
 from django_revision.modeladmin_mixin import ModelAdminRevisionMixin
 from edc_action_item import action_fields
-from edc_base.sites.admin import ModelAdminSiteMixin
 from edc_model_admin import (
     ModelAdminNextUrlRedirectMixin,
     ModelAdminFormInstructionsMixin,
@@ -15,6 +14,7 @@ from edc_model_admin import (
 )
 from edc_metadata import NextFormGetter
 from edc_notification import NotificationModelAdminMixin
+from edc_sites.admin import ModelAdminSiteMixin
 from edc_subject_dashboard import ModelAdminSubjectDashboardMixin
 
 from ..models import AeInitial

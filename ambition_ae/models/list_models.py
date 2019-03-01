@@ -1,4 +1,4 @@
-from edc_base.model_mixins import BaseUuidModel
+from edc_model.model_mixins import BaseUuidModel
 from edc_list_data.model_mixins import ListModelMixin
 
 

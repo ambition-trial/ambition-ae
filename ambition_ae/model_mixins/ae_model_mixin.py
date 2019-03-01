@@ -1,7 +1,7 @@
 from django.db import models
-from edc_base.model_validators.date import date_not_future
-from edc_base.utils import get_utcnow
 from edc_constants.constants import NOT_APPLICABLE
+from edc_model.model_validators.date import date_not_future
+from edc_utils import get_utcnow
 
 from ..choices import AE_GRADE
 

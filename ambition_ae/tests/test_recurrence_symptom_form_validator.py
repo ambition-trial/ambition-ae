@@ -1,7 +1,7 @@
 from copy import copy
 from django import forms
 from django.core.exceptions import ValidationError
-from django.test import TestCase, tag
+from django.test import TestCase, tag  # noqa
 from edc_constants.constants import NO, NOT_APPLICABLE, OTHER, YES
 from edc_list_data import site_list_data
 

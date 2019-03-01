@@ -7,9 +7,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.urls.base import reverse
 from django.utils.safestring import mark_safe
 from edc_action_item import action_fieldset_tuple, action_fields
-from edc_base.utils import convert_php_dateformat
 from edc_constants.constants import OTHER, YES, DEAD
 from edc_model_admin import audit_fieldset_tuple
+from edc_utils import convert_php_dateformat
 from simple_history.admin import SimpleHistoryAdmin
 
 from ..admin_site import ambition_ae_admin

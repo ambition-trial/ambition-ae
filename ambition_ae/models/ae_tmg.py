@@ -5,14 +5,14 @@ from edc_action_item.managers import (
     ActionIdentifierManager,
 )
 from edc_action_item.models import ActionModelMixin
-from edc_base.model_mixins import BaseUuidModel, ReportStatusModelMixin
-from edc_base.model_validators.date import datetime_not_future
-from edc_base.sites import SiteModelMixin
-from edc_base.utils import get_utcnow
 from edc_constants.choices import YES_NO
 from edc_identifier.model_mixins import TrackingModelMixin
+from edc_model.model_mixins import BaseUuidModel, ReportStatusModelMixin
+from edc_model.model_validators.date import datetime_not_future
 from edc_model_fields.fields import OtherCharField
 from edc_search.model_mixins import SearchSlugModelMixin
+from edc_sites.model_mixins import SiteModelMixin
+from edc_utils import get_utcnow
 
 from ..constants import AE_TMG_ACTION
 from .ae_initial import AeInitial

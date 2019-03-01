@@ -3,8 +3,8 @@ from django.conf import settings
 from django.contrib import admin
 from django.core.exceptions import ObjectDoesNotExist
 from edc_action_item import action_fieldset_tuple
-from edc_base.utils import convert_php_dateformat
 from edc_model_admin import audit_fieldset_tuple
+from edc_utils import convert_php_dateformat
 
 from ..admin_site import ambition_ae_admin
 from ..choices import AE_CLASSIFICATION

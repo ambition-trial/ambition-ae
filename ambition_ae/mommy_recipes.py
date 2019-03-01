@@ -1,4 +1,4 @@
-from edc_base.utils import get_utcnow
+from edc_utils import get_utcnow
 from edc_constants.constants import YES, NO, OTHER, NOT_APPLICABLE
 from faker import Faker
 from model_mommy.recipe import Recipe

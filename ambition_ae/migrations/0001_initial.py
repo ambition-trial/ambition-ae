@@ -10,7 +10,7 @@ import edc_model_fields.fields
 import edc_model_fields.fields.hostname_modification_field
 import edc_model_fields.fields.userfield
 import edc_model_fields.fields.uuid_auto_field
-import edc_base.model_validators.date
+import edc_model.validators
 import edc_base.sites.managers
 import edc_base.utils
 
