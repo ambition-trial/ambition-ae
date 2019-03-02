@@ -8,9 +8,9 @@ from edc_action_item.models import ActionModelMixin
 from edc_constants.constants import CLOSED
 from edc_identifier.model_mixins import TrackingModelMixin
 from edc_model.choices import REPORT_STATUS
-from edc_model.model_mixins import BaseUuidModel, ReportStatusModelMixin
-from edc_model.model_validators.date import datetime_not_future
-from edc_sites.model_mixins import SiteModelMixin
+from edc_model.models import BaseUuidModel, ReportStatusModelMixin
+from edc_model.validators import datetime_not_future
+from edc_sites.models import SiteModelMixin
 from edc_utils import get_utcnow
 
 from ..constants import AE_SUSAR_ACTION

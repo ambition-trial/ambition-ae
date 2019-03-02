@@ -8,9 +8,9 @@ from edc_action_item.models import ActionModelMixin
 from edc_constants.choices import YES_NO
 from edc_constants.constants import YES, NOT_APPLICABLE
 from edc_identifier.model_mixins import TrackingModelMixin
-from edc_model.model_mixins import BaseUuidModel
-from edc_model.model_validators import date_not_future
-from edc_sites.model_mixin import SiteModelMixin
+from edc_model.models import BaseUuidModel
+from edc_model.validators import date_not_future
+from edc_sites.models import SiteModelMixin
 from edc_utils import get_utcnow
 
 from ..constants import AE_FOLLOWUP_ACTION
