@@ -1,9 +1,9 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.test import TestCase, tag
-from edc_base.tests import SiteTestCaseMixin
 from edc_constants.constants import YES, NO, NOT_APPLICABLE
 from edc_form_validators import NOT_REQUIRED_ERROR
+from edc_sites.tests import SiteTestCaseMixin
 
 from ..form_validators import AeInitialFormValidator
 

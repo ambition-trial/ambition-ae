@@ -44,8 +44,11 @@ setup(
         'edc-base',
         'edc-form-describer',
         'edc-reportable',
-        'edc_notification',
         'edc-subject-dashboard',
+        'edc_model',
+        'edc_notification',
+        'edc_sites',
+        'edc_utils',
     ],
     classifiers=[
         'Environment :: Web Environment',

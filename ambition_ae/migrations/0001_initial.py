@@ -10,9 +10,9 @@ import edc_model_fields.fields
 import edc_model_fields.fields.hostname_modification_field
 import edc_model_fields.fields.userfield
 import edc_model_fields.fields.uuid_auto_field
-import edc_base.model_validators.date
-import edc_base.sites.managers
-import edc_base.utils
+import edc_model.validators
+import edc_sites.models
+import edc_utils
 
 
 class Migration(migrations.Migration):
@@ -30,11 +30,11 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "created",
-                    models.DateTimeField(blank=True, default=edc_base.utils.get_utcnow),
+                    models.DateTimeField(blank=True, default=edc_utils.date.get_utcnow),
                 ),
                 (
                     "modified",
-                    models.DateTimeField(blank=True, default=edc_base.utils.get_utcnow),
+                    models.DateTimeField(blank=True, default=edc_utils.date.get_utcnow),
                 ),
                 (
                     "user_created",
@@ -103,7 +103,7 @@ class Migration(migrations.Migration):
                 (
                     "report_datetime",
                     models.DateTimeField(
-                        default=edc_base.utils.get_utcnow,
+                        default=edc_utils.date.get_utcnow,
                         verbose_name="Report date and time",
                     ),
                 ),
@@ -126,7 +126,7 @@ class Migration(migrations.Migration):
                 (
                     "outcome_date",
                     models.DateField(
-                        validators=[edc_base.model_validators.date.date_not_future]
+                        validators=[edc_model.validators.date.date_not_future]
                     ),
                 ),
                 (
@@ -162,18 +162,18 @@ class Migration(migrations.Migration):
                 ),
             ],
             options={"verbose_name": "AE Follow-up Report"},
-            managers=[("on_site", edc_base.sites.managers.CurrentSiteManager())],
+            managers=[("on_site", edc_sites.models.CurrentSiteManager())],
         ),
         migrations.CreateModel(
             name="AeInitial",
             fields=[
                 (
                     "created",
-                    models.DateTimeField(blank=True, default=edc_base.utils.get_utcnow),
+                    models.DateTimeField(blank=True, default=edc_utils.date.get_utcnow),
                 ),
                 (
                     "modified",
-                    models.DateTimeField(blank=True, default=edc_base.utils.get_utcnow),
+                    models.DateTimeField(blank=True, default=edc_utils.date.get_utcnow),
                 ),
                 (
                     "user_created",
@@ -250,7 +250,7 @@ class Migration(migrations.Migration):
                 (
                     "report_datetime",
                     models.DateTimeField(
-                        default=edc_base.utils.get_utcnow,
+                        default=edc_utils.date.get_utcnow,
                         verbose_name="Report Date and Time",
                     ),
                 ),
@@ -261,16 +261,16 @@ class Migration(migrations.Migration):
                 (
                     "ae_awareness_date",
                     models.DateField(
-                        default=edc_base.utils.get_utcnow,
-                        validators=[edc_base.model_validators.date.date_not_future],
+                        default=edc_utils.date.get_utcnow,
+                        validators=[edc_model.validators.date.date_not_future],
                         verbose_name="AE Awareness date",
                     ),
                 ),
                 (
                     "ae_start_date",
                     models.DateField(
-                        default=edc_base.utils.get_utcnow,
-                        validators=[edc_base.model_validators.date.date_not_future],
+                        default=edc_utils.date.get_utcnow,
+                        validators=[edc_model.validators.date.date_not_future],
                         verbose_name="Actual Start Date of AE",
                     ),
                 ),
@@ -421,7 +421,7 @@ class Migration(migrations.Migration):
                     models.DateTimeField(
                         blank=True,
                         null=True,
-                        validators=[edc_base.model_validators.date.datetime_not_future],
+                        validators=[edc_model.validators.date.datetime_not_future],
                         verbose_name="Date and time of last implicated study medication administered",
                     ),
                 ),
@@ -532,18 +532,18 @@ class Migration(migrations.Migration):
                 ),
             ],
             options={"verbose_name": "AE Initial Report"},
-            managers=[("on_site", edc_base.sites.managers.CurrentSiteManager())],
+            managers=[("on_site", edc_sites.models.CurrentSiteManager())],
         ),
         migrations.CreateModel(
             name="AeTmg",
             fields=[
                 (
                     "created",
-                    models.DateTimeField(blank=True, default=edc_base.utils.get_utcnow),
+                    models.DateTimeField(blank=True, default=edc_utils.date.get_utcnow),
                 ),
                 (
                     "modified",
-                    models.DateTimeField(blank=True, default=edc_base.utils.get_utcnow),
+                    models.DateTimeField(blank=True, default=edc_utils.date.get_utcnow),
                 ),
                 (
                     "user_created",
@@ -612,8 +612,8 @@ class Migration(migrations.Migration):
                 (
                     "report_datetime",
                     models.DateTimeField(
-                        default=edc_base.utils.get_utcnow,
-                        validators=[edc_base.model_validators.date.datetime_not_future],
+                        default=edc_utils.date.get_utcnow,
+                        validators=[edc_model.validators.date.datetime_not_future],
                         verbose_name="Report date and time",
                     ),
                 ),
@@ -622,7 +622,7 @@ class Migration(migrations.Migration):
                     models.DateTimeField(
                         blank=True,
                         null=True,
-                        validators=[edc_base.model_validators.date.datetime_not_future],
+                        validators=[edc_model.validators.date.datetime_not_future],
                         verbose_name="Date and time AE form received:",
                     ),
                 ),
@@ -631,7 +631,7 @@ class Migration(migrations.Migration):
                     models.DateTimeField(
                         blank=True,
                         null=True,
-                        validators=[edc_base.model_validators.date.datetime_not_future],
+                        validators=[edc_model.validators.date.datetime_not_future],
                         verbose_name="Date and time of clinical review: ",
                     ),
                 ),
@@ -681,7 +681,7 @@ class Migration(migrations.Migration):
                     models.DateTimeField(
                         blank=True,
                         null=True,
-                        validators=[edc_base.model_validators.date.datetime_not_future],
+                        validators=[edc_model.validators.date.datetime_not_future],
                         verbose_name="Date and time regulatory authorities notified (SUSARs)",
                     ),
                 ),
@@ -701,7 +701,7 @@ class Migration(migrations.Migration):
                     models.DateTimeField(
                         blank=True,
                         null=True,
-                        validators=[edc_base.model_validators.date.datetime_not_future],
+                        validators=[edc_model.validators.date.datetime_not_future],
                         verbose_name="Date and time report closed.",
                     ),
                 ),
@@ -723,18 +723,18 @@ class Migration(migrations.Migration):
                 ),
             ],
             options={"verbose_name": "AE TMG Report"},
-            managers=[("on_site", edc_base.sites.managers.CurrentSiteManager())],
+            managers=[("on_site", edc_sites.models.CurrentSiteManager())],
         ),
         migrations.CreateModel(
             name="AntibioticTreatment",
             fields=[
                 (
                     "created",
-                    models.DateTimeField(blank=True, default=edc_base.utils.get_utcnow),
+                    models.DateTimeField(blank=True, default=edc_utils.date.get_utcnow),
                 ),
                 (
                     "modified",
-                    models.DateTimeField(blank=True, default=edc_base.utils.get_utcnow),
+                    models.DateTimeField(blank=True, default=edc_utils.date.get_utcnow),
                 ),
                 (
                     "user_created",
@@ -845,11 +845,11 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "created",
-                    models.DateTimeField(blank=True, default=edc_base.utils.get_utcnow),
+                    models.DateTimeField(blank=True, default=edc_utils.date.get_utcnow),
                 ),
                 (
                     "modified",
-                    models.DateTimeField(blank=True, default=edc_base.utils.get_utcnow),
+                    models.DateTimeField(blank=True, default=edc_utils.date.get_utcnow),
                 ),
                 (
                     "user_created",
@@ -917,7 +917,7 @@ class Migration(migrations.Migration):
                 (
                     "report_datetime",
                     models.DateTimeField(
-                        default=edc_base.utils.get_utcnow,
+                        default=edc_utils.date.get_utcnow,
                         verbose_name="Report date and time",
                     ),
                 ),
@@ -940,7 +940,7 @@ class Migration(migrations.Migration):
                 (
                     "outcome_date",
                     models.DateField(
-                        validators=[edc_base.model_validators.date.date_not_future]
+                        validators=[edc_model.validators.date.date_not_future]
                     ),
                 ),
                 (
@@ -1032,11 +1032,11 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "created",
-                    models.DateTimeField(blank=True, default=edc_base.utils.get_utcnow),
+                    models.DateTimeField(blank=True, default=edc_utils.date.get_utcnow),
                 ),
                 (
                     "modified",
-                    models.DateTimeField(blank=True, default=edc_base.utils.get_utcnow),
+                    models.DateTimeField(blank=True, default=edc_utils.date.get_utcnow),
                 ),
                 (
                     "user_created",
@@ -1112,7 +1112,7 @@ class Migration(migrations.Migration):
                 (
                     "report_datetime",
                     models.DateTimeField(
-                        default=edc_base.utils.get_utcnow,
+                        default=edc_utils.date.get_utcnow,
                         verbose_name="Report Date and Time",
                     ),
                 ),
@@ -1123,16 +1123,16 @@ class Migration(migrations.Migration):
                 (
                     "ae_awareness_date",
                     models.DateField(
-                        default=edc_base.utils.get_utcnow,
-                        validators=[edc_base.model_validators.date.date_not_future],
+                        default=edc_utils.date.get_utcnow,
+                        validators=[edc_model.validators.date.date_not_future],
                         verbose_name="AE Awareness date",
                     ),
                 ),
                 (
                     "ae_start_date",
                     models.DateField(
-                        default=edc_base.utils.get_utcnow,
-                        validators=[edc_base.model_validators.date.date_not_future],
+                        default=edc_utils.date.get_utcnow,
+                        validators=[edc_model.validators.date.date_not_future],
                         verbose_name="Actual Start Date of AE",
                     ),
                 ),
@@ -1283,7 +1283,7 @@ class Migration(migrations.Migration):
                     models.DateTimeField(
                         blank=True,
                         null=True,
-                        validators=[edc_base.model_validators.date.datetime_not_future],
+                        validators=[edc_model.validators.date.datetime_not_future],
                         verbose_name="Date and time of last implicated study medication administered",
                     ),
                 ),
@@ -1430,11 +1430,11 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "created",
-                    models.DateTimeField(blank=True, default=edc_base.utils.get_utcnow),
+                    models.DateTimeField(blank=True, default=edc_utils.date.get_utcnow),
                 ),
                 (
                     "modified",
-                    models.DateTimeField(blank=True, default=edc_base.utils.get_utcnow),
+                    models.DateTimeField(blank=True, default=edc_utils.date.get_utcnow),
                 ),
                 (
                     "user_created",
@@ -1502,8 +1502,8 @@ class Migration(migrations.Migration):
                 (
                     "report_datetime",
                     models.DateTimeField(
-                        default=edc_base.utils.get_utcnow,
-                        validators=[edc_base.model_validators.date.datetime_not_future],
+                        default=edc_utils.date.get_utcnow,
+                        validators=[edc_model.validators.date.datetime_not_future],
                         verbose_name="Report date and time",
                     ),
                 ),
@@ -1512,7 +1512,7 @@ class Migration(migrations.Migration):
                     models.DateTimeField(
                         blank=True,
                         null=True,
-                        validators=[edc_base.model_validators.date.datetime_not_future],
+                        validators=[edc_model.validators.date.datetime_not_future],
                         verbose_name="Date and time AE form received:",
                     ),
                 ),
@@ -1521,7 +1521,7 @@ class Migration(migrations.Migration):
                     models.DateTimeField(
                         blank=True,
                         null=True,
-                        validators=[edc_base.model_validators.date.datetime_not_future],
+                        validators=[edc_model.validators.date.datetime_not_future],
                         verbose_name="Date and time of clinical review: ",
                     ),
                 ),
@@ -1571,7 +1571,7 @@ class Migration(migrations.Migration):
                     models.DateTimeField(
                         blank=True,
                         null=True,
-                        validators=[edc_base.model_validators.date.datetime_not_future],
+                        validators=[edc_model.validators.date.datetime_not_future],
                         verbose_name="Date and time regulatory authorities notified (SUSARs)",
                     ),
                 ),
@@ -1591,7 +1591,7 @@ class Migration(migrations.Migration):
                     models.DateTimeField(
                         blank=True,
                         null=True,
-                        validators=[edc_base.model_validators.date.datetime_not_future],
+                        validators=[edc_model.validators.date.datetime_not_future],
                         verbose_name="Date and time report closed.",
                     ),
                 ),
@@ -1653,11 +1653,11 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "created",
-                    models.DateTimeField(blank=True, default=edc_base.utils.get_utcnow),
+                    models.DateTimeField(blank=True, default=edc_utils.date.get_utcnow),
                 ),
                 (
                     "modified",
-                    models.DateTimeField(blank=True, default=edc_base.utils.get_utcnow),
+                    models.DateTimeField(blank=True, default=edc_utils.date.get_utcnow),
                 ),
                 (
                     "user_created",
@@ -1725,7 +1725,7 @@ class Migration(migrations.Migration):
                 (
                     "report_datetime",
                     models.DateTimeField(
-                        default=edc_base.utils.get_utcnow,
+                        default=edc_utils.date.get_utcnow,
                         verbose_name="Report Date and Time",
                     ),
                 ),
@@ -1902,7 +1902,7 @@ class Migration(migrations.Migration):
                     models.DateField(
                         blank=True,
                         null=True,
-                        validators=[edc_base.model_validators.date.date_not_future],
+                        validators=[edc_model.validators.date.date_not_future],
                         verbose_name="Study date ARVs started.",
                     ),
                 ),
@@ -1993,11 +1993,11 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "created",
-                    models.DateTimeField(blank=True, default=edc_base.utils.get_utcnow),
+                    models.DateTimeField(blank=True, default=edc_utils.date.get_utcnow),
                 ),
                 (
                     "modified",
-                    models.DateTimeField(blank=True, default=edc_base.utils.get_utcnow),
+                    models.DateTimeField(blank=True, default=edc_utils.date.get_utcnow),
                 ),
                 (
                     "user_created",
@@ -2108,11 +2108,11 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "created",
-                    models.DateTimeField(blank=True, default=edc_base.utils.get_utcnow),
+                    models.DateTimeField(blank=True, default=edc_utils.date.get_utcnow),
                 ),
                 (
                     "modified",
-                    models.DateTimeField(blank=True, default=edc_base.utils.get_utcnow),
+                    models.DateTimeField(blank=True, default=edc_utils.date.get_utcnow),
                 ),
                 (
                     "user_created",
@@ -2223,11 +2223,11 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "created",
-                    models.DateTimeField(blank=True, default=edc_base.utils.get_utcnow),
+                    models.DateTimeField(blank=True, default=edc_utils.date.get_utcnow),
                 ),
                 (
                     "modified",
-                    models.DateTimeField(blank=True, default=edc_base.utils.get_utcnow),
+                    models.DateTimeField(blank=True, default=edc_utils.date.get_utcnow),
                 ),
                 (
                     "user_created",
@@ -2296,7 +2296,7 @@ class Migration(migrations.Migration):
                 (
                     "report_datetime",
                     models.DateTimeField(
-                        default=edc_base.utils.get_utcnow,
+                        default=edc_utils.date.get_utcnow,
                         verbose_name="Report Date and Time",
                     ),
                 ),
@@ -2473,7 +2473,7 @@ class Migration(migrations.Migration):
                     models.DateField(
                         blank=True,
                         null=True,
-                        validators=[edc_base.model_validators.date.date_not_future],
+                        validators=[edc_model.validators.date.date_not_future],
                         verbose_name="Study date ARVs started.",
                     ),
                 ),
@@ -2551,7 +2551,7 @@ class Migration(migrations.Migration):
                 "verbose_name": "Recurrence of Symptoms",
                 "verbose_name_plural": "Recurrence of Symptoms",
             },
-            managers=[("on_site", edc_base.sites.managers.CurrentSiteManager())],
+            managers=[("on_site", edc_sites.models.CurrentSiteManager())],
         ),
         migrations.AddField(
             model_name="aefollowup",

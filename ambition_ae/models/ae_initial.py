@@ -5,13 +5,13 @@ from edc_action_item.managers import (
     ActionIdentifierManager,
 )
 from edc_action_item.models import ActionModelMixin
-from edc_base.model_mixins import BaseUuidModel
-from edc_base.model_validators import datetime_not_future
-from edc_base.sites import SiteModelMixin
 from edc_constants.choices import YES_NO, YES_NO_NA, YES_NO_UNKNOWN
 from edc_constants.constants import NOT_APPLICABLE, UNKNOWN
 from edc_identifier.model_mixins import TrackingModelMixin
+from edc_model.models import BaseUuidModel
+from edc_model.validators import datetime_not_future
 from edc_model_fields.fields import OtherCharField
+from edc_sites.models import SiteModelMixin
 
 from ..constants import AE_INITIAL_ACTION
 from ..choices import STUDY_DRUG_RELATIONSHIP, SAE_REASONS, AE_CLASSIFICATION

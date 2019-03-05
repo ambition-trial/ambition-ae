@@ -1,7 +1,7 @@
 from django import forms
-from edc_base.sites.forms import SiteModelFormMixin
 from django.core.exceptions import ObjectDoesNotExist
 from edc_registration.models import RegisteredSubject
+from edc_sites.forms import SiteModelFormMixin
 
 
 class ModelFormMixin(SiteModelFormMixin):

@@ -6,12 +6,12 @@ from django.test import TestCase, tag
 from edc_action_item.get_action_type import get_action_type
 from edc_action_item.models import SubjectDoesNotExist
 from edc_action_item.models.action_item import ActionItem
-from edc_base import get_utcnow
 from edc_constants.constants import CLOSED, NO, NEW, YES, LOST_TO_FOLLOWUP
 from edc_constants.constants import DEAD
 from edc_list_data.site_list_data import site_list_data
 from edc_registration.models import RegisteredSubject
 from edc_reportable import GRADE3, GRADE4, GRADE5
+from edc_utils import get_utcnow
 from model_mommy import mommy
 
 from ..action_items import AeFollowupAction, AeInitialAction
