@@ -45,6 +45,7 @@ setup(
         'edc-form-describer',
         'edc-reportable',
         'edc-subject-dashboard',
+        'edc_metadata',
         'edc_model',
         'edc_notification',
         'edc_sites',
