@@ -1,15 +1,18 @@
 from django.contrib import admin
 from edc_action_item import action_fieldset_tuple
 from edc_model_admin import audit_fieldset_tuple, SimpleHistoryAdmin
+from edc_model_admin.dashboard import ModelAdminSubjectDashboardMixin
 
 from ..admin_site import ambition_ae_admin
 from ..forms import AeSusarForm
 from ..models import AeSusar
-from .modeladmin_mixins import ModelAdminMixin, NonAeInitialModelAdminMixin
+from .modeladmin_mixins import NonAeInitialModelAdminMixin
 
 
 @admin.register(AeSusar, site=ambition_ae_admin)
-class AeSusarAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, SimpleHistoryAdmin):
+class AeSusarAdmin(
+    ModelAdminSubjectDashboardMixin, NonAeInitialModelAdminMixin, SimpleHistoryAdmin
+):
 
     form = AeSusarForm
 

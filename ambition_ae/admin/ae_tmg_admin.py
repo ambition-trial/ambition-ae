@@ -4,17 +4,20 @@ from django.contrib import admin
 from django.core.exceptions import ObjectDoesNotExist
 from edc_action_item import action_fieldset_tuple
 from edc_model_admin import audit_fieldset_tuple, SimpleHistoryAdmin
+from edc_model_admin.dashboard import ModelAdminSubjectDashboardMixin
 from edc_utils import convert_php_dateformat
 
 from ..admin_site import ambition_ae_admin
 from ..choices import AE_CLASSIFICATION
 from ..forms import AeTmgForm
 from ..models import AeTmg, AeInitial
-from .modeladmin_mixins import ModelAdminMixin, NonAeInitialModelAdminMixin
+from .modeladmin_mixins import NonAeInitialModelAdminMixin
 
 
 @admin.register(AeTmg, site=ambition_ae_admin)
-class AeTmgAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, SimpleHistoryAdmin):
+class AeTmgAdmin(
+    ModelAdminSubjectDashboardMixin, NonAeInitialModelAdminMixin, SimpleHistoryAdmin
+):
 
     form = AeTmgForm
 
