@@ -5,15 +5,18 @@ from django.utils.safestring import mark_safe
 from edc_action_item import action_fieldset_tuple
 from edc_constants.constants import YES, NO, NOT_APPLICABLE
 from edc_model_admin import audit_fieldset_tuple, SimpleHistoryAdmin
+from edc_model_admin.dashboard import ModelAdminSubjectDashboardMixin
 
 from ..admin_site import ambition_ae_admin
 from ..forms import AeFollowupForm
 from ..models import AeFollowup
-from .modeladmin_mixins import ModelAdminMixin, NonAeInitialModelAdminMixin
+from .modeladmin_mixins import NonAeInitialModelAdminMixin
 
 
 @admin.register(AeFollowup, site=ambition_ae_admin)
-class AeFollowupAdmin(ModelAdminMixin, NonAeInitialModelAdminMixin, SimpleHistoryAdmin):
+class AeFollowupAdmin(
+    ModelAdminSubjectDashboardMixin, NonAeInitialModelAdminMixin, SimpleHistoryAdmin
+):
 
     form = AeFollowupForm
 
