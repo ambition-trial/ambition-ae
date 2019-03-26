@@ -21,4 +21,4 @@ class NonAeInitialModelAdminMixin:
             fields = fields + ("ae_initial",)
         action_flds = copy(list(action_fields))
         action_flds.remove("action_identifier")
-        return fields + tuple(action_flds)
+        return list(fields) + list(action_flds)

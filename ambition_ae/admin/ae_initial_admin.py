@@ -114,7 +114,7 @@ class AeInitialAdmin(ModelAdminSubjectDashboardMixin, SimpleHistoryAdmin):
         fields = super().get_readonly_fields(request, obj=obj)
         action_flds = copy(list(action_fields))
         action_flds.remove("action_identifier")
-        return fields + tuple(action_flds)
+        return list(fields) + list(action_flds)
 
     def user(self, obj):
         """Returns formatted user names and creation/modification dates.
