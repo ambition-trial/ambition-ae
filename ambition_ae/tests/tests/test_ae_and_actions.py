@@ -14,8 +14,8 @@ from edc_reportable import GRADE3, GRADE4, GRADE5
 from edc_utils import get_utcnow
 from model_mommy import mommy
 
-from ..action_items import AeFollowupAction, AeInitialAction
-from ..models import AeInitial, AeFollowup, AeTmg, AeSusar
+from ...action_items import AeFollowupAction, AeInitialAction
+from ...models import AeInitial, AeFollowup, AeTmg, AeSusar
 
 
 class TestAeAndActions(AmbitionTestCaseMixin, TestCase):
@@ -30,7 +30,8 @@ class TestAeAndActions(AmbitionTestCaseMixin, TestCase):
 
     def setUp(self):
         self.subject_identifier = "12345"
-        RegisteredSubject.objects.create(subject_identifier=self.subject_identifier)
+        RegisteredSubject.objects.create(
+            subject_identifier=self.subject_identifier)
 
     def test_subject_identifier(self):
         mommy.make_recipe(
@@ -261,8 +262,10 @@ class TestAeAndActions(AmbitionTestCaseMixin, TestCase):
         )
 
         action_item = ActionItem.objects.get(pk=action_item.pk)
-        self.assertEqual(action_item.reference_model, ae_initial._meta.label_lower)
-        self.assertEqual(action_item.action_identifier, ae_initial.action_identifier)
+        self.assertEqual(action_item.reference_model,
+                         ae_initial._meta.label_lower)
+        self.assertEqual(action_item.action_identifier,
+                         ae_initial.action_identifier)
 
     def test_ae_initial_creates_next_action_on_close(self):
         ae_initial = mommy.make_recipe(
