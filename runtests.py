@@ -8,8 +8,6 @@ from django.conf import settings
 from django.test.runner import DiscoverRunner
 from edc_test_utils import DefaultTestSettings
 from os.path import abspath, dirname, join
-from pprint import pprint
-from copy import copy
 
 
 app_name = 'ambition_ae'
