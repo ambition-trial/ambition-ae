@@ -30,8 +30,7 @@ class TestAeAndActions(AmbitionTestCaseMixin, TestCase):
 
     def setUp(self):
         self.subject_identifier = "12345"
-        RegisteredSubject.objects.create(
-            subject_identifier=self.subject_identifier)
+        RegisteredSubject.objects.create(subject_identifier=self.subject_identifier)
 
     def test_subject_identifier(self):
         mommy.make_recipe(
@@ -262,10 +261,8 @@ class TestAeAndActions(AmbitionTestCaseMixin, TestCase):
         )
 
         action_item = ActionItem.objects.get(pk=action_item.pk)
-        self.assertEqual(action_item.reference_model,
-                         ae_initial._meta.label_lower)
-        self.assertEqual(action_item.action_identifier,
-                         ae_initial.action_identifier)
+        self.assertEqual(action_item.reference_model, ae_initial._meta.label_lower)
+        self.assertEqual(action_item.action_identifier, ae_initial.action_identifier)
 
     def test_ae_initial_creates_next_action_on_close(self):
         ae_initial = mommy.make_recipe(
