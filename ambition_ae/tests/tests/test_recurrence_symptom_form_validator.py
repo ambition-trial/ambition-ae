@@ -21,15 +21,13 @@ class TestRecurrenceSymptomFormValidator(TestCase):
 
     def test_meningitis_symptom_other_none(self):
         selected = MeningitisSymptom.objects.filter(short_name=OTHER)
-        options = {"meningitis_symptom": selected,
-                   "meningitis_symptom_other": None}
+        options = {"meningitis_symptom": selected, "meningitis_symptom_other": None}
         form_validator = RecurrenceSymptomFormValidator(cleaned_data=options)
         self.assertRaises(ValidationError, form_validator.validate)
 
     def test_meningitis_symptom_other_valid(self):
         selected = MeningitisSymptom.objects.filter(short_name=OTHER)
-        options = {"meningitis_symptom": selected,
-                   "meningitis_symptom_other": "blah"}
+        options = {"meningitis_symptom": selected, "meningitis_symptom_other": "blah"}
         form_validator = RecurrenceSymptomFormValidator(cleaned_data=options)
         try:
             form_validator.validate()
@@ -37,12 +35,9 @@ class TestRecurrenceSymptomFormValidator(TestCase):
             self.fail(f"ValidationError unexpectedly raised. Got{e}")
 
     def test_neurological_focal_neurologic_deficit_none(self):
-        selected = Neurological.objects.filter(
-            short_name="focal_neurologic_deficit")
-        cleaned_data = {"neurological": selected,
-                        "focal_neurologic_deficit": None}
-        form_validator = RecurrenceSymptomFormValidator(
-            cleaned_data=cleaned_data)
+        selected = Neurological.objects.filter(short_name="focal_neurologic_deficit")
+        cleaned_data = {"neurological": selected, "focal_neurologic_deficit": None}
+        form_validator = RecurrenceSymptomFormValidator(cleaned_data=cleaned_data)
         self.assertRaises(ValidationError, form_validator.validate)
         self.assertIn("focal_neurologic_deficit", form_validator._errors)
 

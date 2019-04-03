@@ -1,4 +1,4 @@
-from ambition_auth import TMG
+from ambition_permissions import TMG
 from django.conf import settings
 from django.contrib import admin
 from django.core.exceptions import ObjectDoesNotExist

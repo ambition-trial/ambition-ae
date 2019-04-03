@@ -1,4 +1,4 @@
-from ambition_auth.group_names import TMG
+from ambition_permissions.group_names import TMG
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 from django.db.models.signals import m2m_changed, post_save, post_delete
