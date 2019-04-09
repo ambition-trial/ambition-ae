@@ -1,0 +1,6 @@
+faker
+model-mommy
+django-crypto-fields
+django-revision
+django-rest-framework
+edc_test_utils
