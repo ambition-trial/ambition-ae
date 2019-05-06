@@ -182,7 +182,7 @@ class AeInitial(
     @property
     def ae_follow_ups(self):
         AeFollowup = django_apps.get_model("ambition_ae.aefollowup")
-        return AeFollowup.objects.filter(ae_initial=self)
+        return AeFollowup.objects.filter(ae_initial=self).order_by("report_datetime")
 
     @property
     def description(self):
