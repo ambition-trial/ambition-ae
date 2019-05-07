@@ -22,7 +22,6 @@ class AeTmgAdmin(
     form = AeTmgForm
 
     additional_instructions = "For completion by TMG Investigators Only"
-    subject_dashboard_url = "tmg_ae_listboard_url"
 
     list_display = [
         "subject_identifier",
@@ -93,7 +92,8 @@ class AeTmgAdmin(
         """
         initial = super().get_changeform_initial_data(request)
         try:
-            ae_initial = AeInitial.objects.get(pk=request.GET.get("ae_initial"))
+            ae_initial = AeInitial.objects.get(
+                pk=request.GET.get("ae_initial"))
         except ObjectDoesNotExist:
             pass
         else:
