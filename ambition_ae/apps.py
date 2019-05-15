@@ -1,6 +1,5 @@
 from django.apps import AppConfig as DjangoApponfig
 from django.conf import settings
-from edc_facility.apps import AppConfig as BaseEdcFacilityAppConfig
 
 
 class AppConfig(DjangoApponfig):
@@ -17,6 +16,7 @@ class AppConfig(DjangoApponfig):
 if settings.APP_NAME == "ambition_ae":
 
     from dateutil.relativedelta import MO, TU, WE, TH, FR, SA, SU
+    from edc_facility.apps import AppConfig as BaseEdcFacilityAppConfig
     from edc_lab.apps import AppConfig as BaseEdcLabAppConfig
 
     class EdcFacilityAppConfig(BaseEdcFacilityAppConfig):
