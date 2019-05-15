@@ -92,8 +92,7 @@ class AeTmgAdmin(
         """
         initial = super().get_changeform_initial_data(request)
         try:
-            ae_initial = AeInitial.objects.get(
-                pk=request.GET.get("ae_initial"))
+            ae_initial = AeInitial.objects.get(pk=request.GET.get("ae_initial"))
         except ObjectDoesNotExist:
             pass
         else:
