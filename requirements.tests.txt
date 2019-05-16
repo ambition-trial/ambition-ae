@@ -4,3 +4,5 @@ django-crypto-fields
 django-revision
 django-rest-framework
 edc_test_utils
+ambition_dashboard
+ambition_reports
