@@ -7,8 +7,16 @@ from edc_constants.constants import (
     LOST_TO_FOLLOWUP,
 )
 
-from .constants import GRADE3, GRADE4, GRADE5, MILD, MODERATE, SEVERE
-from .constants import SEVERITY_INCREASED_FROM_G3
+from edc_reportable import (
+    GRADE3,
+    GRADE4,
+    GRADE5,
+    MILD,
+    MODERATE,
+    SEVERE,
+    SEVERITY_INCREASED_FROM_G3,
+)
+
 
 AE_CLASSIFICATION = (
     ("anaemia", "Anaemia"),
