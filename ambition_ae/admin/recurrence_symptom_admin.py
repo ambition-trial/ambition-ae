@@ -1,6 +1,5 @@
-from copy import copy
 from django.contrib import admin
-from edc_action_item import action_fieldset_tuple, action_fields
+from edc_action_item import action_fieldset_tuple
 from edc_model_admin import audit_fieldset_tuple, SimpleHistoryAdmin
 from edc_model_admin.dashboard import ModelAdminSubjectDashboardMixin
 
@@ -97,9 +96,3 @@ class RecurrenceSymptomAdmin(ModelAdminSubjectDashboardMixin, SimpleHistoryAdmin
     filter_horizontal = ("meningitis_symptom", "neurological", "antibiotic_treatment")
 
     search_fields = ("subject_identifier", "action_identifier", "tracking_identifier")
-
-    def get_readonly_fields(self, request, obj=None):
-        fields = super().get_readonly_fields(request, obj=obj)
-        action_flds = copy(list(action_fields))
-        action_flds.remove("action_identifier")
-        return list(fields) + list(action_flds)

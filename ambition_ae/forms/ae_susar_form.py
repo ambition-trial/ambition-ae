@@ -1,14 +1,17 @@
 from django import forms
 from edc_action_item.forms import ActionItemFormMixin
 from edc_form_validators import FormValidatorMixin
+from edc_registration.modelform_mixins import ModelFormSubjectIdentifierMixin
 
 from ..form_validators import AeSusarFormValidator
 from ..models import AeSusar
-from .modelform_mixin import ModelFormMixin
 
 
 class AeSusarForm(
-    FormValidatorMixin, ModelFormMixin, ActionItemFormMixin, forms.ModelForm
+    FormValidatorMixin,
+    ModelFormSubjectIdentifierMixin,
+    ActionItemFormMixin,
+    forms.ModelForm,
 ):
 
     form_validator_cls = AeSusarFormValidator

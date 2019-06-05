@@ -1,6 +1,3 @@
-from copy import copy
-from edc_action_item import action_fields
-
 from ..models import AeInitial
 
 
@@ -19,6 +16,4 @@ class NonAeInitialModelAdminMixin:
         fields = super().get_readonly_fields(request, obj=obj)
         if obj:
             fields = fields + ("ae_initial",)
-        action_flds = copy(list(action_fields))
-        action_flds.remove("action_identifier")
-        return list(fields) + list(action_flds)
+        return list(fields)
