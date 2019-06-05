@@ -51,9 +51,10 @@ class AeFollowupAdmin(
         "dashboard",
         "outcome_date",
         "initial_ae",
-        "relevant_history",
+        "description",
         "severity",
         "status",
+        "follow_up_report",
         "user_created",
     )
 
@@ -65,6 +66,12 @@ class AeFollowupAdmin(
         "ae_initial__subject_identifier",
         "ae_initial__action_identifier",
     ]
+
+    def description(self, obj):
+        return obj.relevant_history
+
+    def follow_up_report(self, obj):
+        return obj.followup
 
     def status(self, obj):
         link = None

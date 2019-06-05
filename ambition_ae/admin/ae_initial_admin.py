@@ -1,12 +1,11 @@
 from ambition_prn.admin_site import ambition_prn_admin
 from ambition_prn.models import DeathReport
-from copy import copy
 from django.conf import settings
 from django.contrib import admin
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls.base import reverse
 from django.utils.safestring import mark_safe
-from edc_action_item import action_fieldset_tuple, action_fields
+from edc_action_item import action_fieldset_tuple
 from edc_constants.constants import OTHER, YES, DEAD
 from edc_model_admin import audit_fieldset_tuple, SimpleHistoryAdmin
 from edc_model_admin.dashboard import ModelAdminSubjectDashboardMixin
@@ -109,12 +108,6 @@ class AeInitialAdmin(ModelAdminSubjectDashboardMixin, SimpleHistoryAdmin):
     ]
 
     search_fields = ["subject_identifier", "action_identifier", "tracking_identifier"]
-
-    def get_readonly_fields(self, request, obj=None):
-        fields = super().get_readonly_fields(request, obj=obj)
-        action_flds = copy(list(action_fields))
-        action_flds.remove("action_identifier")
-        return list(fields) + list(action_flds)
 
     def user(self, obj):
         """Returns formatted user names and creation/modification dates.

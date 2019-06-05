@@ -7,15 +7,18 @@ from django.utils.safestring import mark_safe
 from edc_action_item.forms import ActionItemFormMixin
 from edc_constants.constants import NO
 from edc_form_validators import FormValidatorMixin
+from edc_registration.modelform_mixins import ModelFormSubjectIdentifierMixin
 from edc_utils import formatted_datetime
 
 from ..form_validators import AeInitialFormValidator
 from ..models import AeInitial, AeSusar
-from .modelform_mixin import ModelFormMixin
 
 
 class AeInitialForm(
-    FormValidatorMixin, ModelFormMixin, ActionItemFormMixin, forms.ModelForm
+    FormValidatorMixin,
+    ModelFormSubjectIdentifierMixin,
+    ActionItemFormMixin,
+    forms.ModelForm,
 ):
 
     form_validator_cls = AeInitialFormValidator

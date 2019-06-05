@@ -2,10 +2,10 @@ from django import forms
 from edc_action_item.forms import ActionItemFormMixin
 from edc_constants.constants import YES, DEAD
 from edc_form_validators import FormValidatorMixin, FormValidator
+from edc_registration.modelform_mixins import ModelFormSubjectIdentifierMixin
 from edc_reportable import SEVERITY_INCREASED_FROM_G3, GRADE5
 
 from ..models import AeFollowup
-from .modelform_mixin import ModelFormMixin
 
 
 class AeFollowupFormValidator(FormValidator):
@@ -21,7 +21,10 @@ class AeFollowupFormValidator(FormValidator):
 
 
 class AeFollowupForm(
-    FormValidatorMixin, ModelFormMixin, ActionItemFormMixin, forms.ModelForm
+    FormValidatorMixin,
+    ModelFormSubjectIdentifierMixin,
+    ActionItemFormMixin,
+    forms.ModelForm,
 ):
 
     form_validator_cls = AeFollowupFormValidator
