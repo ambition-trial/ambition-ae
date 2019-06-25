@@ -2,8 +2,15 @@ from ambition_prn.constants import DEATH_REPORT_ACTION
 from ambition_subject.constants import BLOOD_RESULTS_ACTION
 from django.conf import settings
 from django.utils.safestring import mark_safe
-from edc_action_item import HIGH_PRIORITY, ActionWithNotification, site_action_items
-from edc_constants.constants import CLOSED, DEAD, LOST_TO_FOLLOWUP, YES, NO
+from edc_action_item import ActionWithNotification, site_action_items
+from edc_constants.constants import (
+    CLOSED,
+    DEAD,
+    LOST_TO_FOLLOWUP,
+    YES,
+    NO,
+    HIGH_PRIORITY,
+)
 from edc_reportable import GRADE3, GRADE4, GRADE5
 from edc_visit_schedule.utils import get_offschedule_models
 
