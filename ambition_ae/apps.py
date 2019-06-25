@@ -6,6 +6,7 @@ class AppConfig(DjangoApponfig):
     name = "ambition_ae"
     verbose_name = "Ambition Adverse Events"
     has_exportable_data = True
+    include_in_administration_section = True
 
     def ready(self):
         from .signals import update_ae_notifications_for_tmg_group  # noqa
