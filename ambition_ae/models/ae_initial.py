@@ -175,8 +175,7 @@ class AeInitial(
     def natural_key(self):
         return (self.action_identifier,)
 
-    @property
-    def action_item_reason(self):
+    def get_action_item_reason(self):
         return self.ae_description
 
     @property

@@ -86,8 +86,7 @@ class AeFollowup(ActionModelMixin, TrackingModelMixin, SiteModelMixin, BaseUuidM
             return "unchanged"
         return self.ae_grade
 
-    @property
-    def action_item_reason(self):
+    def get_action_item_reason(self):
         return self.ae_initial.ae_description
 
     class Meta:
