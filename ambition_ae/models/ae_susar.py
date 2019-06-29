@@ -74,3 +74,8 @@ class AeSusar(
 
     class Meta:
         verbose_name = "AE SUSAR Report"
+        indexes = [
+            models.Index(
+                fields=["subject_identifier", "action_identifier", "site", "id"]
+            )
+        ]

@@ -182,3 +182,8 @@ class RecurrenceSymptom(
     class Meta:
         verbose_name = "Recurrence of Symptoms"
         verbose_name_plural = "Recurrence of Symptoms"
+        indexes = [
+            models.Index(
+                fields=["subject_identifier", "action_identifier", "site", "id"]
+            )
+        ]
