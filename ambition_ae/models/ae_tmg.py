@@ -110,3 +110,8 @@ class AeTmg(
 
     class Meta:
         verbose_name = "AE TMG Report"
+        indexes = [
+            models.Index(
+                fields=["subject_identifier", "action_identifier", "site", "id"]
+            )
+        ]

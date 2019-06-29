@@ -91,3 +91,8 @@ class AeFollowup(ActionModelMixin, TrackingModelMixin, SiteModelMixin, BaseUuidM
 
     class Meta:
         verbose_name = "AE Follow-up Report"
+        indexes = [
+            models.Index(
+                fields=["subject_identifier", "action_identifier", "site", "id"]
+            )
+        ]

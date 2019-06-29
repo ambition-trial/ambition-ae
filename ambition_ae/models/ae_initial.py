@@ -191,3 +191,8 @@ class AeInitial(
 
     class Meta:
         verbose_name = "AE Initial Report"
+        indexes = [
+            models.Index(
+                fields=["subject_identifier", "action_identifier", "site", "id"]
+            )
+        ]
