@@ -5,9 +5,10 @@ from django.db import transaction
 from django.urls.base import reverse
 from django.utils.safestring import mark_safe
 from edc_action_item.forms import ActionItemFormMixin
-from edc_constants.constants import NO
+from edc_constants.constants import NO, YES
 from edc_form_validators import FormValidatorMixin
 from edc_registration.modelform_mixins import ModelFormSubjectIdentifierMixin
+from edc_reportable import GRADE4, GRADE5
 from edc_utils import formatted_datetime
 
 from ..form_validators import AeInitialFormValidator
@@ -41,6 +42,13 @@ class AeInitialForm(
                     f'See <A href="{url}">AE Follow-ups for {self.instance}</A>.'
                 )
             )
+
+        # redmine #115
+        if (
+            self.cleaned_data.get("ae_grade") in [GRADE4, GRADE5]
+            and self.cleaned_data.get("sae") != YES
+        ):
+            raise forms.ValidationError({"sae": "Invalid. Grade is >= 4"})
 
         # don't allow user to change response to NO if
         # SUSAR already submitted.

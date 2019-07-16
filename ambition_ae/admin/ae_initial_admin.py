@@ -1,3 +1,4 @@
+from textwrap import wrap
 from ambition_prn.admin_site import ambition_prn_admin
 from ambition_prn.models import DeathReport
 from django.conf import settings
@@ -14,6 +15,12 @@ from edc_utils import convert_php_dateformat
 from ..admin_site import ambition_ae_admin
 from ..forms import AeInitialForm
 from ..models import AeInitial, AeFollowup
+from ..templatetags.ambition_ae_extras import (
+    format_ae_description_template_name,
+    format_ae_description,
+)
+
+from django.template.loader import render_to_string
 
 
 @admin.register(AeInitial, site=ambition_ae_admin)
@@ -91,9 +98,8 @@ class AeInitialAdmin(ModelAdminSubjectDashboardMixin, SimpleHistoryAdmin):
     list_display = [
         "identifier",
         "dashboard",
-        "follow_up_reports",
         "description",
-        "if_sae_reason",
+        "follow_up_reports",
         "user",
     ]
 
@@ -157,35 +163,8 @@ class AeInitialAdmin(ModelAdminSubjectDashboardMixin, SimpleHistoryAdmin):
         """Returns a formatted comprehensive description of the SAE
         combining multiple fields.
         """
-        ae_awareness_date = obj.ae_awareness_date.strftime(
-            convert_php_dateformat(settings.SHORT_DATE_FORMAT)
-        )
-        classification = (
-            f"Other: {obj.ae_classification_other}"
-            if obj.ae_classification == OTHER
-            else obj.get_ae_classification_display()
-        )
-        susar_reported = (
-            "Reported"
-            if obj.susar_reported == YES
-            else '<font color="red">Not reported</font>'
-        )
-        susar = (
-            f"Yes. {susar_reported}" if obj.susar == YES else obj.get_susar_display()
-        )
-        return mark_safe(
-            ".<BR>".join(
-                [
-                    f"<b>Site aware:</b> {ae_awareness_date}",
-                    f"<b>Grade:</b> {obj.get_ae_grade_display()}",
-                    f"<b>Classification:</b> {classification}",
-                    f"<b>SAE?:</b> {obj.get_sae_display()}",
-                    f"<b>SUSAR?:</b> {susar}",
-                    "<b>Description:</b>",
-                    obj.ae_description,
-                ]
-            )
-        )
+        context = format_ae_description({}, obj, 50)
+        return render_to_string(format_ae_description_template_name, context)
 
     def follow_up_reports(self, obj):
         """Returns a formatted list of links to AE Follow up reports.
