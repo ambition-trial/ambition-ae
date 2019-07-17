@@ -48,6 +48,7 @@ DEFAULT_SETTINGS = DefaultTestSettings(
         "edc_action_item.apps.AppConfig",
         "edc_appointment.apps.AppConfig",
         "edc_auth.apps.AppConfig",
+        "edc_dashboard.apps.AppConfig",
         "edc_data_manager.apps.AppConfig",
         "edc_device.apps.AppConfig",
         "edc_identifier.apps.AppConfig",
@@ -78,7 +79,7 @@ def main():
         settings.configure(**DEFAULT_SETTINGS)
     django.setup()
     tags = [t.split('=')[1] for t in sys.argv if t.startswith('--tag')]
-    failures = DiscoverRunner(failfast=True, tags=tags).run_tests(
+    failures = DiscoverRunner(failfast=False, tags=tags).run_tests(
         [f'{app_name}.tests'])
     sys.exit(failures)
 

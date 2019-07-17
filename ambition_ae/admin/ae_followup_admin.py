@@ -49,6 +49,7 @@ class AeFollowupAdmin(
     list_display = (
         "identifier",
         "dashboard",
+        "subject_identifier",
         "outcome_date",
         "initial_ae",
         "description",

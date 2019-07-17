@@ -6,6 +6,9 @@ from edc_registration.modelform_mixins import ModelFormSubjectIdentifierMixin
 from edc_reportable import SEVERITY_INCREASED_FROM_G3, GRADE5
 
 from ..models import AeFollowup
+from pprint import pprint
+from edc_utils.text import convert_php_dateformat
+from django.conf import settings
 
 
 class AeFollowupFormValidator(FormValidator):
@@ -37,6 +40,24 @@ class AeFollowupForm(
 
     def clean(self):
         cleaned_data = super().clean()
+
+        ae_initial = self.cleaned_data.get("ae_initial")
+        if not ae_initial and self.instance:
+            ae_initial = self.instance.ae_initial
+        outcome_date = self.cleaned_data.get("outcome_date")
+        if ae_initial and outcome_date:
+            if outcome_date < ae_initial.ae_start_date:
+                formatted_dte = ae_initial.ae_start_date.strftime(
+                    convert_php_dateformat(settings.SHORT_DATE_FORMAT)
+                )
+                raise forms.ValidationError(
+                    {
+                        "outcome_date": (
+                            f"May not be before the AE start date {formatted_dte}."
+                        )
+                    }
+                )
+
         if cleaned_data.get("followup") == YES:
             if (
                 cleaned_data.get("ae_grade") == GRADE5

@@ -6,7 +6,7 @@ from edc_action_item.managers import (
 )
 from edc_action_item.models import ActionModelMixin
 from edc_constants.choices import YES_NO, YES_NO_NA, YES_NO_UNKNOWN
-from edc_constants.constants import NOT_APPLICABLE, UNKNOWN
+from edc_constants.constants import NOT_APPLICABLE, UNKNOWN, OTHER, YES
 from edc_identifier.model_mixins import TrackingModelMixin
 from edc_model.models import BaseUuidModel
 from edc_model.validators import datetime_not_future
