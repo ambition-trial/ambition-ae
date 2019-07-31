@@ -3,6 +3,11 @@ from ambition_subject.constants import BLOOD_RESULTS_ACTION
 from django.conf import settings
 from django.utils.safestring import mark_safe
 from edc_action_item import ActionWithNotification, site_action_items
+from edc_adverse_event.constants import (
+    AE_INITIAL_ACTION,
+    AE_FOLLOWUP_ACTION,
+    AE_SUSAR_ACTION,
+)
 from edc_constants.constants import (
     CLOSED,
     DEAD,
@@ -14,7 +19,6 @@ from edc_constants.constants import (
 from edc_reportable import GRADE3, GRADE4, GRADE5
 from edc_visit_schedule.utils import get_offschedule_models
 
-from .constants import AE_FOLLOWUP_ACTION, AE_INITIAL_ACTION, AE_SUSAR_ACTION
 from .constants import AE_TMG_ACTION, RECURRENCE_OF_SYMPTOMS_ACTION
 
 
