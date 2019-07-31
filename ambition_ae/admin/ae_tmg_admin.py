@@ -84,7 +84,7 @@ class AeTmgAdmin(
             request.user.groups.get(name=TMG)
         except ObjectDoesNotExist:
             return super().get_queryset(request)
-        return super().get_queryset(request).filter(user_created=request.user)
+        return super().get_queryset(request).all()
 
     def get_changeform_initial_data(self, request):
         """Updates initial data with the description of the
