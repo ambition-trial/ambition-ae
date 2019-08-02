@@ -4,6 +4,7 @@ from ambition_rando.tests import AmbitionTestCaseMixin
 from django.contrib.auth.models import User, Permission
 from django.test import TestCase, tag
 from django.test.client import RequestFactory
+from edc_adverse_event.models import AeClassification
 from edc_list_data.site_list_data import site_list_data
 from edc_registration.models import RegisteredSubject
 from model_mommy import mommy
@@ -30,8 +31,12 @@ class TestAeTmg(AmbitionTestCaseMixin, TestCase):
 
         self.subject_identifier = "12345"
         RegisteredSubject.objects.create(subject_identifier=self.subject_identifier)
+
+        anaemia = AeClassification.objects.get(short_name="anaemia")
         self.ae_initial = mommy.make_recipe(
-            "ambition_ae.aeinitial", subject_identifier=self.subject_identifier
+            "ambition_ae.aeinitial",
+            subject_identifier=self.subject_identifier,
+            ae_classification=anaemia,
         )
 
     def test_(self):

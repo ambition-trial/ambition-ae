@@ -8,10 +8,10 @@
 <BR><b>Site aware:</b> {{ ae_initial.ae_awareness_date|date:SHORT_DATE_FORMAT }}
 <BR><b>Grade:</b> {{ ae_initial.get_ae_grade_display }}
 <BR><b>Classification:</b> 
-{% if ae_initial.ae_classification == OTHER %}
+{% if ae_initial.ae_classification.short_name == OTHER %}
 	Other: {{ ae_initial.ae_classification_other }}
 {% else %}
-	{{ ae_initial.get_ae_classification_display }}
+	{{ ae_initial.ae_classification.name }}
 {% endif %}
 <BR><b>SAE:</b> {{ ae_initial.get_sae_display }}
 {% if ae_initial.sae == YES %}

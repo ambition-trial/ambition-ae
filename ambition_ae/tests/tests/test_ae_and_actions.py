@@ -6,6 +6,7 @@ from django.test import TestCase, tag
 from edc_action_item.get_action_type import get_action_type
 from edc_action_item.models import SubjectDoesNotExist
 from edc_action_item.models.action_item import ActionItem
+from edc_adverse_event.models import AeClassification
 from edc_constants.constants import CLOSED, NO, NEW, YES, LOST_TO_FOLLOWUP
 from edc_constants.constants import DEAD
 from edc_list_data.site_list_data import site_list_data
@@ -437,10 +438,11 @@ class TestAeAndActions(AmbitionTestCaseMixin, TestCase):
         )
 
     def test_next_action5(self):
+        anaemia = AeClassification.objects.get(short_name="anaemia")
         ae_initial = mommy.make_recipe(
             "ambition_ae.aeinitial",
             subject_identifier=self.subject_identifier,
-            ae_classification="anaemia",
+            ae_classification=anaemia,
         )
         ae_initial = AeInitial.objects.get(pk=ae_initial.pk)
 
@@ -466,7 +468,7 @@ class TestAeAndActions(AmbitionTestCaseMixin, TestCase):
             "ambition_ae.aetmg",
             subject_identifier=self.subject_identifier,
             ae_initial=ae_initial,
-            ae_classification="anaemia",
+            ae_classification=anaemia.short_name,
             report_status=CLOSED,
         )
 

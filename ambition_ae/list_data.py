@@ -34,6 +34,21 @@ list_data = {
         ("no_symptoms", "- No symptoms"),
         (OTHER, "- Other CN palsy"),
     ],
+    "edc_adverse_event.aeclassification": [
+        ("anaemia", "Anaemia"),
+        ("bacteraemia/sepsis", "Bacteraemia/Sepsis"),
+        ("CM_IRIS", "CM IRIS"),
+        ("diarrhoea", "Diarrhoea"),
+        ("hypokalaemia", "Hypokalaemia"),
+        ("neutropaenia", "Neutropaenia"),
+        ("pneumonia", "Pneumonia"),
+        ("renal_impairment", "Renal impairment"),
+        ("respiratory_distress", "Respiratory distress"),
+        ("TB", "TB"),
+        ("thrombocytopenia", "Thrombocytopenia"),
+        ("thrombophlebitis", "Thrombophlebitis"),
+        (OTHER, "Other"),
+    ],
 }
 
 preload_data = PreloadData(list_data=list_data, model_data={}, unique_field_data=None)
