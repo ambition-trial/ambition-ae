@@ -10,6 +10,7 @@ from .models import MeningitisSymptom
 
 fake = Faker()
 
+
 aeinitial = Recipe(
     AeInitial,
     action_identifier=None,

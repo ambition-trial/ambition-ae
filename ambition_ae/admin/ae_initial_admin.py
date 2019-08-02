@@ -1,13 +1,13 @@
-from textwrap import wrap
 from ambition_prn.admin_site import ambition_prn_admin
 from ambition_prn.models import DeathReport
 from django.conf import settings
 from django.contrib import admin
 from django.core.exceptions import ObjectDoesNotExist
+from django.template.loader import render_to_string
 from django.urls.base import reverse
 from django.utils.safestring import mark_safe
 from edc_action_item import action_fieldset_tuple
-from edc_constants.constants import OTHER, YES, DEAD
+from edc_constants.constants import DEAD
 from edc_model_admin import audit_fieldset_tuple, SimpleHistoryAdmin
 from edc_model_admin.dashboard import ModelAdminSubjectDashboardMixin
 from edc_utils import convert_php_dateformat
@@ -19,8 +19,6 @@ from ..templatetags.ambition_ae_extras import (
     format_ae_description_template_name,
     format_ae_description,
 )
-
-from django.template.loader import render_to_string
 
 
 @admin.register(AeInitial, site=ambition_ae_admin)

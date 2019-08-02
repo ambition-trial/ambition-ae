@@ -26,10 +26,11 @@ AE_CLASSIFICATION = (
     ("hypokalaemia", "Hypokalaemia"),
     ("neutropaenia", "Neutropaenia"),
     ("pneumonia", "Pneumonia"),
+    ("renal_impairment", "Renal impairment"),
     ("respiratory_distress", "Respiratory distress"),
     ("TB", "TB"),
     ("thrombocytopenia", "Thrombocytopenia"),
-    ("thrombophlebitis", "Renal impairment"),
+    ("thrombophlebitis", "Thrombophlebitis"),
     (OTHER, "Other"),
 )
 

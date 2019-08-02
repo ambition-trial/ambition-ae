@@ -8,12 +8,12 @@ from edc_action_item.models import ActionModelMixin
 from edc_adverse_event.constants import AE_INITIAL_ACTION
 from edc_adverse_event.model_mixins import AeModelMixin, SUSARModelMixin, SaeModelMixin
 from edc_constants.choices import YES_NO, YES_NO_UNKNOWN
+from edc_constants.constants import QUESTION_RETIRED
 from edc_identifier.model_mixins import TrackingModelMixin
 from edc_model.models import BaseUuidModel
 from edc_model_fields.fields import OtherCharField
 from edc_sites.models import SiteModelMixin
 
-from ...choices import AE_CLASSIFICATION
 from .ae_ambition_model_mixin import AeAmbitionModelMixin
 
 
@@ -32,9 +32,7 @@ class AeInitial(
 
     action_name = AE_INITIAL_ACTION
 
-    ae_classification = models.CharField(max_length=150, choices=AE_CLASSIFICATION)
-
-    ae_classification_other = OtherCharField(max_length=250, blank=True, null=True)
+    ae_classification_old = models.CharField(max_length=150, default=QUESTION_RETIRED)
 
     ae_study_relation_possibility = models.CharField(
         verbose_name=(
