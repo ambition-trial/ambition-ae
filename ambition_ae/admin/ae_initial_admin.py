@@ -136,7 +136,7 @@ class AeInitialAdmin(ModelAdminSubjectDashboardMixin, SimpleHistoryAdmin):
 
         If DEATH, adds link to the death report.
         """
-        if obj.sae_reason == DEAD:
+        if obj.sae_reason.short_name == DEAD:
             try:
                 death_report = DeathReport.objects.get(
                     subject_identifier=obj.subject_identifier
@@ -152,7 +152,7 @@ class AeInitialAdmin(ModelAdminSubjectDashboardMixin, SimpleHistoryAdmin):
                     f'href="{url}?q={death_report.subject_identifier}">'
                     f"<span nowrap>{death_report.identifier}</span></a>"
                 )
-            return mark_safe(f"{obj.get_sae_reason_display()}.<BR>{link}.")
+            return mark_safe(f"{obj.sae_reason.name}.<BR>{link}.")
         return obj.get_sae_reason_display()
 
     if_sae_reason.short_description = "If SAE, reason"

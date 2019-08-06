@@ -6,6 +6,7 @@ from edc_constants.constants import YES, NO, DEAD
 from edc_list_data.site_list_data import site_list_data
 from edc_registration.models import RegisteredSubject
 from model_mommy import mommy
+from edc_adverse_event.models.sae_reason import SaeReason
 
 
 class TestAdmin(AmbitionTestCaseMixin, TestCase):
@@ -92,9 +93,10 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
         )
         self.assertIsNone(modeladmin.follow_up_reports(ae_initial))
 
+        sae_reason = SaeReason.objects.get(short_name=DEAD)
         mommy.make_recipe(
             "ambition_ae.aeinitial",
-            sae_reason=DEAD,
+            sae_reason=sae_reason,
             subject_identifier=self.subject_identifier,
         )
         self.assertTrue(modeladmin.description(ae_initial))

@@ -18,22 +18,6 @@ from edc_reportable import (
 )
 
 
-AE_CLASSIFICATION = (
-    ("anaemia", "Anaemia"),
-    ("bacteraemia/sepsis", "Bacteraemia/Sepsis"),
-    ("CM_IRIS", "CM IRIS"),
-    ("diarrhoea", "Diarrhoea"),
-    ("hypokalaemia", "Hypokalaemia"),
-    ("neutropaenia", "Neutropaenia"),
-    ("pneumonia", "Pneumonia"),
-    ("renal_impairment", "Renal impairment"),
-    ("respiratory_distress", "Respiratory distress"),
-    ("TB", "TB"),
-    ("thrombocytopenia", "Thrombocytopenia"),
-    ("thrombophlebitis", "Thrombophlebitis"),
-    (OTHER, "Other"),
-)
-
 AE_INTENSITY = ((MILD, "Mild"), (MODERATE, "Moderate"), (SEVERE, "Severe"))
 
 AE_REPORT_TYPE = (

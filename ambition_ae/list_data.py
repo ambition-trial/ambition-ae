@@ -1,5 +1,5 @@
 from edc_list_data import PreloadData
-from edc_constants.constants import OTHER
+from edc_constants.constants import OTHER, NOT_APPLICABLE, DEAD
 
 
 list_data = {
@@ -48,6 +48,22 @@ list_data = {
         ("thrombocytopenia", "Thrombocytopenia"),
         ("thrombophlebitis", "Thrombophlebitis"),
         (OTHER, "Other"),
+    ],
+    "edc_adverse_event.saereason": [
+        (NOT_APPLICABLE, "Not applicable"),
+        (DEAD, "Death"),
+        ("life_threatening", "Life-threatening"),
+        ("significant_disability", "Significant disability"),
+        (
+            "in-patient_hospitalization",
+            "In-patient hospitalization or prolongation (17 or more days from study inclusion)",
+        ),
+        (
+            "medically_important_event",
+            "Medically important event (e.g. Severe thrombophlebitis, Bacteraemia, "
+            "recurrence of symptoms not requiring admission, Hospital acquired "
+            "pneumonia)",
+        ),
     ],
 }
 
