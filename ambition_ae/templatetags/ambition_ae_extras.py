@@ -22,7 +22,7 @@ def format_ae_description(context, ae_initial, wrap_length):
     context["YES"] = YES
     context["ae_initial"] = ae_initial
     context["sae_reason"] = mark_safe(
-        "<BR>".join(wrap(ae_initial.get_sae_reason_display(), wrap_length or 35))
+        "<BR>".join(wrap(ae_initial.sae_reason.name, wrap_length or 35))
     )
     context["ae_description"] = mark_safe(
         "<BR>".join(wrap(ae_initial.ae_description, wrap_length or 35))

@@ -6,6 +6,7 @@ from edc_form_validators import NOT_REQUIRED_ERROR
 from edc_sites.tests import SiteTestCaseMixin
 
 from ...form_validators import AeInitialFormValidator
+from edc_adverse_event.models.sae_reason import SaeReason
 
 
 class TestAeInitialFormValidator(SiteTestCaseMixin, TestCase):
@@ -98,7 +99,8 @@ class TestAeInitialFormValidator(SiteTestCaseMixin, TestCase):
             self.fail(f"ValidationError unexpectedly raised. Got{e}")
 
     def test_sae_reason_not_applicable(self):
-        cleaned_data = {"sae": YES, "sae_reason": NOT_APPLICABLE}
+        sae_reason = SaeReason.objects.get(short_name=NOT_APPLICABLE)
+        cleaned_data = {"sae": YES, "sae_reason": sae_reason}
         form_validator = AeInitialFormValidator(cleaned_data=cleaned_data)
         self.assertRaises(ValidationError, form_validator.validate)
         self.assertIn("sae_reason", form_validator._errors)

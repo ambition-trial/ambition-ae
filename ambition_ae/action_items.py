@@ -132,7 +132,7 @@ class AeInitialAction(ActionWithNotification):
         next_actions = []
         deceased = (
             self.reference_obj.ae_grade == GRADE5
-            or self.reference_obj.sae_reason == DEAD
+            or self.reference_obj.sae_reason.short_name == DEAD
         )
 
         # add next AeFollowup if not deceased

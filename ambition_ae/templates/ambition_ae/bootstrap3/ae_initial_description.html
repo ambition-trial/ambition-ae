@@ -15,7 +15,7 @@
 {% endif %}
 <BR><b>SAE:</b> {{ ae_initial.get_sae_display }}
 {% if ae_initial.sae == YES %}
-	<BR><b>SAE Reason:</b> {{ sae_reason|default:ae_initial.get_sae_reason_display }}
+	<BR><b>SAE Reason:</b> {{ sae_reason|default:ae_initial.sae_reason.name }}
 {% endif %}
 <BR><b>SUSAR:</b>
 {% if ae_initial.susar_reported == YES %}
