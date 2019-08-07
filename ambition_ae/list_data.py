@@ -56,7 +56,10 @@ list_data = {
         ("significant_disability", "Significant disability"),
         (
             "in-patient_hospitalization",
-            "In-patient hospitalization or prolongation (17 or more days from study inclusion)",
+            (
+                "In-patient hospitalization or prolongation "
+                "(17 or more days from study inclusion)"
+            ),
         ),
         (
             "medically_important_event",
