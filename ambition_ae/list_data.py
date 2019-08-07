@@ -56,8 +56,10 @@ list_data = {
         ("significant_disability", "Significant disability"),
         (
             "in-patient_hospitalization",
-            ("In-patient hospitalization or prolongation "
-             "(17 or more days from study inclusion)"),
+            (
+                "In-patient hospitalization or prolongation "
+                "(17 or more days from study inclusion)"
+            ),
         ),
         (
             "medically_important_event",
@@ -68,5 +70,4 @@ list_data = {
     ],
 }
 
-preload_data = PreloadData(
-    list_data=list_data, model_data={}, unique_field_data=None)
+preload_data = PreloadData(list_data=list_data, model_data={}, unique_field_data=None)
