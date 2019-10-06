@@ -1,4 +1,4 @@
-from edc_form_validators import FormValidator
+from edc_adverse_event.form_validators import AeSusarFormValidator as FormValidator
 
 
 class AeSusarFormValidator(FormValidator):
