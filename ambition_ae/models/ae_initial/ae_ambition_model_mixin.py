@@ -1,12 +1,24 @@
 from django.db import models
 from edc_model.validators import datetime_not_future
 from edc_constants.choices import YES_NO
-from edc_constants.constants import UNKNOWN
+from edc_constants.constants import UNKNOWN, QUESTION_RETIRED
 
-from ...choices import STUDY_DRUG_RELATIONSHIP
+from ...choices import STUDY_DRUG_RELATIONSHIP, SAE_REASONS
 
 
 class AeAmbitionModelMixin(models.Model):
+
+    # QUESTION_RETIRED
+    ae_classification_old = models.CharField(max_length=150, default=QUESTION_RETIRED)
+
+    # QUESTION_RETIRED
+    sae_reason_old = models.CharField(
+        verbose_name='If "Yes", reason for SAE:',
+        max_length=50,
+        choices=SAE_REASONS,
+        default=QUESTION_RETIRED,
+        help_text="If subject deceased, submit a Death Report",
+    )
 
     # removed issue #4
     ambisome_relation = models.CharField(
@@ -68,16 +80,6 @@ class AeAmbitionModelMixin(models.Model):
         choices=YES_NO,
         default=UNKNOWN,
         help_text='If "Yes", fill in the "Recurrence of Symptoms" form',
-    )
-
-    tmg_report_datetime = models.DateTimeField(
-        verbose_name="Date and time AE reported to TMG",
-        blank=True,
-        null=True,
-        help_text=(
-            "AEs ≥ Grade 4 or SAE must be reported to the Trial "
-            "Management Group (TMG) within 24 hours"
-        ),
     )
 
     class Meta:

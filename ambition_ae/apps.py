@@ -8,11 +8,6 @@ class AppConfig(DjangoApponfig):
     has_exportable_data = True
     include_in_administration_section = True
 
-    def ready(self):
-        from .signals import update_ae_notifications_for_tmg_group  # noqa
-        from .signals import update_ae_initial_for_susar  # noqa
-        from .signals import update_ae_initial_susar_reported  # noqa
-
 
 if settings.APP_NAME == "ambition_ae":
 

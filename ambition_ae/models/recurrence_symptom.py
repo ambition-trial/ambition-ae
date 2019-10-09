@@ -6,7 +6,10 @@ from edc_action_item.managers import (
 )
 from edc_action_item.models import ActionModelMixin
 from edc_constants.choices import YES_NO, YES_NO_NA, NOT_APPLICABLE
-from edc_identifier.model_mixins import TrackingModelMixin
+from edc_identifier.model_mixins import (
+    TrackingModelMixin,
+    NonUniqueSubjectIdentifierFieldMixin,
+)
 from edc_model.models import BaseUuidModel
 from edc_model.validators import date_not_future
 from edc_sites.models import SiteModelMixin
@@ -18,7 +21,11 @@ from .list_models import Neurological, MeningitisSymptom, AntibioticTreatment
 
 
 class RecurrenceSymptom(
-    ActionModelMixin, TrackingModelMixin, SiteModelMixin, BaseUuidModel
+    NonUniqueSubjectIdentifierFieldMixin,
+    ActionModelMixin,
+    TrackingModelMixin,
+    SiteModelMixin,
+    BaseUuidModel,
 ):
 
     tracking_identifier_prefix = "RS"
