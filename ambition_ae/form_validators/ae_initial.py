@@ -3,7 +3,6 @@ from edc_constants.constants import YES, UNKNOWN
 
 
 class AeInitialFormValidator(FormValidator):
-
     def validate_relationship_to_study_drug(self):
         drugs = [
             "fluconazole_relation",
