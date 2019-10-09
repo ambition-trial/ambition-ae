@@ -19,6 +19,8 @@ DEFAULT_SETTINGS = DefaultTestSettings(
     APP_NAME=app_name,
     ETC_DIR=os.path.join(base_dir, app_name, "tests", "etc"),
     SUBJECT_VISIT_MODEL="ambition_subject.subjectvisit",
+    ADVERSE_EVENT_APP_LABEL="ambition_ae",
+    ADVERSE_EVENT_ADMIN_SITE="ambition_ae_admin",
     EDC_BOOTSTRAP=3,
     EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
     EMAIL_CONTACTS={
@@ -60,6 +62,7 @@ DEFAULT_SETTINGS = DefaultTestSettings(
         "edc_prn.apps.AppConfig",
         "edc_protocol.apps.AppConfig",
         "edc_registration.apps.AppConfig",
+        "edc_sites.apps.AppConfig",
         "edc_visit_schedule.apps.AppConfig",
         "edc_visit_tracking.apps.AppConfig",
         "ambition_subject.apps.AppConfig",
