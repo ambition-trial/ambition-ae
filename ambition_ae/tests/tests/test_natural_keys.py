@@ -1,10 +1,11 @@
 from ambition_rando.tests import AmbitionTestCaseMixin
 from django.test import TestCase, tag
 from django.test.utils import override_settings
-from edc_metadata.tests import CrfTestHelper
-from edc_registration.models import RegisteredSubject
 from django_collect_offline.models import OutgoingTransaction
 from django_collect_offline.tests import OfflineTestHelper
+from edc_adverse_event.constants import RECOVERING
+from edc_metadata.tests import CrfTestHelper
+from edc_registration.models import RegisteredSubject
 from model_mommy import mommy
 
 
@@ -59,6 +60,7 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
             "ambition_ae.aefollowup",
             ae_initial=ae_initial,
             subject_identifier=self.subject_identifier,
+            outcome=RECOVERING,
         )
         for outgoing_transaction in OutgoingTransaction.objects.filter(
             tx_name=ae_followup._meta.label_lower

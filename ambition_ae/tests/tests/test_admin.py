@@ -2,11 +2,12 @@ from ambition_ae.admin_site import ambition_ae_admin
 from ambition_ae.models import AeFollowup, AeInitial
 from ambition_rando.tests import AmbitionTestCaseMixin
 from django.test import TestCase, tag
+from edc_adverse_event.constants import RECOVERING
+from edc_adverse_event.models import SaeReason
 from edc_constants.constants import YES, NO, DEAD
 from edc_list_data.site_list_data import site_list_data
 from edc_registration.models import RegisteredSubject
 from model_mommy import mommy
-from edc_adverse_event.models.sae_reason import SaeReason
 
 
 class TestAdmin(AmbitionTestCaseMixin, TestCase):
@@ -55,12 +56,12 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
             "ambition_ae.aefollowup",
             ae_initial=ae_initial,
             followup=YES,
+            outcome=RECOVERING,
             subject_identifier=self.subject_identifier,
         )
 
         self.assertIn(ae_followup.identifier, modeladmin.ae_followup(ae_followup))
 
-    @tag("4")
     def test_ae_initial_follow_up_reports(self):
         modeladmin = ambition_ae_admin._registry.get(AeInitial)
         ae_initial = mommy.make_recipe(
@@ -72,6 +73,7 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
             "ambition_ae.aefollowup",
             ae_initial=ae_initial,
             followup=YES,
+            outcome=RECOVERING,
             subject_identifier=self.subject_identifier,
         )
 
@@ -79,13 +81,13 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
             "ambition_ae.aefollowup",
             ae_initial=ae_initial,
             followup=NO,
+            outcome=RECOVERING,
             subject_identifier=self.subject_identifier,
         )
 
         self.assertIn(ae_followup1.identifier, modeladmin.follow_up_reports(ae_initial))
         self.assertIn(ae_followup2.identifier, modeladmin.follow_up_reports(ae_initial))
 
-    @tag("4")
     def test_ae_initial_if_sae_reason(self):
         modeladmin = ambition_ae_admin._registry.get(AeInitial)
         ae_initial = mommy.make_recipe(
@@ -101,7 +103,6 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
         )
         self.assertTrue(modeladmin.description(ae_initial))
 
-    @tag("4")
     def test_ae_initial_description(self):
         modeladmin = ambition_ae_admin._registry.get(AeInitial)
         ae_initial = mommy.make_recipe(
@@ -109,7 +110,6 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
         )
         self.assertTrue(modeladmin.description(ae_initial))
 
-    @tag("4")
     def test_ae_initial_user(self):
         modeladmin = ambition_ae_admin._registry.get(AeInitial)
         ae_initial = mommy.make_recipe(

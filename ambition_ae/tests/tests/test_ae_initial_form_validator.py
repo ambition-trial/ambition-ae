@@ -1,12 +1,12 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.test import TestCase, tag
+from edc_adverse_event.models import SaeReason
 from edc_constants.constants import YES, NO, NOT_APPLICABLE
 from edc_form_validators import NOT_REQUIRED_ERROR
 from edc_sites.tests import SiteTestCaseMixin
 
 from ...form_validators import AeInitialFormValidator
-from edc_adverse_event.models.sae_reason import SaeReason
 
 
 class TestAeInitialFormValidator(SiteTestCaseMixin, TestCase):
