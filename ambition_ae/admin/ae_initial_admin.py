@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from edc_action_item.fieldsets import action_fieldset_tuple
+from edc_adverse_event.forms import AeInitialForm
 from edc_adverse_event.modeladmin_mixins import AeInitialModelAdminMixin
 from edc_model_admin import audit_fieldset_tuple, SimpleHistoryAdmin
 
@@ -11,6 +12,8 @@ from ..models import AeInitial
 
 @admin.register(AeInitial, site=ambition_ae_admin)
 class AeInitialAdmin(AeInitialModelAdminMixin, SimpleHistoryAdmin):
+
+    form = AeInitialForm
 
     email_contact = settings.EMAIL_CONTACTS.get("ae_reports")
     additional_instructions = mark_safe(
