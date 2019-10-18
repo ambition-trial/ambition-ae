@@ -16,7 +16,6 @@ from ...models import DeathReport
 
 
 class TestStudyTerminationConclusionFormValidator(AmbitionTestCaseMixin, TestCase):
-
     @classmethod
     def setUpClass(cls):
         site_list_data.autodiscover()

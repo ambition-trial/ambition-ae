@@ -51,8 +51,7 @@ AE_OUTCOME = (
 )
 
 
-DR_OPINION = (("cm_release", "CM Relapse"),
-              ("cm_iris", "CM IRIS"), (OTHER, "Other"))
+DR_OPINION = (("cm_release", "CM Relapse"), ("cm_iris", "CM IRIS"), (OTHER, "Other"))
 
 # SAE_REASONS = (
 #     (NOT_APPLICABLE, "Not applicable"),

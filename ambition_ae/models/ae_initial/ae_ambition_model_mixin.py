@@ -8,8 +8,7 @@ from edc_model.validators import datetime_not_future
 class AeAmbitionModelMixin(models.Model):
 
     # QUESTION_RETIRED
-    ae_classification_old = models.CharField(
-        max_length=150, default=QUESTION_RETIRED)
+    ae_classification_old = models.CharField(max_length=150, default=QUESTION_RETIRED)
 
     # QUESTION_RETIRED
     sae_reason_old = models.CharField(

@@ -20,15 +20,13 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
 
     def setUp(self):
         self.subject_identifier = "12345"
-        RegisteredSubject.objects.create(
-            subject_identifier=self.subject_identifier)
+        RegisteredSubject.objects.create(subject_identifier=self.subject_identifier)
 
     def test_natural_key_attrs(self):
         self.offline_test_helper.offline_test_natural_key_attr("ambition_ae")
 
     def test_get_by_natural_key_attr(self):
-        self.offline_test_helper.offline_test_get_by_natural_key_attr(
-            "ambition_ae")
+        self.offline_test_helper.offline_test_get_by_natural_key_attr("ambition_ae")
 
     def test_deserialize_ae_initial(self):
         ae_initial = mommy.make_recipe(
@@ -88,8 +86,7 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
     def test_deserialize_death_report(self):
         self.subject_identifier = self.create_subject()
 
-        cause_of_death = CauseOfDeath.objects.get(
-            short_name=CRYTOCOCCAL_MENINGITIS)
+        cause_of_death = CauseOfDeath.objects.get(short_name=CRYTOCOCCAL_MENINGITIS)
         death_report = mommy.make_recipe(
             "ambition_ae.deathreport",
             subject_identifier=self.subject_identifier,
@@ -105,8 +102,7 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
 
     def test_deserialize_death_report_tmg(self):
         self.subject_identifier = self.create_subject()
-        cause_of_death = CauseOfDeath.objects.get(
-            short_name=CRYTOCOCCAL_MENINGITIS)
+        cause_of_death = CauseOfDeath.objects.get(short_name=CRYTOCOCCAL_MENINGITIS)
         death_report = mommy.make_recipe(
             "ambition_ae.deathreport",
             subject_identifier=self.subject_identifier,
