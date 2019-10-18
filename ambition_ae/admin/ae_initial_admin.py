@@ -8,12 +8,18 @@ from edc_model_admin import audit_fieldset_tuple, SimpleHistoryAdmin
 
 from ..admin_site import ambition_ae_admin
 from ..models import AeInitial
+from ambition_ae.form_validators.ae_initial import AeInitialFormValidator
+
+
+class CustomAeInitialForm(AeInitialForm):
+
+    form_validator = AeInitialFormValidator
 
 
 @admin.register(AeInitial, site=ambition_ae_admin)
 class AeInitialAdmin(AeInitialModelAdminMixin, SimpleHistoryAdmin):
 
-    form = AeInitialForm
+    form = CustomAeInitialForm
 
     email_contact = settings.EMAIL_CONTACTS.get("ae_reports")
     additional_instructions = mark_safe(

@@ -1,12 +1,18 @@
+from edc_adverse_event.mommy_recipes import causeofdeath
 from edc_constants.constants import YES, NO, OTHER, NOT_APPLICABLE
 from edc_reportable import GRADE4
 from edc_utils import get_utcnow
 from faker import Faker
-from model_mommy.recipe import Recipe
+from model_mommy.recipe import Recipe, foreign_key
 
 from .models import AeInitial, AeTmg, AeFollowup, AeSusar
 from .models import RecurrenceSymptom, Neurological
 from .models import MeningitisSymptom
+from .models import (
+    DeathReport,
+    DeathReportTmg,
+    DeathReportTmgSecond,
+)
 
 fake = Faker()
 
@@ -46,4 +52,32 @@ recurrencesymptom = Recipe(
 
 meningitissymptom = Recipe(MeningitisSymptom, name=OTHER, short_name="Other")
 
-neurological = Recipe(Neurological, name="meningismus", short_name="Meningismus")
+neurological = Recipe(Neurological, name="meningismus",
+                      short_name="Meningismus")
+
+
+deathreport = Recipe(
+    DeathReport,
+    study_day=1,
+    death_as_inpatient=YES,
+    cause_of_death=foreign_key(causeofdeath),
+    cause_of_death_other=None,
+    action_identifier=None,
+    tracking_identifier=None,
+)
+
+deathreporttmg = Recipe(
+    DeathReportTmg,
+    action_identifier=None,
+    cause_of_death=foreign_key(causeofdeath),
+    cause_of_death_agreed=YES,
+    tracking_identifier=None,
+)
+
+deathreporttmgsecond = Recipe(
+    DeathReportTmgSecond,
+    action_identifier=None,
+    cause_of_death=foreign_key(causeofdeath),
+    cause_of_death_agreed=YES,
+    tracking_identifier=None,
+)

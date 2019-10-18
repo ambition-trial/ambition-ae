@@ -1,2 +1,2 @@
-AE_TMG_ACTION = "submit-ae-tmg-report"
+CRYTOCOCCAL_MENINGITIS = "cryptococcal_meningitis"
 RECURRENCE_OF_SYMPTOMS_ACTION = "submit-recurrence-of-symptoms"
