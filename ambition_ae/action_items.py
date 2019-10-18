@@ -5,6 +5,9 @@ from edc_adverse_event.action_items import (
     AeInitialAction,
     AeSusarAction,
     AeTmgAction,
+    DeathReportAction,
+    DeathReportTmgAction,
+    DeathReportTmgSecondAction,
 )
 from edc_adverse_event.constants import AE_INITIAL_ACTION
 from edc_constants.constants import HIGH_PRIORITY, YES
@@ -43,4 +46,7 @@ site_action_items.register(AeFollowupAction)
 site_action_items.register(AeInitialAction)
 site_action_items.register(AeSusarAction)
 site_action_items.register(AeTmgAction)
+site_action_items.register(DeathReportAction)
+site_action_items.register(DeathReportTmgAction)
+site_action_items.register(DeathReportTmgSecondAction)
 site_action_items.register(RecurrenceOfSymptomsAction)

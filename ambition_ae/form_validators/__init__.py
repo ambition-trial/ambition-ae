@@ -1,3 +1,4 @@
 from .ae_initial import AeInitialFormValidator
-from .ae_susar import AeSusarFormValidator
+from .death_report import DeathReportFormValidator
+from .death_report_tmg import DeathReportTmgFormValidator
 from .recurrence_symptom import RecurrenceSymptomFormValidator

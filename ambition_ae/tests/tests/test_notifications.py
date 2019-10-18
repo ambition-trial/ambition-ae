@@ -32,12 +32,12 @@ class TestNotifications(AmbitionTestCaseMixin, TestCase):
             self.user.user_permissions.add(permission)
 
         self.subject_identifier = "12345"
-        RegisteredSubject.objects.create(subject_identifier=self.subject_identifier)
+        RegisteredSubject.objects.create(
+            subject_identifier=self.subject_identifier)
 
         self.assertEqual(len(mail.outbox), 0)
         self.assertTrue(site_notifications.loaded)
 
-    @tag("1")
     def test_susar(self):
 
         mommy.make_recipe(
@@ -49,7 +49,6 @@ class TestNotifications(AmbitionTestCaseMixin, TestCase):
         )
         self.assertEqual(len(mail.outbox), 5)
 
-    @tag("1")
     def test_susar_updates(self):
 
         ae_initial = mommy.make_recipe(
@@ -88,7 +87,6 @@ class TestNotifications(AmbitionTestCaseMixin, TestCase):
         subject = "".join([msg.subject for msg in mail.outbox])
         self.assertEqual(2, subject.count("AE SUSAR Report"))
 
-    @tag("1")
     def test_susar_text(self):
         mommy.make_recipe(
             "ambition_ae.aeinitial",

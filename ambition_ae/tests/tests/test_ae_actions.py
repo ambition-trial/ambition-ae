@@ -1,7 +1,6 @@
 # see also tests in edc_adverse_events
 
 from django.test import TestCase, tag
-from pprint import pprint
 from edc_constants.constants import YES, NO
 from edc_action_item.models.action_item import ActionItem
 from model_mommy import mommy
@@ -23,9 +22,9 @@ class TestAeActions(TestCase):
 
     def setUp(self):
         self.subject_identifier = "12345"
-        RegisteredSubject.objects.create(subject_identifier=self.subject_identifier)
+        RegisteredSubject.objects.create(
+            subject_identifier=self.subject_identifier)
 
-    @tag("1")
     def test_no_ae_cm_recurrence_action(self):
 
         mommy.make_recipe(
@@ -43,7 +42,6 @@ class TestAeActions(TestCase):
             action_type__name=RecurrenceOfSymptomsAction.name,
         )
 
-    @tag("1")
     def test_ae_cm_recurrence_action(self):
 
         mommy.make_recipe(
@@ -56,7 +54,8 @@ class TestAeActions(TestCase):
         )
 
         try:
-            ActionItem.objects.get(action_type__name=RecurrenceOfSymptomsAction.name)
+            ActionItem.objects.get(
+                action_type__name=RecurrenceOfSymptomsAction.name)
         except ObjectDoesNotExist:
             self.fail(
                 "ActionItem for recurrence of syptoms unexpectedly does not exist"

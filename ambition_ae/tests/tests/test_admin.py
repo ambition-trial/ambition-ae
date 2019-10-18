@@ -22,7 +22,8 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
 
     def setUp(self):
         self.subject_identifier = "12345"
-        RegisteredSubject.objects.create(subject_identifier=self.subject_identifier)
+        RegisteredSubject.objects.create(
+            subject_identifier=self.subject_identifier)
 
     def test_ae_followup_status(self):
         modeladmin = ambition_ae_admin._registry.get(AeFollowup)
@@ -36,9 +37,7 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
             subject_identifier=self.subject_identifier,
         )
         self.assertEqual(
-            modeladmin.status(ae_followup),
-            f"{ae_followup.get_outcome_display()}. See AE Followup.",
-        )
+            modeladmin.status(ae_followup), ae_followup.get_outcome_display())
 
         ae_followup.followup = NO
         ae_followup.save()
@@ -46,7 +45,7 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
             modeladmin.status(ae_followup), ae_followup.get_outcome_display()
         )
 
-    def test_ae_followup_ae_follow_up(self):
+    def test_ae_followup_ae_follow_ups(self):
         modeladmin = ambition_ae_admin._registry.get(AeFollowup)
         ae_initial = mommy.make_recipe(
             "ambition_ae.aeinitial", subject_identifier=self.subject_identifier
@@ -60,7 +59,8 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
             subject_identifier=self.subject_identifier,
         )
 
-        self.assertIn(ae_followup.identifier, modeladmin.ae_followup(ae_followup))
+        self.assertIn(ae_followup.identifier,
+                      modeladmin.follow_up_reports(ae_followup))
 
     def test_ae_initial_follow_up_reports(self):
         modeladmin = ambition_ae_admin._registry.get(AeInitial)
@@ -85,8 +85,10 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
             subject_identifier=self.subject_identifier,
         )
 
-        self.assertIn(ae_followup1.identifier, modeladmin.follow_up_reports(ae_initial))
-        self.assertIn(ae_followup2.identifier, modeladmin.follow_up_reports(ae_initial))
+        self.assertIn(ae_followup1.identifier,
+                      modeladmin.follow_up_reports(ae_initial))
+        self.assertIn(ae_followup2.identifier,
+                      modeladmin.follow_up_reports(ae_initial))
 
     def test_ae_initial_if_sae_reason(self):
         modeladmin = ambition_ae_admin._registry.get(AeInitial)

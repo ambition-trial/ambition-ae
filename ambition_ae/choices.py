@@ -51,24 +51,25 @@ AE_OUTCOME = (
 )
 
 
-DR_OPINION = (("cm_release", "CM Relapse"), ("cm_iris", "CM IRIS"), (OTHER, "Other"))
+DR_OPINION = (("cm_release", "CM Relapse"),
+              ("cm_iris", "CM IRIS"), (OTHER, "Other"))
 
-SAE_REASONS = (
-    (NOT_APPLICABLE, "Not applicable"),
-    (DEAD, "Death"),
-    ("life_threatening", "Life-threatening"),
-    ("significant_disability", "Significant disability"),
-    (
-        "in-patient_hospitalization",
-        "In-patient hospitalization or prolongation (17 or more days from study inclusion)",
-    ),
-    (
-        "medically_important_event",
-        "Medically important event (e.g. Severe thrombophlebitis, Bacteraemia, "
-        "recurrence of symptoms not requiring admission, Hospital acquired "
-        "pneumonia)",
-    ),
-)
+# SAE_REASONS = (
+#     (NOT_APPLICABLE, "Not applicable"),
+#     (DEAD, "Death"),
+#     ("life_threatening", "Life-threatening"),
+#     ("significant_disability", "Significant disability"),
+#     (
+#         "in-patient_hospitalization",
+#         "In-patient hospitalization or prolongation (17 or more days from study inclusion)",
+#     ),
+#     (
+#         "medically_important_event",
+#         "Medically important event (e.g. Severe thrombophlebitis, Bacteraemia, "
+#         "recurrence of symptoms not requiring admission, Hospital acquired "
+#         "pneumonia)",
+#     ),
+# )
 
 
 STEROIDS_CHOICES = (
@@ -78,12 +79,10 @@ STEROIDS_CHOICES = (
     (OTHER, "Other"),
 )
 
-STUDY_DRUG_RELATIONSHIP = (
-    ("not_related", "Not related"),
-    ("unlikely_related", "Unlikely related"),
-    ("possibly_related", "Possibly related"),
-    ("probably_related", "Probably related"),
-    ("definitely_related", "Definitely related"),
+TB_SITE_DEATH = (
+    ("meningitis", "Meningitis"),
+    ("pulmonary", "Pulmonary"),
+    ("disseminated", "Disseminated"),
     (NOT_APPLICABLE, "Not applicable"),
 )
 
