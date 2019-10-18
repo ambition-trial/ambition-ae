@@ -1328,18 +1328,4 @@ class Migration(migrations.Migration):
                 ),
             ],
         ),
-        migrations.AddIndex(
-            model_name="deathreporttmg",
-            index=models.Index(
-                fields=["subject_identifier", "action_identifier", "site", "id"],
-                name="ambition_pr_subject_732cea_idx",
-            ),
-        ),
-        migrations.AddIndex(
-            model_name="deathreport",
-            index=models.Index(
-                fields=["subject_identifier", "action_identifier", "site", "id"],
-                name="ambition_pr_subject_2d450e_idx",
-            ),
-        ),
     ]
