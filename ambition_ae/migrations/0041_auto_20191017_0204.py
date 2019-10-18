@@ -5,33 +5,29 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ambition_ae', '0040_auto_20191017_0107'),
-    ]
+    dependencies = [("ambition_ae", "0040_auto_20191017_0107")]
 
     operations = [
         migrations.RemoveIndex(
-            model_name='deathreport',
-            name='ambition_pr_subject_2d450e_idx',
+            model_name="deathreport", name="ambition_pr_subject_2d450e_idx"
         ),
         migrations.RemoveIndex(
-            model_name='deathreporttmg',
-            name='ambition_pr_subject_732cea_idx',
+            model_name="deathreporttmg", name="ambition_pr_subject_732cea_idx"
         ),
         migrations.AddIndex(
-            model_name='deathreport',
-            index=models.Index(fields=['subject_identifier', 'action_identifier', 'site', 'id'], name='ambition_ae_subject_ec758c_idx'),
+            model_name="deathreport",
+            index=models.Index(
+                fields=["subject_identifier", "action_identifier", "site", "id"],
+                name="ambition_ae_subject_ec758c_idx",
+            ),
         ),
         migrations.AddIndex(
-            model_name='deathreporttmg',
-            index=models.Index(fields=['subject_identifier', 'action_identifier', 'site', 'id'], name='ambition_ae_subject_809724_idx'),
+            model_name="deathreporttmg",
+            index=models.Index(
+                fields=["subject_identifier", "action_identifier", "site", "id"],
+                name="ambition_ae_subject_809724_idx",
+            ),
         ),
-        migrations.AlterModelTable(
-            name='deathreport',
-            table=None,
-        ),
-        migrations.AlterModelTable(
-            name='deathreporttmg',
-            table=None,
-        ),
+        migrations.AlterModelTable(name="deathreport", table=None),
+        migrations.AlterModelTable(name="deathreporttmg", table=None),
     ]

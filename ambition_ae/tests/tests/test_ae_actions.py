@@ -22,8 +22,7 @@ class TestAeActions(TestCase):
 
     def setUp(self):
         self.subject_identifier = "12345"
-        RegisteredSubject.objects.create(
-            subject_identifier=self.subject_identifier)
+        RegisteredSubject.objects.create(subject_identifier=self.subject_identifier)
 
     def test_no_ae_cm_recurrence_action(self):
 
@@ -54,8 +53,7 @@ class TestAeActions(TestCase):
         )
 
         try:
-            ActionItem.objects.get(
-                action_type__name=RecurrenceOfSymptomsAction.name)
+            ActionItem.objects.get(action_type__name=RecurrenceOfSymptomsAction.name)
         except ObjectDoesNotExist:
             self.fail(
                 "ActionItem for recurrence of syptoms unexpectedly does not exist"

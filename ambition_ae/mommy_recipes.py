@@ -8,11 +8,7 @@ from model_mommy.recipe import Recipe, foreign_key
 from .models import AeInitial, AeTmg, AeFollowup, AeSusar
 from .models import RecurrenceSymptom, Neurological
 from .models import MeningitisSymptom
-from .models import (
-    DeathReport,
-    DeathReportTmg,
-    DeathReportTmgSecond,
-)
+from .models import DeathReport, DeathReportTmg, DeathReportTmgSecond
 
 fake = Faker()
 
@@ -52,8 +48,7 @@ recurrencesymptom = Recipe(
 
 meningitissymptom = Recipe(MeningitisSymptom, name=OTHER, short_name="Other")
 
-neurological = Recipe(Neurological, name="meningismus",
-                      short_name="Meningismus")
+neurological = Recipe(Neurological, name="meningismus", short_name="Meningismus")
 
 
 deathreport = Recipe(

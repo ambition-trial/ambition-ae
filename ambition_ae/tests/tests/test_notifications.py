@@ -32,8 +32,7 @@ class TestNotifications(AmbitionTestCaseMixin, TestCase):
             self.user.user_permissions.add(permission)
 
         self.subject_identifier = "12345"
-        RegisteredSubject.objects.create(
-            subject_identifier=self.subject_identifier)
+        RegisteredSubject.objects.create(subject_identifier=self.subject_identifier)
 
         self.assertEqual(len(mail.outbox), 0)
         self.assertTrue(site_notifications.loaded)
