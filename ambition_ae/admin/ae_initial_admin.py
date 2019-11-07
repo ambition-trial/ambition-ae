@@ -7,8 +7,8 @@ from edc_adverse_event.modeladmin_mixins import AeInitialModelAdminMixin
 from edc_model_admin import audit_fieldset_tuple, SimpleHistoryAdmin
 
 from ..admin_site import ambition_ae_admin
+from ..form_validators.ae_initial import AeInitialFormValidator
 from ..models import AeInitial
-from ambition_ae.form_validators.ae_initial import AeInitialFormValidator
 
 
 class CustomAeInitialForm(AeInitialForm):
