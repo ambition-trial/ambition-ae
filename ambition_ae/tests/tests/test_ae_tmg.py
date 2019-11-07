@@ -32,7 +32,7 @@ class TestAeTmg(AmbitionTestCaseMixin, TestCase):
         self.subject_identifier = "12345"
         RegisteredSubject.objects.create(subject_identifier=self.subject_identifier)
 
-        anaemia = AeClassification.objects.get(short_name="anaemia")
+        anaemia = AeClassification.objects.get(name="anaemia")
         self.ae_initial = mommy.make_recipe(
             "ambition_ae.aeinitial",
             subject_identifier=self.subject_identifier,

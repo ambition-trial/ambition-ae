@@ -20,13 +20,13 @@ class TestRecurrenceSymptomFormValidator(TestCase):
         super().tearDownClass()
 
     def test_meningitis_symptom_other_none(self):
-        selected = MeningitisSymptom.objects.filter(short_name=OTHER)
+        selected = MeningitisSymptom.objects.filter(name=OTHER)
         options = {"meningitis_symptom": selected, "meningitis_symptom_other": None}
         form_validator = RecurrenceSymptomFormValidator(cleaned_data=options)
         self.assertRaises(ValidationError, form_validator.validate)
 
     def test_meningitis_symptom_other_valid(self):
-        selected = MeningitisSymptom.objects.filter(short_name=OTHER)
+        selected = MeningitisSymptom.objects.filter(name=OTHER)
         options = {"meningitis_symptom": selected, "meningitis_symptom_other": "blah"}
         form_validator = RecurrenceSymptomFormValidator(cleaned_data=options)
         try:
@@ -35,7 +35,7 @@ class TestRecurrenceSymptomFormValidator(TestCase):
             self.fail(f"ValidationError unexpectedly raised. Got{e}")
 
     def test_neurological_focal_neurologic_deficit_none(self):
-        selected = Neurological.objects.filter(short_name="focal_neurologic_deficit")
+        selected = Neurological.objects.filter(name="focal_neurologic_deficit")
         cleaned_data = {"neurological": selected, "focal_neurologic_deficit": None}
         form_validator = RecurrenceSymptomFormValidator(cleaned_data=cleaned_data)
         self.assertRaises(ValidationError, form_validator.validate)
@@ -126,13 +126,11 @@ class TestRecurrenceSymptomFormValidator(TestCase):
             ("antibiotic_treatment", "antibiotic_treatment_other"),
         ]
         default_cleaned_data = {
-            "meningitis_symptom": MeningitisSymptom.objects.filter(short_name=OTHER),
+            "meningitis_symptom": MeningitisSymptom.objects.filter(name=OTHER),
             "meningitis_symptom_other": "yada yada",
-            "neurological": Neurological.objects.filter(short_name=OTHER),
+            "neurological": Neurological.objects.filter(name=OTHER),
             "cn_palsy_chosen_other": "yada yada",
-            "antibiotic_treatment": AntibioticTreatment.objects.filter(
-                short_name=OTHER
-            ),
+            "antibiotic_treatment": AntibioticTreatment.objects.filter(name=OTHER),
             "antibiotic_treatment_other": "yada yada",
         }
         for field, field_other in options:

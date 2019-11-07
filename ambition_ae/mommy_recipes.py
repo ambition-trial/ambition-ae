@@ -46,9 +46,9 @@ recurrencesymptom = Recipe(
     RecurrenceSymptom, action_identifier=None, tracking_identifier=None
 )
 
-meningitissymptom = Recipe(MeningitisSymptom, name=OTHER, short_name="Other")
+meningitissymptom = Recipe(MeningitisSymptom, name=OTHER, display_name="Other")
 
-neurological = Recipe(Neurological, name="meningismus", short_name="Meningismus")
+neurological = Recipe(Neurological, name="meningismus", display_name="Meningismus")
 
 
 deathreport = Recipe(

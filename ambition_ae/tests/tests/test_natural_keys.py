@@ -86,7 +86,7 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
     def test_deserialize_death_report(self):
         self.subject_identifier = self.create_subject()
 
-        cause_of_death = CauseOfDeath.objects.get(short_name=CRYTOCOCCAL_MENINGITIS)
+        cause_of_death = CauseOfDeath.objects.get(name=CRYTOCOCCAL_MENINGITIS)
         death_report = mommy.make_recipe(
             "ambition_ae.deathreport",
             subject_identifier=self.subject_identifier,
@@ -102,7 +102,7 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
 
     def test_deserialize_death_report_tmg(self):
         self.subject_identifier = self.create_subject()
-        cause_of_death = CauseOfDeath.objects.get(short_name=CRYTOCOCCAL_MENINGITIS)
+        cause_of_death = CauseOfDeath.objects.get(name=CRYTOCOCCAL_MENINGITIS)
         death_report = mommy.make_recipe(
             "ambition_ae.deathreport",
             subject_identifier=self.subject_identifier,

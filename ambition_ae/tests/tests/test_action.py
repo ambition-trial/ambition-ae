@@ -46,7 +46,7 @@ class TestDeathReport(AmbitionTestCaseMixin, TestCase):
         for i in range(0, 3):
             subject_identifier = self.create_subject(first_name=names[i])
             DeathReportAction(subject_identifier=subject_identifier)
-            cause_of_death = CauseOfDeath.objects.get(short_name=CRYTOCOCCAL_MENINGITIS)
+            cause_of_death = CauseOfDeath.objects.get(name=CRYTOCOCCAL_MENINGITIS)
             mommy.make_recipe(
                 "ambition_ae.deathreport",
                 subject_identifier=subject_identifier,
@@ -62,7 +62,7 @@ class TestDeathReport(AmbitionTestCaseMixin, TestCase):
         action_item = ActionItem.objects.get(action_identifier=action.action_identifier)
 
         # fill on death report
-        cause_of_death = CauseOfDeath.objects.get(short_name=CRYTOCOCCAL_MENINGITIS)
+        cause_of_death = CauseOfDeath.objects.get(name=CRYTOCOCCAL_MENINGITIS)
         death_report = mommy.make_recipe(
             "ambition_ae.deathreport",
             subject_identifier=subject_identifier,
@@ -98,7 +98,7 @@ class TestDeathReport(AmbitionTestCaseMixin, TestCase):
             helper.reference_url.startswith(f"/admin/ambition_ae/deathreport/add/")
         )
 
-        cause_of_death = CauseOfDeath.objects.get(short_name=CRYTOCOCCAL_MENINGITIS)
+        cause_of_death = CauseOfDeath.objects.get(name=CRYTOCOCCAL_MENINGITIS)
         death_report = mommy.make_recipe(
             "ambition_ae.deathreport",
             subject_identifier=subject_identifier,
@@ -123,7 +123,7 @@ class TestDeathReport(AmbitionTestCaseMixin, TestCase):
         subject_identifier = self.create_subject()
 
         DeathReportAction(subject_identifier=subject_identifier)
-        cause_of_death = CauseOfDeath.objects.get(short_name=CRYTOCOCCAL_MENINGITIS)
+        cause_of_death = CauseOfDeath.objects.get(name=CRYTOCOCCAL_MENINGITIS)
         mommy.make_recipe(
             "ambition_ae.deathreport",
             subject_identifier=subject_identifier,
@@ -138,7 +138,7 @@ class TestDeathReport(AmbitionTestCaseMixin, TestCase):
     def test_death_report_closes_action(self):
         subject_identifier = self.create_subject()
         DeathReportAction(subject_identifier=subject_identifier)
-        cause_of_death = CauseOfDeath.objects.get(short_name=CRYTOCOCCAL_MENINGITIS)
+        cause_of_death = CauseOfDeath.objects.get(name=CRYTOCOCCAL_MENINGITIS)
         death_report = mommy.make_recipe(
             "ambition_ae.deathreport",
             subject_identifier=subject_identifier,
@@ -151,7 +151,7 @@ class TestDeathReport(AmbitionTestCaseMixin, TestCase):
 
         subject_identifier = self.create_subject()
         death_report_action = DeathReportAction(subject_identifier=subject_identifier)
-        cause_of_death = CauseOfDeath.objects.get(short_name=CRYTOCOCCAL_MENINGITIS)
+        cause_of_death = CauseOfDeath.objects.get(name=CRYTOCOCCAL_MENINGITIS)
         death_report = mommy.make_recipe(
             "ambition_ae.deathreport",
             subject_identifier=subject_identifier,
@@ -170,7 +170,7 @@ class TestDeathReport(AmbitionTestCaseMixin, TestCase):
         )
 
         # fill in TMG report with matching cause of death
-        cause_of_death = CauseOfDeath.objects.get(short_name=CRYTOCOCCAL_MENINGITIS)
+        cause_of_death = CauseOfDeath.objects.get(name=CRYTOCOCCAL_MENINGITIS)
         death_report_tmg = mommy.make_recipe(
             "ambition_ae.deathreporttmg",
             subject_identifier=subject_identifier,
@@ -197,7 +197,7 @@ class TestDeathReport(AmbitionTestCaseMixin, TestCase):
         subject_identifier = self.create_subject()
         death_report_action = DeathReportAction(subject_identifier=subject_identifier)
 
-        cause_of_death = CauseOfDeath.objects.get(short_name=CRYTOCOCCAL_MENINGITIS)
+        cause_of_death = CauseOfDeath.objects.get(name=CRYTOCOCCAL_MENINGITIS)
         death_report = mommy.make_recipe(
             "ambition_ae.deathreport",
             subject_identifier=subject_identifier,
@@ -244,7 +244,7 @@ class TestDeathReport(AmbitionTestCaseMixin, TestCase):
             self.fail("Action item unexpectedly does not exist")
 
         # fill in TMG report with non-matching cause of death
-        cause_of_death = CauseOfDeath.objects.get(short_name=MALIGNANCY)
+        cause_of_death = CauseOfDeath.objects.get(name=MALIGNANCY)
         death_report_tmg = mommy.make_recipe(
             "ambition_ae.deathreporttmg",
             subject_identifier=subject_identifier,
@@ -270,9 +270,9 @@ class TestDeathReport(AmbitionTestCaseMixin, TestCase):
 
         # assert the cause of death on the tmg report does not match the
         # death report
-        cause_of_death = CauseOfDeath.objects.get(short_name=MALIGNANCY)
+        cause_of_death = CauseOfDeath.objects.get(name=MALIGNANCY)
         self.assertEqual(death_report_tmg.cause_of_death, cause_of_death)
-        cause_of_death = CauseOfDeath.objects.get(short_name=CRYTOCOCCAL_MENINGITIS)
+        cause_of_death = CauseOfDeath.objects.get(name=CRYTOCOCCAL_MENINGITIS)
         self.assertEqual(death_report.cause_of_death, cause_of_death)
 
         self.assertEqual(ActionItem.objects.all().count(), 4)
@@ -315,7 +315,7 @@ class TestDeathReport(AmbitionTestCaseMixin, TestCase):
         )
 
         # fill in second TMG report with any cause of death
-        cause_of_death = CauseOfDeath.objects.get(short_name=MALIGNANCY)
+        cause_of_death = CauseOfDeath.objects.get(name=MALIGNANCY)
         death_report_tmg_second = mommy.make_recipe(
             "ambition_ae.deathreporttmgsecond",
             subject_identifier=subject_identifier,
@@ -415,7 +415,7 @@ class TestDeathReport(AmbitionTestCaseMixin, TestCase):
         )
 
         # set the cause of death to agree
-        cause_of_death = CauseOfDeath.objects.get(short_name=CRYTOCOCCAL_MENINGITIS)
+        cause_of_death = CauseOfDeath.objects.get(name=CRYTOCOCCAL_MENINGITIS)
         death_report_tmg.cause_of_death = cause_of_death
         death_report_tmg.cause_of_death_agreed = YES
         death_report_tmg.save()
@@ -432,7 +432,7 @@ class TestDeathReport(AmbitionTestCaseMixin, TestCase):
         )
 
         # set the cause of death to NOT agree
-        cause_of_death = CauseOfDeath.objects.get(short_name=MALIGNANCY)
+        cause_of_death = CauseOfDeath.objects.get(name=MALIGNANCY)
         death_report_tmg.cause_of_death = cause_of_death
         death_report_tmg.cause_of_death_agreed = NO
         death_report_tmg.save()
@@ -452,14 +452,14 @@ class TestDeathReport(AmbitionTestCaseMixin, TestCase):
 
         subject_identifier = self.create_subject()
 
-        cause_of_death = CauseOfDeath.objects.get(short_name=CRYTOCOCCAL_MENINGITIS)
+        cause_of_death = CauseOfDeath.objects.get(name=CRYTOCOCCAL_MENINGITIS)
         death_report = mommy.make_recipe(
             "ambition_ae.deathreport",
             subject_identifier=subject_identifier,
             cause_of_death=cause_of_death,
         )
         # fill in TMG report with non-matching cause of death
-        cause_of_death = CauseOfDeath.objects.get(short_name=MALIGNANCY)
+        cause_of_death = CauseOfDeath.objects.get(name=MALIGNANCY)
         death_report_tmg = mommy.make_recipe(
             "ambition_ae.deathreporttmg",
             subject_identifier=subject_identifier,
@@ -500,7 +500,7 @@ class TestDeathReport(AmbitionTestCaseMixin, TestCase):
             ).count(),
             1,
         )
-        cause_of_death = CauseOfDeath.objects.get(short_name=MALIGNANCY)
+        cause_of_death = CauseOfDeath.objects.get(name=MALIGNANCY)
         death_report_tmg = mommy.make_recipe(
             "ambition_ae.deathreporttmg",
             subject_identifier=subject_identifier,
@@ -529,7 +529,7 @@ class TestDeathReport(AmbitionTestCaseMixin, TestCase):
             1,
         )
 
-        cause_of_death = CauseOfDeath.objects.get(short_name=MALIGNANCY)
+        cause_of_death = CauseOfDeath.objects.get(name=MALIGNANCY)
         death_report_tmg_second = mommy.make_recipe(
             "ambition_ae.deathreporttmgsecond",
             subject_identifier=subject_identifier,
@@ -571,7 +571,7 @@ class TestDeathReport(AmbitionTestCaseMixin, TestCase):
 
         subject_identifier = RegisteredSubject.objects.all()[0].subject_identifier
         death_report = DeathReport.objects.get(subject_identifier=subject_identifier)
-        cause_of_death = CauseOfDeath.objects.get(short_name=MALIGNANCY)
+        cause_of_death = CauseOfDeath.objects.get(name=MALIGNANCY)
         death_report_tmg = mommy.make_recipe(
             "ambition_ae.deathreporttmg",
             subject_identifier=subject_identifier,
@@ -583,7 +583,7 @@ class TestDeathReport(AmbitionTestCaseMixin, TestCase):
             report_status=CLOSED,
             report_closed_datetime=get_utcnow(),
         )
-        cause_of_death = CauseOfDeath.objects.get(short_name=MALIGNANCY)
+        cause_of_death = CauseOfDeath.objects.get(name=MALIGNANCY)
         death_report_tmg_second = mommy.make_recipe(
             "ambition_ae.deathreporttmgsecond",
             subject_identifier=subject_identifier,
