@@ -94,7 +94,7 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
         )
         self.assertIsNone(modeladmin.follow_up_reports(ae_initial))
 
-        sae_reason = SaeReason.objects.get(short_name=DEAD)
+        sae_reason = SaeReason.objects.get(name=DEAD)
         mommy.make_recipe(
             "ambition_ae.aeinitial",
             sae_reason=sae_reason,
