@@ -45,39 +45,24 @@ class Migration(migrations.Migration):
         migrations.RemoveIndex(
             model_name="neurological", name="ambition_ae_id_658177_idx",
         ),
-
-
         migrations.RenameField(
-            model_name="antibiotictreatment",
-            old_name="name",
-            new_name="display_name",
+            model_name="antibiotictreatment", old_name="name", new_name="display_name",
         ),
         migrations.RenameField(
-            model_name="meningitissymptom",
-            old_name="name",
-            new_name="display_name",
+            model_name="meningitissymptom", old_name="name", new_name="display_name",
         ),
         migrations.RenameField(
-            model_name="neurological",
-            old_name="name",
-            new_name="display_name",
+            model_name="neurological", old_name="name", new_name="display_name",
         ),
         migrations.RenameField(
-            model_name="antibiotictreatment",
-            old_name="short_name",
-            new_name="name",
+            model_name="antibiotictreatment", old_name="short_name", new_name="name",
         ),
         migrations.RenameField(
-            model_name="meningitissymptom",
-            old_name="short_name",
-            new_name="name",
+            model_name="meningitissymptom", old_name="short_name", new_name="name",
         ),
         migrations.RenameField(
-            model_name="neurological",
-            old_name="short_name",
-            new_name="name",
+            model_name="neurological", old_name="short_name", new_name="name",
         ),
-
         migrations.AlterField(
             model_name="aefollowup",
             name="site",
@@ -142,8 +127,6 @@ class Migration(migrations.Migration):
                 to="sites.Site",
             ),
         ),
-
-
         migrations.AlterField(
             model_name="historicalaeinitial",
             name="ae_classification_other",
