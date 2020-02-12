@@ -7,7 +7,7 @@ from edc_adverse_event.constants import RECOVERING
 from edc_adverse_event.models.cause_of_death import CauseOfDeath
 from edc_metadata.tests import CrfTestHelper
 from edc_registration.models import RegisteredSubject
-from model_mommy import mommy
+from model_bakery import baker
 
 from ...constants import CRYTOCOCCAL_MENINGITIS
 
@@ -29,7 +29,7 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
         self.offline_test_helper.offline_test_get_by_natural_key_attr("ambition_ae")
 
     def test_deserialize_ae_initial(self):
-        ae_initial = mommy.make_recipe(
+        ae_initial = baker.make_recipe(
             "ambition_ae.aeinitial", subject_identifier=self.subject_identifier
         )
         for outgoing_transaction in OutgoingTransaction.objects.filter(
@@ -40,10 +40,10 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
             )
 
     def test_deserialize_ae_tmg(self):
-        ae_initial = mommy.make_recipe(
+        ae_initial = baker.make_recipe(
             "ambition_ae.aeinitial", subject_identifier=self.subject_identifier
         )
-        ae_tmg = mommy.make_recipe(
+        ae_tmg = baker.make_recipe(
             "ambition_ae.aetmg",
             ae_initial=ae_initial,
             subject_identifier=self.subject_identifier,
@@ -56,10 +56,10 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
             )
 
     def test_deserialize_ae_followup(self):
-        ae_initial = mommy.make_recipe(
+        ae_initial = baker.make_recipe(
             "ambition_ae.aeinitial", subject_identifier=self.subject_identifier
         )
-        ae_followup = mommy.make_recipe(
+        ae_followup = baker.make_recipe(
             "ambition_ae.aefollowup",
             ae_initial=ae_initial,
             subject_identifier=self.subject_identifier,
@@ -73,7 +73,7 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
             )
 
     def test_deserialize_recurrence_symptom(self):
-        recurrence_symptoms = mommy.make_recipe(
+        recurrence_symptoms = baker.make_recipe(
             "ambition_ae.recurrencesymptom", subject_identifier=self.subject_identifier
         )
         for outgoing_transaction in OutgoingTransaction.objects.filter(
@@ -87,7 +87,7 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
         self.subject_identifier = self.create_subject()
 
         cause_of_death = CauseOfDeath.objects.get(name=CRYTOCOCCAL_MENINGITIS)
-        death_report = mommy.make_recipe(
+        death_report = baker.make_recipe(
             "ambition_ae.deathreport",
             subject_identifier=self.subject_identifier,
             cause_of_death=cause_of_death,
@@ -103,12 +103,12 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
     def test_deserialize_death_report_tmg(self):
         self.subject_identifier = self.create_subject()
         cause_of_death = CauseOfDeath.objects.get(name=CRYTOCOCCAL_MENINGITIS)
-        death_report = mommy.make_recipe(
+        death_report = baker.make_recipe(
             "ambition_ae.deathreport",
             subject_identifier=self.subject_identifier,
             cause_of_death=cause_of_death,
         )
-        death_report_tmg = mommy.make_recipe(
+        death_report_tmg = baker.make_recipe(
             "ambition_ae.deathreporttmg",
             subject_identifier=self.subject_identifier,
             death_report=death_report,

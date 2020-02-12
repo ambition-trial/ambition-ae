@@ -7,7 +7,7 @@ from django.test.client import RequestFactory
 from edc_adverse_event.models import AeClassification
 from edc_list_data.site_list_data import site_list_data
 from edc_registration.models import RegisteredSubject
-from model_mommy import mommy
+from model_bakery import baker
 
 
 class TestAeTmg(AmbitionTestCaseMixin, TestCase):
@@ -33,7 +33,7 @@ class TestAeTmg(AmbitionTestCaseMixin, TestCase):
         RegisteredSubject.objects.create(subject_identifier=self.subject_identifier)
 
         anaemia = AeClassification.objects.get(name="anaemia")
-        self.ae_initial = mommy.make_recipe(
+        self.ae_initial = baker.make_recipe(
             "ambition_ae.aeinitial",
             subject_identifier=self.subject_identifier,
             ae_classification=anaemia,

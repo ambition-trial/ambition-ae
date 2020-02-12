@@ -36,8 +36,7 @@ DEFAULT_SETTINGS = DefaultTestSettings(
     HOLIDAY_FILE=join(base_dir, app_name, "tests", "holidays.csv"),
     LIVE_SYSTEM=False,
     EDC_RANDOMIZATION_LIST_MODEL="ambition_rando.randomizationlist",
-    EDC_RANDOMIZATION_LIST_FILE=join(
-        base_dir, app_name, "tests", "etc", "randomization_list.csv"),
+    EDC_RANDOMIZATION_LIST_PATH=join(base_dir, app_name, "tests", "etc"),
     INSTALLED_APPS=[
         "django.contrib.admin",
         "django.contrib.auth",
