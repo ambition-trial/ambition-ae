@@ -1,5 +1,5 @@
 from django.contrib import admin
-from edc_action_item import action_fieldset_tuple
+from edc_action_item import action_fieldset_tuple, ModelAdminActionItemMixin
 from edc_model_admin import audit_fieldset_tuple, SimpleHistoryAdmin
 from edc_model_admin.dashboard import ModelAdminSubjectDashboardMixin
 
@@ -9,8 +9,9 @@ from ..models import RecurrenceSymptom
 
 
 @admin.register(RecurrenceSymptom, site=ambition_ae_admin)
-class RecurrenceSymptomAdmin(ModelAdminSubjectDashboardMixin, SimpleHistoryAdmin):
-
+class RecurrenceSymptomAdmin(
+    ModelAdminSubjectDashboardMixin, ModelAdminActionItemMixin, SimpleHistoryAdmin
+):
     form = RecurrenceSymptomForm
 
     fieldsets = (
