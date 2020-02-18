@@ -7,7 +7,7 @@ from edc_constants.constants import YES, NO, NOT_APPLICABLE
 from edc_list_data.site_list_data import site_list_data
 from edc_notification import site_notifications
 from edc_registration.models import RegisteredSubject
-from model_mommy import mommy
+from model_bakery import baker
 
 style = color_style()
 
@@ -39,7 +39,7 @@ class TestNotifications(AmbitionTestCaseMixin, TestCase):
 
     def test_susar(self):
 
-        mommy.make_recipe(
+        baker.make_recipe(
             "ambition_ae.aeinitial",
             subject_identifier=self.subject_identifier,
             susar=YES,
@@ -50,7 +50,7 @@ class TestNotifications(AmbitionTestCaseMixin, TestCase):
 
     def test_susar_updates(self):
 
-        ae_initial = mommy.make_recipe(
+        ae_initial = baker.make_recipe(
             "ambition_ae.aeinitial",
             subject_identifier=self.subject_identifier,
             susar=YES,
@@ -87,7 +87,7 @@ class TestNotifications(AmbitionTestCaseMixin, TestCase):
         self.assertEqual(2, subject.count("AE SUSAR Report"))
 
     def test_susar_text(self):
-        mommy.make_recipe(
+        baker.make_recipe(
             "ambition_ae.aeinitial",
             subject_identifier=self.subject_identifier,
             susar=YES,

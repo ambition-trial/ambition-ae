@@ -1,9 +1,9 @@
-from edc_adverse_event.mommy_recipes import causeofdeath
+from edc_adverse_event.baker_recipes import causeofdeath
 from edc_constants.constants import YES, NO, OTHER, NOT_APPLICABLE
 from edc_reportable import GRADE4
 from edc_utils import get_utcnow
 from faker import Faker
-from model_mommy.recipe import Recipe, foreign_key
+from model_bakery.recipe import Recipe, foreign_key
 
 from .models import AeInitial, AeTmg, AeFollowup, AeSusar
 from .models import RecurrenceSymptom, Neurological

@@ -3,7 +3,7 @@
 from django.test import TestCase, tag
 from edc_constants.constants import YES, NO
 from edc_action_item.models.action_item import ActionItem
-from model_mommy import mommy
+from model_bakery import baker
 from edc_list_data.site_list_data import site_list_data
 from edc_registration.models import RegisteredSubject
 from django.core.exceptions import ObjectDoesNotExist
@@ -26,7 +26,7 @@ class TestAeActions(TestCase):
 
     def test_no_ae_cm_recurrence_action(self):
 
-        mommy.make_recipe(
+        baker.make_recipe(
             "ambition_ae.aeinitial",
             subject_identifier=self.subject_identifier,
             susar=YES,
@@ -43,7 +43,7 @@ class TestAeActions(TestCase):
 
     def test_ae_cm_recurrence_action(self):
 
-        mommy.make_recipe(
+        baker.make_recipe(
             "ambition_ae.aeinitial",
             subject_identifier=self.subject_identifier,
             susar=YES,

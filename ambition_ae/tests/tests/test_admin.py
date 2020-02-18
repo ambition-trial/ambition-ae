@@ -7,7 +7,7 @@ from edc_adverse_event.models import SaeReason
 from edc_constants.constants import YES, NO, DEAD
 from edc_list_data.site_list_data import site_list_data
 from edc_registration.models import RegisteredSubject
-from model_mommy import mommy
+from model_bakery import baker
 
 
 class TestAdmin(AmbitionTestCaseMixin, TestCase):
@@ -26,10 +26,10 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
 
     def test_ae_followup_status(self):
         modeladmin = ambition_ae_admin._registry.get(AeFollowup)
-        ae_initial = mommy.make_recipe(
+        ae_initial = baker.make_recipe(
             "ambition_ae.aeinitial", subject_identifier=self.subject_identifier
         )
-        ae_followup = mommy.make_recipe(
+        ae_followup = baker.make_recipe(
             "ambition_ae.aefollowup",
             ae_initial=ae_initial,
             followup=YES,
@@ -47,11 +47,11 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
 
     def test_ae_followup_ae_follow_ups(self):
         modeladmin = ambition_ae_admin._registry.get(AeFollowup)
-        ae_initial = mommy.make_recipe(
+        ae_initial = baker.make_recipe(
             "ambition_ae.aeinitial", subject_identifier=self.subject_identifier
         )
 
-        ae_followup = mommy.make_recipe(
+        ae_followup = baker.make_recipe(
             "ambition_ae.aefollowup",
             ae_initial=ae_initial,
             followup=YES,
@@ -63,12 +63,12 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
 
     def test_ae_initial_follow_up_reports(self):
         modeladmin = ambition_ae_admin._registry.get(AeInitial)
-        ae_initial = mommy.make_recipe(
+        ae_initial = baker.make_recipe(
             "ambition_ae.aeinitial", subject_identifier=self.subject_identifier
         )
         self.assertIsNone(modeladmin.follow_up_reports(ae_initial))
 
-        ae_followup1 = mommy.make_recipe(
+        ae_followup1 = baker.make_recipe(
             "ambition_ae.aefollowup",
             ae_initial=ae_initial,
             followup=YES,
@@ -76,7 +76,7 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
             subject_identifier=self.subject_identifier,
         )
 
-        ae_followup2 = mommy.make_recipe(
+        ae_followup2 = baker.make_recipe(
             "ambition_ae.aefollowup",
             ae_initial=ae_initial,
             followup=NO,
@@ -89,13 +89,13 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
 
     def test_ae_initial_if_sae_reason(self):
         modeladmin = ambition_ae_admin._registry.get(AeInitial)
-        ae_initial = mommy.make_recipe(
+        ae_initial = baker.make_recipe(
             "ambition_ae.aeinitial", subject_identifier=self.subject_identifier
         )
         self.assertIsNone(modeladmin.follow_up_reports(ae_initial))
 
         sae_reason = SaeReason.objects.get(name=DEAD)
-        mommy.make_recipe(
+        baker.make_recipe(
             "ambition_ae.aeinitial",
             sae_reason=sae_reason,
             subject_identifier=self.subject_identifier,
@@ -104,14 +104,14 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
 
     def test_ae_initial_description(self):
         modeladmin = ambition_ae_admin._registry.get(AeInitial)
-        ae_initial = mommy.make_recipe(
+        ae_initial = baker.make_recipe(
             "ambition_ae.aeinitial", subject_identifier=self.subject_identifier
         )
         self.assertTrue(modeladmin.description(ae_initial))
 
     def test_ae_initial_user(self):
         modeladmin = ambition_ae_admin._registry.get(AeInitial)
-        ae_initial = mommy.make_recipe(
+        ae_initial = baker.make_recipe(
             "ambition_ae.aeinitial", subject_identifier=self.subject_identifier
         )
         self.assertTrue(modeladmin.user(ae_initial))
