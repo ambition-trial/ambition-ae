@@ -50,7 +50,7 @@ setup(
         'edc_model',
         'edc_notification',
         'edc_sites',
-        'edc_utils', 'pytz', 'dateutil'
+        'edc_utils',
     ],
     classifiers=[
         'Environment :: Web Environment',
